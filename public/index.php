@@ -9,7 +9,7 @@ require_once ('../config.php');
 
 /* ------------ Include plugin Smarty ------------ */
 
-require_once ('../smarty/Smarty.class.php');
+require_once('../smarty_old/Smarty.class.php');
 
 $smarty = new Smarty;
 $smarty->template_dir = '../app/views';

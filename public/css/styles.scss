@@ -102,6 +102,11 @@ body {
 
 .main_iframe{
   margin-top: 20px;
+  overflow: auto;
+}
+
+.mdl-layout__content{
+  max-width:none;
 }
 
 

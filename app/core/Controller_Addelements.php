@@ -1,4 +1,5 @@
 <?php
+namespace App\core;
 
 /**
  * Created by PhpStorm.
@@ -15,26 +16,32 @@ class Controller_Addelements
 
     function init() {
         global $smarty;
-        if ( isset($_GET['site_url']) ) {
-
-            $this->site_url = $_GET['site_url'];
-
-            $page = file_get_contents($this->site_url);
-
-            $page = str_replace('href=', 'href="'.$this->site_url, $page);
-            $page = str_replace($this->site_url.'"', $this->site_url, $page);
-
-            $page = str_replace('src=', 'src="'.$this->site_url, $page);
-            $page = str_replace($this->site_url.'"/', $this->site_url, $page);
-
-            file_put_contents('html_text.txt', $page);
-
-            $smarty->assign('iframe', '<iframe class="main_iframe" id="main_iframe" src="http://megayagla.local/addelements/getcontent" frameborder="0" width="100%" height="600px"></iframe>');
-            $smarty->display('addelements.tpl');
-        }
+        error_log(123);
+            //$smarty->assign('iframe', '');
+        $smarty->display('addelements.tpl');
     }
 
-    public function getcontent () {
-        echo file_get_contents('html_text.txt');
+    public function getcontent() {
+        $this->site_url = $_GET['site_url'];
+
+        $url = explode('/', $this->site_url);
+
+        $page = file_get_contents($this->site_url);
+
+        $new_url = $url[0] . '//' . $url[2];
+
+        $page = str_replace('href="', 'href="'.$new_url.'/', $page);
+        $page = str_replace('href=\'', 'href=\''.$new_url.'/', $page);
+        $page = str_replace('href="'.$new_url.'/'.$new_url, 'href="'.$new_url, $page);
+
+        $page = str_replace('src="', 'src="'.$new_url.'/', $page);
+        $page = str_replace('src=\'', 'src=\''.$new_url.'/', $page);
+        $page = str_replace('src="'.$new_url.'/'.$new_url, 'src="'.$new_url, $page);
+
+
+
+        $page = $page . '<script src="/js/site.js"></script>';
+
+        echo $page;
     }
 }

@@ -68,7 +68,11 @@ body {
   color: #212121; }
 
 .main_iframe {
-  margin-top: 20px; }
+  margin-top: 20px;
+  overflow: auto; }
+
+.mdl-layout__content {
+  max-width: none; }
 
 .auth_main {
   text-decoration: none;

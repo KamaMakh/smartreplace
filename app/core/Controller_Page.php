@@ -1,4 +1,5 @@
 <?php
+namespace App\core;
 
 /**
  * Created by PhpStorm.

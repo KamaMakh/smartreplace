@@ -3,12 +3,20 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/dist/node_modules/babel-preset-es2015/lib/index.js" />
+        <item url="file://$PROJECT_DIR$/dist/vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/Template/js/bootstrap.min.js" />
         <item url="file://$PROJECT_DIR$/dist/public/js/main.js" />
+        <item url="file://$PROJECT_DIR$/dist/public/js/site.js" />
+        <item url="file://$PROJECT_DIR$/dist/vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/Template/js/html5shiv.min.js" />
+        <item url="file://$PROJECT_DIR$/dist/vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/Template/js/respond.min.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/dist/node_modules/babel-preset-es2015/lib/index.js" />
+      <root url="file://$PROJECT_DIR$/dist/vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/Template/js/bootstrap.min.js" />
       <root url="file://$PROJECT_DIR$/dist/public/js/main.js" />
+      <root url="file://$PROJECT_DIR$/dist/public/js/site.js" />
+      <root url="file://$PROJECT_DIR$/dist/vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/Template/js/html5shiv.min.js" />
+      <root url="file://$PROJECT_DIR$/dist/vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/Template/js/respond.min.js" />
     </CLASSES>
     <SOURCES />
   </library>
