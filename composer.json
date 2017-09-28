@@ -19,6 +19,8 @@
     "psr/log": "^1.0"
   },
   "autoload": {
-    "classmap": ["app/core"]
+    "psr-4": {
+      "Megagroup\\DynamicContent\\" : "app/"
+    }
   }
 }

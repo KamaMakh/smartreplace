@@ -1,5 +1,5 @@
 <?php
-namespace App\core;
+namespace Megagroup\DynamicContent;
 
 /**
  * Created by PhpStorm.
