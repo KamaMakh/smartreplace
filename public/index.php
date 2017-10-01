@@ -5,7 +5,7 @@
  * Date: 15.09.17
  * Time: 18:57
  */
-require_once ('../config.php');
+require_once('../config.php');
 
 /* ------------ Include plugin Smarty ------------ */
 
@@ -23,8 +23,8 @@ $smarty->assign('my_dir', DIR_PATH);
 require_once ('../vendor/autoload.php');
 
 /* ----------------- Auto Load End --------------- */
+echo '111';
 
-
-$router = new Router;
+//$router = new Router;
 session_start();
-$router->run();
+//$router->run();
