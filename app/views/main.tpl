@@ -1,5 +1,5 @@
-{extends "header.tpl"}
-
+{*{extends "header.tpl"}*}
+{include 'header.tpl'}
 {if $check_user != 1}
     <h3>Авторизуйтесь и создайте проект</h3>
     <a class="auth_main" href="/registration/login">Авторизация</a>
@@ -14,4 +14,4 @@
 
 
 
-{*extends "footer.tpl"*}
+{include "footer.tpl"}

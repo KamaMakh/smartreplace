@@ -1,3 +1,4 @@
+{*{extends 'main.tpl'}*}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,17 +6,18 @@
     <title>Yagla in PHP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="http://{$smarty.server.HTTP_HOST}/css/material.min.custom.css">
-    <link rel="stylesheet" type="text/css" href="http://{$smarty.server.HTTP_HOST}/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="http://megayagla.local/css/material.min.custom.css">
+    <link rel="stylesheet" type="text/css" href="http://megayagla.local/css/styles.css">
 
-    <script src="http://{$smarty.server.HTTP_HOST}/js/jquery-3.2.1.js"></script>
-    <script src="http://{$smarty.server.HTTP_HOST}/js/material.min.js"></script>
-    <script src="http://{$smarty.server.HTTP_HOST}/js/main.js"></script>
+    <script src="http://megayagla.local/js/jquery-3.2.1.js"></script>
+    <script src="http://megayagla.local/js/material.min.js"></script>
+    <script src="http://megayagla.local/js/main.js"></script>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
             <!-- Title -->

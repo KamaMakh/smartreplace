@@ -16,17 +16,17 @@ class PageController
     }
 
     public function init() {
-        global $smarty;
+        global $fenom;
         $page = Db::select("SELECT * FROM pages WHERE url = '$this->alias'");
 
         if ( $page ) {
             $page = $page[0];
 
-            $smarty->assign('h1', $page['name']);
-            $smarty->assign('text', $page['content_text']);
-            $smarty->display('text.tpl');
+            $fenom->assign('h1', $page['name']);
+            $fenom->assign('text', $page['content_text']);
+            $fenom->display('text.tpl');
         } else {
-            $smarty->display('404.tpl');
+            $fenom->display('404.tpl');
         }
     }
 }

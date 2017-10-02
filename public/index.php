@@ -6,31 +6,23 @@
  * Time: 18:57
  */
 require_once('../configs/config.php');
+require_once ('../vendor/autoload.php');
+require_once ('../app/core/Router.php');
 
-/* ------------ Include plugin Smarty ------------ */
-
-//require_once('../smarty_old/Smarty.class.php');
-//require_once('../vendor/smarty/smarty/libs/Smarty.class.php');
-//
-//$smarty = new Smarty;
-//$smarty->template_dir = '../app/views';
-//$smarty->compile_dir = '../compile_views';
-//$smarty->assign('my_dir', DIR_PATH);
-
-$fenom = \Fenom::factory('../app/views', '../compile_views', $options);
+/* ------------ Include plugin Venom ------------ */
 
 $options = [
     "auto_reload" => "true"
 ];
 
-echo'2222';
-//$fenom->display('test fenom');
+$fenom = new \Fenom(new Fenom\Provider('../app/views'));
+$fenom->setCompileDir('../compile_views');
+$fenom->setOptions($options);
 
-/* ---------------- Include End ------------------ */
+$fenom->display('main.tpl', $_SERVER);
 
 
 /* ----------------- Auto Load End --------------- */
-//$smarty->display('main.tpl');
 
 $router = new \Megagroup\DynamicContent\Router();
 session_start();
