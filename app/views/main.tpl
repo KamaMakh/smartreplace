@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+{extends "header.tpl"}
 
 {if $check_user != 1}
     <h3>Авторизуйтесь и создайте проект</h3>
@@ -14,4 +14,4 @@
 
 
 
-{include file="footer.tpl"}
+{*extends "footer.tpl"*}

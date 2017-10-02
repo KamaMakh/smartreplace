@@ -5,7 +5,7 @@
  * Date: 17.09.17
  * Time: 16:06
  */
-
+namespace Megagroup\DynamicContent;
 
 class Router
 {
@@ -20,7 +20,7 @@ class Router
         if ($url != '/') {
             $url = explode('/', $url);
 
-            $controller = 'Controller_' . ucfirst($url[0]);
+            $controller =  ucfirst($url[0]) . 'Controller';
 
             if (file_exists( DIR_PATH . '/app/core/' . $controller . '.php' )) {
                 $controller = new $controller;
@@ -39,7 +39,7 @@ class Router
 
         } else {
 
-            $controller = 'Controller_' . $this->controller;
+            $controller = $this->controller . 'Controller';
             $controller = new $controller;
 
             $controller->init();

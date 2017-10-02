@@ -1,7 +1,7 @@
 {
-  "name": "dynamic_content/dynamic_content",
+  "name": "megagroup/dynamic_content",
   "description": "Dynamic_content is the dynamic content substitution",
-  "license" : "MIT",
+  "license" : "proprietary",
   "authors": [
     {
       "name": "Kamron Makhmudov",
@@ -10,13 +10,14 @@
     }
   ],
   "require": {
-    "php":">=7.0",
-    "smarty/smarty": "2.6.29"
+    "php": ">=7.0",
+    "fenom/fenom": "2.*"
   },
   "require-dev": {
     "ext-curl": "*",
     "phpunit/phpunit": "^4.0 || ^5.0",
-    "psr/log": "^1.0"
+    "psr/log": "^1.0",
+    "satooshi/php-coveralls": "*"
   },
   "autoload": {
     "psr-4": {
