@@ -11,7 +11,8 @@
   ],
   "require": {
     "php": ">=7.0",
-    "fenom/fenom": "2.*"
+    "fenom/fenom": "2.*",
+    "fenom/storage": "1.*"
   },
   "require-dev": {
     "ext-curl": "*",

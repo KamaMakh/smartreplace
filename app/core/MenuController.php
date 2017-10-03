@@ -24,15 +24,15 @@ class MenuController
     }
 
     public function get_items ($alias = null, $type) {
-        global $smarty;
+        global $fenom;
         if( $type == 1 ) {
             self::$first_level = Db::select("SELECT m.alias, mi.*, p.url, p.name FROM menu m JOIN menu_items mi JOIN pages p WHERE m.id=mi.menu_id AND mi.level=1 AND m.alias='$alias' AND p.item_id=mi.id ORDER BY mi.left_key;
 ");
-            $smarty->assign($alias, self::$first_level);
+            $fenom->assign($alias, self::$first_level);
         } elseif ( $type == 2 ) {
             self::$all_items = Db::select("SELECT m.alias, mi.*, p.url, p.name FROM menu m JOIN menu_items mi JOIN pages p WHERE m.id=mi.menu_id AND m.alias='$alias' AND p.item_id=mi.id ORDER BY mi.left_key;
 ");
-            $smarty->assign($alias, self::$all_items);
+            $fenom->assign($alias, self::$all_items);
         }
     }
 

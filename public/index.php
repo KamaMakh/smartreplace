@@ -19,7 +19,7 @@ $fenom = new \Fenom(new Fenom\Provider('../app/views'));
 $fenom->setCompileDir('../compile_views');
 $fenom->setOptions($options);
 
-$fenom->display('main.tpl', $_SERVER);
+$fenom->display('main.tpl');
 
 
 /* ----------------- Auto Load End --------------- */

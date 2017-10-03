@@ -135,6 +135,7 @@ class ComposerStaticInitac88b00527e4b02012ee272ba27529dd
             'Fenom\\' => 
             array (
                 0 => __DIR__ . '/..' . '/fenom/fenom/src',
+                1 => __DIR__ . '/..' . '/fenom/storage/src',
             ),
         ),
     );

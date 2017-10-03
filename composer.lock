@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "14641fdcfce51bb135bad393056091ba",
+    "content-hash": "d09142d3a1ed472e20db2c0974012d16",
     "packages": [
         {
             "name": "fenom/fenom",
@@ -55,6 +55,53 @@
                 "templating"
             ],
             "time": "2017-06-29T10:49:38+00:00"
+        },
+        {
+            "name": "fenom/storage",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fenom-template/storage.git",
+                "reference": "110c0a0b98c8975207efc5d2d09527fde0dfbc96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fenom-template/storage/zipball/110c0a0b98c8975207efc5d2d09527fde0dfbc96",
+                "reference": "110c0a0b98c8975207efc5d2d09527fde0dfbc96",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.8"
+            },
+            "require-dev": {
+                "fenom/fenom": "2.*",
+                "phpunit/phpunit": "*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Fenom\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Shalganov",
+                    "email": "a.cobest@gmail.com"
+                }
+            ],
+            "description": "Fenom extension: store data in fenom",
+            "keywords": [
+                "assign",
+                "fenom",
+                "storage",
+                "store"
+            ],
+            "time": "2016-12-26T08:27:52+00:00"
         }
     ],
     "packages-dev": [

@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+{block 'registration'}
 
 {if $errors}
     <div class="mdl-components__warning">
@@ -57,4 +57,4 @@
 
 {/if}
 
-{include file="footer.tpl"}
+{/block}

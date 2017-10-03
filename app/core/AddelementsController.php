@@ -15,8 +15,8 @@ class AddelementsController
 
 
     function init() {
-        global $smarty;
-        $smarty->display('addelements.tpl');
+        global $fenom;
+        $fenom->display('addelements.tpl');
     }
 
     public function getcontent() {

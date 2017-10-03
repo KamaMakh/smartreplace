@@ -2037,5 +2037,54 @@
             "github",
             "test"
         ]
+    },
+    {
+        "name": "fenom/storage",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/fenom-template/storage.git",
+            "reference": "110c0a0b98c8975207efc5d2d09527fde0dfbc96"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/fenom-template/storage/zipball/110c0a0b98c8975207efc5d2d09527fde0dfbc96",
+            "reference": "110c0a0b98c8975207efc5d2d09527fde0dfbc96",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.8"
+        },
+        "require-dev": {
+            "fenom/fenom": "2.*",
+            "phpunit/phpunit": "*",
+            "satooshi/php-coveralls": "dev-master"
+        },
+        "time": "2016-12-26T08:27:52+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Fenom\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3"
+        ],
+        "authors": [
+            {
+                "name": "Ivan Shalganov",
+                "email": "a.cobest@gmail.com"
+            }
+        ],
+        "description": "Fenom extension: store data in fenom",
+        "keywords": [
+            "assign",
+            "fenom",
+            "storage",
+            "store"
+        ]
     }
 ]

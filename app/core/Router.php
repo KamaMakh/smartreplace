@@ -5,7 +5,9 @@
  * Date: 17.09.17
  * Time: 16:06
  */
+
 namespace Megagroup\DynamicContent;
+
 
 class Router
 {
@@ -33,14 +35,14 @@ class Router
                     $controller->init();
                 }
             } else {
-                $controller = new Controller_Page($url[0]);
+                $controller = new PageController($url[0]);
                 $controller->init();
             }
 
         } else {
 
             $controller = $this->controller . 'Controller';
-            $controller = new $controller;
+            $controller = new MainController();
 
             $controller->init();
         }
