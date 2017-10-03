@@ -15,7 +15,7 @@ class Router
 
     public function run() {
 
-        $url = (isset($_GET['url']) && $_GET['url'] != '/') ? trim($_GET['url'], '/') : '/';
+        $url =    ( isset( $_GET['url'] )  &&  $_GET['url'] != '/' )    ?    trim($_GET['url'], '/')    :    '/';
 
         if ($url != '/') {
             $url = explode('/', $url);
