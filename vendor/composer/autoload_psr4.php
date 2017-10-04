@@ -18,7 +18,11 @@ return array(
     'Symfony\\Component\\Config\\' => array($vendorDir . '/symfony/config'),
     'Satooshi\\' => array($vendorDir . '/satooshi/php-coveralls/src/Satooshi'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
-    'Megagroup\\DynamicContent\\' => array($baseDir . '/app'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Megagroup\\SmartReplace\\' => array($baseDir . '/app'),
+    'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
+    'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
+    'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

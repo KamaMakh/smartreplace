@@ -5,9 +5,10 @@
  * Date: 15.09.17
  * Time: 18:57
  */
+
 require_once('../configs/config.php');
 require_once ('../vendor/autoload.php');
-require_once ('../app/core/Router.php');
+require_once('../app/controllers/Router.php');
 
 /* ------------ Include plugin Venom ------------ */
 
@@ -23,6 +24,6 @@ $fenom->setOptions($options);
 
 
 
-$router = new \Megagroup\DynamicContent\Router();
+$router = new \Megagroup\SmartReplace\controllers\Router();
 session_start();
 $router->run();

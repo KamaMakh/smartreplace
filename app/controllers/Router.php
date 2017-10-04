@@ -6,7 +6,7 @@
  * Time: 16:06
  */
 
-namespace Megagroup\DynamicContent;
+namespace Megagroup\SmartReplace\Controllers;
 
 class Router
 {
@@ -48,7 +48,7 @@ class Router
         } else {
 
             $controller = $this->controller . 'Controller';
-            $controller = new MainController();
+            $controller = new $controller;
 
             $controller->init();
         }

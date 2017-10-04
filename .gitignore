@@ -1,4 +1,4 @@
-/logs
-/compile_views
-/vendor
-/.idea
+.idea/
+logs/
+vendor/
+compile_views/

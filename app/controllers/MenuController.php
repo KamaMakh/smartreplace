@@ -1,5 +1,5 @@
 <?php
-namespace Megagroup\DynamicContent;
+namespace Megagroup\SmartReplace\Controllers;
 
 /**
  * Created by PhpStorm.

@@ -2,21 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8e9950e-c4a2-4da4-8f52-5756771f9b6e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/footer.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/form.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/header.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/css/material.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/css/material.min.custom.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/js/material.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/js/site.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/views/text.tpl" afterPath="$PROJECT_DIR$/app/views/layout.tpl" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/mega_yagla.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/core/AddelementsController.php" afterPath="$PROJECT_DIR$/app/controllers/AddelementsController.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/core/Db.php" afterPath="$PROJECT_DIR$/app/controllers/Db.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/core/MainController.php" afterPath="$PROJECT_DIR$/app/controllers/MainController.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/core/MenuController.php" afterPath="$PROJECT_DIR$/app/controllers/MenuController.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/core/PageController.php" afterPath="$PROJECT_DIR$/app/controllers/PageController.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/core/RegistrationController.php" afterPath="$PROJECT_DIR$/app/controllers/RegistrationController.php" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/core/Router.php" afterPath="$PROJECT_DIR$/app/controllers/Router.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/core/Router.php" afterPath="$PROJECT_DIR$/app/core/Router.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/404.tpl" afterPath="$PROJECT_DIR$/app/views/404.tpl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/addelements.tpl" afterPath="$PROJECT_DIR$/app/views/addelements.tpl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/main.tpl" afterPath="$PROJECT_DIR$/app/views/main.tpl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/registration.tpl" afterPath="$PROJECT_DIR$/app/views/registration.tpl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layout.tpl" afterPath="$PROJECT_DIR$/app/views/layout.tpl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.php" afterPath="$PROJECT_DIR$/public/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" />
     </list>
     <list id="ffaf40ca-86f7-43fd-855a-2ee2a33c4aaa" name="Failed commit: Default" comment="- Измененеия в классе Controller_Addelements" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,62 +55,25 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="registration.tpl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/registration.tpl">
+      <file leaf-file-name="AddelementsController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/AddelementsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Db.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/Db.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="18">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Router.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/core/Router.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="26" column="26" lean-forward="true" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="layout.tpl" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/layout.tpl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.tpl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/main.tpl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="404.tpl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/404.tpl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addelements.tpl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/addelements.tpl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
+              <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+              <folding>
+                <marker date="1507115989830" expanded="true" signature="1578:1629" ph="INSERT INTO ${$table}... " />
+                <marker date="1507115989830" expanded="true" signature="2689:2716" ph="UPDATE ${{$t... " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -113,18 +81,20 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-              <folding />
+            <state relative-caret-position="324">
+              <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+              <folding>
+                <element signature="e#6#86#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/core/MainController.php">
+      <file leaf-file-name="Router.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/Router.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="9" column="6" lean-forward="false" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+            <state relative-caret-position="597">
+              <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -133,8 +103,8 @@
       <file leaf-file-name="test.error.log" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logs/test.error.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-552">
-              <caret line="1716" column="0" lean-forward="false" selection-start-line="1716" selection-start-column="0" selection-end-line="1716" selection-end-column="0" />
+            <state relative-caret-position="600">
+              <caret line="1836" column="0" lean-forward="false" selection-start-line="1836" selection-start-column="0" selection-end-line="1836" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -171,9 +141,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config.php" />
-        <option value="$PROJECT_DIR$/app/core/Controller_page.php" />
-        <option value="$PROJECT_DIR$/vendor/router.php" />
         <option value="$PROJECT_DIR$/vendor/autoload.php" />
         <option value="$PROJECT_DIR$/public/css/material.min.css" />
         <option value="$PROJECT_DIR$/public/js/main2/js.js" />
@@ -190,7 +157,6 @@
         <option value="$PROJECT_DIR$/public/js/site.js" />
         <option value="$PROJECT_DIR$/public/js/main.js" />
         <option value="$PROJECT_DIR$/vendor/Router.php" />
-        <option value="$PROJECT_DIR$/app/core/Db.php" />
         <option value="$PROJECT_DIR$/configs/nginx.conf" />
         <option value="$PROJECT_DIR$/setup/DB_options" />
         <option value="$PROJECT_DIR$/app/core/Controller_Addelements.php" />
@@ -199,26 +165,33 @@
         <option value="$PROJECT_DIR$/app/core/Controller_Page.php" />
         <option value="$PROJECT_DIR$/app/core/Controller_Registration.php" />
         <option value="$PROJECT_DIR$/app/core/ControllerAddelements.php" />
-        <option value="$PROJECT_DIR$/app/core/RegistrationController.php" />
-        <option value="$PROJECT_DIR$/app/core/PageController.php" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/vendor/fenom/fenom/src/Fenom.php" />
-        <option value="$PROJECT_DIR$/app/core/AddelementsController.php" />
-        <option value="$PROJECT_DIR$/app/core/MenuController.php" />
-        <option value="$PROJECT_DIR$/app/core/MainController.php" />
         <option value="$PROJECT_DIR$/app/views/text.tpl" />
-        <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/app/views/header.tpl" />
         <option value="$PROJECT_DIR$/app/views/footer.tpl" />
         <option value="$PROJECT_DIR$/app/views/form.tpl" />
-        <option value="$PROJECT_DIR$/app/views/layout.tpl" />
         <option value="$PROJECT_DIR$/app/views/main.tpl" />
         <option value="$PROJECT_DIR$/app/views/404.tpl" />
         <option value="$PROJECT_DIR$/app/views/addelements.tpl" />
         <option value="$PROJECT_DIR$/app/views/registration.tpl" />
-        <option value="$PROJECT_DIR$/logs/test.error.log" />
+        <option value="$PROJECT_DIR$/app/views/layout.tpl" />
+        <option value="$PROJECT_DIR$/app/core/AddelementsController.php" />
+        <option value="$PROJECT_DIR$/app/core/Db.php" />
+        <option value="$PROJECT_DIR$/app/core/MainController.php" />
+        <option value="$PROJECT_DIR$/app/core/MenuController.php" />
+        <option value="$PROJECT_DIR$/app/core/PageController.php" />
+        <option value="$PROJECT_DIR$/app/core/RegistrationController.php" />
+        <option value="$PROJECT_DIR$/composer.json" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/core/Router.php" />
+        <option value="$PROJECT_DIR$/app/controllers/PageController.php" />
+        <option value="$PROJECT_DIR$/public/index.php" />
+        <option value="$PROJECT_DIR$/app/controllers/Db.php" />
+        <option value="$PROJECT_DIR$/app/controllers/MainController.php" />
+        <option value="$PROJECT_DIR$/app/controllers/MenuController.php" />
+        <option value="$PROJECT_DIR$/logs/test.error.log" />
+        <option value="$PROJECT_DIR$/app/controllers/AddelementsController.php" />
+        <option value="$PROJECT_DIR$/app/controllers/Router.php" />
       </list>
     </option>
   </component>
@@ -377,7 +350,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -416,7 +389,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/s3" />
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
@@ -530,7 +503,7 @@
       <workItem from="1506942105857" duration="12831000" />
       <workItem from="1507016006720" duration="7992000" />
       <workItem from="1507040219549" duration="4662000" />
-      <workItem from="1507097346909" duration="6578000" />
+      <workItem from="1507097346909" duration="11751000" />
     </task>
     <task id="LOCAL-00001" summary="- Настройка">
       <created>1505484560384</created>
@@ -574,11 +547,18 @@
       <option name="project" value="LOCAL" />
       <updated>1507016696632</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="#5">
+      <created>1507106487613</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1507106487613</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193180000" />
+    <option name="totallyTimeSpent" value="198353000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1442" height="900" extended-state="6" />
@@ -621,7 +601,8 @@
     <MESSAGE value="- change project on issue 3" />
     <MESSAGE value="- change project on issue 3 (part II)" />
     <MESSAGE value="- inital commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="- inital commit" />
+    <MESSAGE value="#5" />
+    <option name="LAST_COMMIT_MESSAGE" value="#5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -711,17 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/Db.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="7" lean-forward="false" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding>
-            <marker date="1506597531558" expanded="true" signature="1568:1619" ph="INSERT INTO ${$table}... " />
-            <marker date="1506597531558" expanded="true" signature="2679:2706" ph="UPDATE ${{$t... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/autoload.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -740,13 +710,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="22" column="16" lean-forward="false" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -775,41 +738,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/AddelementsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/MenuController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="34" column="27" lean-forward="false" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
-          <folding>
-            <marker date="1507027267615" expanded="true" signature="349:376" ph="SELECT alias... menu" />
-            <marker date="1507027267615" expanded="true" signature="355:376" ph="select alias... menu" />
-            <marker date="1507027267615" expanded="true" signature="655:833" ph="SeLECT m.ali... menu" />
-            <marker date="1507027267615" expanded="true" signature="661:833" ph="select m.ali... menu" />
-            <marker date="1507027267615" expanded="true" signature="972:1135" ph="SELECT m.ali... menu" />
-            <marker date="1507027267615" expanded="true" signature="978:1135" ph="select m.ali... menu" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/RegistrationController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="18" lean-forward="false" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-          <folding>
-            <marker date="1506859191830" expanded="true" signature="3072:3118" ph="SELECT email... users" />
-            <marker date="1506859191830" expanded="true" signature="3078:3118" ph="select email... users" />
-            <marker date="1506859191830" expanded="true" signature="3766:3846" ph="SELECT email... users" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/configs/config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -825,28 +753,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/text.tpl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="16" lean-forward="false" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/PageController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="28" column="23" lean-forward="false" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
-          <folding>
-            <marker date="1506958714126" expanded="true" signature="324:370" ph="SELECT * FRO... pages" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -874,42 +785,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/registration.tpl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/test.error.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-552">
-          <caret line="1716" column="0" lean-forward="false" selection-start-line="1716" selection-start-column="0" selection-end-line="1716" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/MainController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="6" lean-forward="false" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/core/Router.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="26" column="26" lean-forward="true" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -922,6 +801,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/main.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="23" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layout.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="26" column="24" lean-forward="false" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/404.tpl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -930,18 +825,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/main.tpl">
+    <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="22" />
+        <state relative-caret-position="288">
+          <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layout.tpl">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+        <state relative-caret-position="72">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/RegistrationController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="32" lean-forward="false" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+          <folding>
+            <marker date="1507113500135" expanded="true" signature="3070:3116" ph="SELECT email... users" />
+            <marker date="1507113500135" expanded="true" signature="3076:3116" ph="select email... users" />
+            <marker date="1507113500135" expanded="true" signature="3764:3844" ph="SELECT email... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/MenuController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+          <folding>
+            <marker date="1507115989994" expanded="true" signature="359:386" ph="SELECT alias... menu" />
+            <marker date="1507115989994" expanded="true" signature="365:386" ph="select alias... menu" />
+            <marker date="1507115989994" expanded="true" signature="665:843" ph="SeLECT m.ali... menu" />
+            <marker date="1507115989994" expanded="true" signature="671:843" ph="select m.ali... menu" />
+            <marker date="1507115989994" expanded="true" signature="982:1145" ph="SELECT m.ali... menu" />
+            <marker date="1507115989994" expanded="true" signature="988:1145" ph="select m.ali... menu" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/PageController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+          <folding>
+            <marker date="1507115990030" expanded="true" signature="334:380" ph="SELECT * FRO... pages" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/MainController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+          <folding>
+            <element signature="e#6#86#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/Db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+          <folding>
+            <marker date="1507115989830" expanded="true" signature="1578:1629" ph="INSERT INTO ${$table}... " />
+            <marker date="1507115989830" expanded="true" signature="2689:2716" ph="UPDATE ${{$t... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/test.error.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="1836" column="0" lean-forward="false" selection-start-line="1836" selection-start-column="0" selection-end-line="1836" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/AddelementsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/Router.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="597">
+          <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
           <folding />
         </state>
       </provider>

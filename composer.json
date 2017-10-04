@@ -1,5 +1,5 @@
 {
-  "name": "megagroup/dynamic_content",
+  "name": "megagroup/smart_replace",
   "description": "Dynamic_content is the dynamic content substitution",
   "license" : "proprietary",
   "authors": [
@@ -12,7 +12,9 @@
   "require": {
     "php": ">=7.0",
     "fenom/fenom": "2.*",
-    "fenom/storage": "1.*"
+    "fenom/storage": "1.*",
+    "guzzlehttp/psr7": "^1.4",
+    "guzzlehttp/guzzle": "6.*"
   },
   "require-dev": {
     "ext-curl": "*",
@@ -22,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Megagroup\\DynamicContent\\" : "app/"
+      "Megagroup\\SmartReplace\\" : "app/"
     }
   }
 }

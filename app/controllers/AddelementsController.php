@@ -1,5 +1,5 @@
 <?php
-namespace Megagroup\DynamicContent;
+namespace Megagroup\SmartReplace\Controllers;
 
 /**
  * Created by PhpStorm.
@@ -24,7 +24,11 @@ class AddelementsController
 
         $url = explode('/', $this->site_url);
 
-        $page = file_get_contents($this->site_url);
+        $client  =  new \GuzzleHttp\Client();
+        $res = $client->request('GET', $this->site_url);
+
+        $page = $res->getBody();
+
 
         $new_url = $url[0] . '//' . $url[2];
 

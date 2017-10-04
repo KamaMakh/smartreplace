@@ -2,7 +2,7 @@
     <html lang="ru">
         <head>
             <meta charset="UTF-8">
-            <title>{block 'title'} Dynamic Content {/block}</title>
+            <title>{block 'title'} SmartReplace {/block}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
             <link rel="stylesheet" type="text/css" href="http://megayagla.local/css/styles.css">
