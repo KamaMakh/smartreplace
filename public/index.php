@@ -19,10 +19,9 @@ $fenom = new \Fenom(new Fenom\Provider('../app/views'));
 $fenom->setCompileDir('../compile_views');
 $fenom->setOptions($options);
 
-$fenom->display('main.tpl');
+//$fenom->display('main.tpl');
 
 
-/* ----------------- Auto Load End --------------- */
 
 $router = new \Megagroup\DynamicContent\Router();
 session_start();

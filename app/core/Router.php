@@ -8,7 +8,6 @@
 
 namespace Megagroup\DynamicContent;
 
-
 class Router
 {
     protected $controller = 'Main';
@@ -17,15 +16,22 @@ class Router
 
     public function run() {
 
-        $url =    ( isset( $_GET['url'] )  &&  $_GET['url'] != '/' )    ?    trim($_GET['url'], '/')    :    '/';
+       // $url =    ( isset( $_GET['url'] )  &&  $_GET['url'] != '/' )    ?    trim($_GET['url'], '/')    :    '/';
+
+        if ( isset( $_GET['url'] )  &&  $_GET['url'] != '/' ) {
+            $url = trim($_GET['url'], '/');
+        } else {
+            $url = '/';
+        }
 
         if ($url != '/') {
             $url = explode('/', $url);
 
             $controller =  ucfirst($url[0]) . 'Controller';
-
+            echo $controller;
             if (file_exists( DIR_PATH . '/app/core/' . $controller . '.php' )) {
-                $controller = new $controller;
+
+                $controller = new $controller();
 
                 if ( !empty($url[1]) ) {
                     $action = $url[1];

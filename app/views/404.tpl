@@ -1,5 +1,8 @@
-{block '404'}
-<h1>Страница не сущесвует</h1>
+{extends 'layout.tpl'}
+{block 'title'} Page not found {/block}
+{block 'content'}
+    <h1>Страница не сущесвует</h1>
 
-<h2>404 Not Found</h2>
+    <h2>404 Not Found</h2>
 {/block}
+
