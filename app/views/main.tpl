@@ -3,7 +3,7 @@
 {block 'title'} Main page {/block}
 
 {block 'content'}
-    {if $check_user != 1}
+    {if $.session.check_user != 1}
         <h3>Авторизуйтесь и создайте проект</h3>
         <a class="auth_main" href="/registration/login">Авторизация</a>
     {else}

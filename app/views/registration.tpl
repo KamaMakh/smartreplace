@@ -1,7 +1,6 @@
 {extends 'layout.tpl'}
 
 {block 'content'}
-    {$test}
     {if $errors}
         <div class="mdl-components__warning">
             {foreach $errors as $e}
@@ -46,11 +45,11 @@
         <h3>Авторизация</h3>
         <form action="" method="POST" id="auth-page">
             <div >
-                <inputtype="text" name="email" value="{$.post.email}">
+                <input type="text" name="email" value="{$.post.email}">
                 <label >E-mail</label>
             </div>
             <div>
-                <inputtype="password" name="password">
+                <input type="password" name="password">
                 <label>Пароль</label>
             </div>
             <button type="submit">

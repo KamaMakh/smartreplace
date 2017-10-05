@@ -63,9 +63,9 @@ class Db {
         $i = 1;
         foreach($fieldsVal as $val) {
             if ( strtolower($val[1]) == 's' ) {
-                $val[1] = PDO::PARAM_STR;
+                $val[1] = \PDO::PARAM_STR;
             } else if ( strtolower($val[1]) == 'i' ) {
-                $val[1] = PDO::PARAM_INT;
+                $val[1] = \PDO::PARAM_INT;
             }
             $stmt->bindParam($i, $val[0], $val[1]);
             $i++;
@@ -80,7 +80,7 @@ class Db {
 
         $result = self::$pdo->query($query);
         if (is_object($result)) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
+            return $result->fetchAll(\PDO::FETCH_ASSOC);
         }
 
     }

@@ -6,12 +6,12 @@
  * Time: 18:57
  */
 
-use Megagroup\SmartReplace\Bin;
+use Megagroup\SmartReplace\Renders;
 
 require_once('../configs/config.php');
 require_once ('../vendor/autoload.php');
 require_once('../app/controllers/Router.php');
-require_once ('../bin/Render.php');
+require_once('../app/renders/Render.php');
 
 /* ------------ Include plugin Venom ------------ */
 
@@ -21,7 +21,7 @@ $options = [
 
 
 
-$fenom = new Bin\Render(new \Fenom\Provider('../app/views'));
+$fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
 $fenom->setCompileDir('../compile_views');
 $fenom->setOptions($options);
 

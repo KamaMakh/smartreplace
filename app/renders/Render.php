@@ -1,6 +1,6 @@
 <?php
 
-namespace Megagroup\SmartReplace\Bin;
+namespace Megagroup\SmartReplace\Renders;
 
 /**
  * Created by PhpStorm.

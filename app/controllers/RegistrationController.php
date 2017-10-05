@@ -89,7 +89,6 @@ class RegistrationController {
             return $fenom->display('registration.tpl');
         } else {
             if ( $this->check_email($this->email) ) {
-                echo '11';
                 $errors[] = 'Пользователь с данным адресом почты уже существует!';
                 $fenom->assign('errors', $errors);
                 return $fenom->display('registration.tpl');

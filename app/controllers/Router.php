@@ -8,6 +8,9 @@
 
 namespace Megagroup\SmartReplace;
 
+use Megagroup\SmartReplace\Controllers\MainController;
+use Megagroup\SmartReplace\Controllers\PageController;
+
 require_once ('Db.php');
 
 class Router
@@ -35,7 +38,7 @@ class Router
             if (in_array(  $controller . '.php', $arr )) {
 
                $controller = 'Megagroup\SmartReplace\Controllers\\' . $controller;
-                echo $controller;
+                //echo $controller;
 
                 $controller = new $controller;
 
