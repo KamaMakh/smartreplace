@@ -19,7 +19,6 @@ use Fenom\Template;
  */
 class Fenom
 {
-    use \Fenom\StorageTrait;
     const VERSION = '2.9';
     const REV = 1;
     /* Actions */

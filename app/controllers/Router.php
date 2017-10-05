@@ -6,9 +6,7 @@
  * Time: 16:06
  */
 
-namespace Megagroup\SmartReplace\Controllers;
-
-use Megagroup\SmartReplace\RegistrationController;
+namespace Megagroup\SmartReplace;
 
 require_once ('Db.php');
 
@@ -31,13 +29,14 @@ class Router
         if ($url != '/') {
             $url = explode('/', $url);
 
-            $controller =  ucfirst($url[0]) . 'Controller';
+            $controller = ucfirst($url[0]) . 'Controller';
             $arr = scandir(__DIR__);
 
             if (in_array(  $controller . '.php', $arr )) {
 
-                require_once ($controller.'.php');
+               $controller = 'Megagroup\SmartReplace\Controllers\\' . $controller;
                 echo $controller;
+
                 $controller = new $controller;
 
                 if ( !empty($url[1]) ) {

@@ -1,15 +1,16 @@
 {extends 'layout.tpl'}
 
 {block 'content'}
-    {*if $errors}
+    {$test}
+    {if $errors}
         <div class="mdl-components__warning">
-            {foreach from=$errors item=e}
+            {foreach $errors as $e}
                 <div style="color:red; font-weight: bold">
                     {$e}
                 </div>
             {/foreach}
         </div>
-    {/if*}
+    {/if}
 
 
     {if !$login}
@@ -35,6 +36,7 @@
                 <input type="text" name="nickName" value="{$.post.nickName}">
                 <label>Псевдоним</label>
             </div>
+            <input type="hidden" value="form" name="get_form">
             <button type="submit">
                 Зарегистрироваться
             </button>

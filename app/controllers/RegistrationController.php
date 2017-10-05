@@ -1,5 +1,5 @@
 <?php
-namespace Megagroup\SmartReplace;
+namespace Megagroup\SmartReplace\Controllers;
 
 /**
  * Created by PhpStorm.
@@ -49,7 +49,10 @@ class RegistrationController {
 
 
         if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+            $test = 'send';
+            $fenom->assign('test', $test);
             $fenom->display('registration.tpl');
+            return;
         }
 
         if ( !empty($this->email) && $this->email ) {
@@ -80,9 +83,8 @@ class RegistrationController {
             $errors[] = "Заполните поле Пароль!";
         }
 
-        if ( !empty($errors) ) {
+        if ( !empty($errors)  ) {
             $fenom->assign('errors', $errors);
-            echo '11';
             print_r($errors);
             return $fenom->display('registration.tpl');
         } else {

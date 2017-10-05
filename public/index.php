@@ -6,9 +6,12 @@
  * Time: 18:57
  */
 
+use Megagroup\SmartReplace\Bin;
+
 require_once('../configs/config.php');
 require_once ('../vendor/autoload.php');
 require_once('../app/controllers/Router.php');
+require_once ('../bin/Render.php');
 
 /* ------------ Include plugin Venom ------------ */
 
@@ -16,14 +19,16 @@ $options = [
     "auto_reload" => "true"
 ];
 
-$fenom = new \Fenom(new Fenom\Provider('../app/views'));
+
+
+$fenom = new Bin\Render(new \Fenom\Provider('../app/views'));
 $fenom->setCompileDir('../compile_views');
 $fenom->setOptions($options);
 
-//$fenom->display('main.tpl');
 
 
 
-$router = new \Megagroup\SmartReplace\controllers\Router();
+
+$router = new \Megagroup\SmartReplace\Router();
 session_start();
 $router->run();

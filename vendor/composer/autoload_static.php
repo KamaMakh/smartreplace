@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitac88b00527e4b02012ee272ba27529dd
+class ComposerStaticInit71b3dbd3b4129ea458ed879e160d3ab0
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -171,6 +171,13 @@ class ComposerStaticInitac88b00527e4b02012ee272ba27529dd
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
+        'Megagroup\\SmartReplace\\Controllers\\AddelementsController' => __DIR__ . '/../..' . '/app/controllers/AddelementsController.php',
+        'Megagroup\\SmartReplace\\Controllers\\Db' => __DIR__ . '/../..' . '/app/controllers/Db.php',
+        'Megagroup\\SmartReplace\\Controllers\\MainController' => __DIR__ . '/../..' . '/app/controllers/MainController.php',
+        'Megagroup\\SmartReplace\\Controllers\\MenuController' => __DIR__ . '/../..' . '/app/controllers/MenuController.php',
+        'Megagroup\\SmartReplace\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/controllers/PageController.php',
+        'Megagroup\\SmartReplace\\Controllers\\RegistrationController' => __DIR__ . '/../..' . '/app/controllers/RegistrationController.php',
+        'Megagroup\\SmartReplace\\Router' => __DIR__ . '/../..' . '/app/controllers/Router.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
@@ -638,10 +645,10 @@ class ComposerStaticInitac88b00527e4b02012ee272ba27529dd
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitac88b00527e4b02012ee272ba27529dd::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitac88b00527e4b02012ee272ba27529dd::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitac88b00527e4b02012ee272ba27529dd::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitac88b00527e4b02012ee272ba27529dd::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit71b3dbd3b4129ea458ed879e160d3ab0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit71b3dbd3b4129ea458ed879e160d3ab0::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit71b3dbd3b4129ea458ed879e160d3ab0::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit71b3dbd3b4129ea458ed879e160d3ab0::$classMap;
 
         }, null, ClassLoader::class);
     }
