@@ -1,4 +1,4 @@
-.idea/
+.idea
 logs/
-vendor/
+vendor
 compile_views/
