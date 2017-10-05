@@ -17,7 +17,7 @@ class Db {
     protected static $charset  = DB_CONF['charset'];
 
     private static function connect() {
-        self::$pdo = new PDO("mysql:host=" . self::$host . ";dbname=" . self::$database. ";charset=" . self::$charset, self::$user, self::$password);
+        self::$pdo = new \PDO("mysql:host=" . self::$host . ";dbname=" . self::$database. ";charset=" . self::$charset, self::$user, self::$password);
     }
 
     public static function insert($query, $table, $where = null) {

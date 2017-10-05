@@ -44,14 +44,15 @@ class RegistrationController {
     }
 
     public function init() {
-        global $smarty;
+        global $fenom;
         $errors = [];
 
+
         if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
-            return $smarty->display('registration.tpl');
+            $fenom->display('registration.tpl');
         }
 
-        if ( !empty($this->email) ) {
+        if ( !empty($this->email) && $this->email ) {
             if ( !filter_var($this->email, FILTER_VALIDATE_EMAIL) ) {
                 $errors[] = "Email введен некорректно!";
             };
@@ -80,13 +81,16 @@ class RegistrationController {
         }
 
         if ( !empty($errors) ) {
-            $smarty->assign('errors', $errors);
-            return $smarty->display('registration.tpl');
+            $fenom->assign('errors', $errors);
+            echo '11';
+            print_r($errors);
+            return $fenom->display('registration.tpl');
         } else {
             if ( $this->check_email($this->email) ) {
+                echo '11';
                 $errors[] = 'Пользователь с данным адресом почты уже существует!';
-                $smarty->assign('errors', $errors);
-                return $smarty->display('registration.tpl');
+                $fenom->assign('errors', $errors);
+                return $fenom->display('registration.tpl');
             };
         }
 
@@ -124,12 +128,12 @@ class RegistrationController {
 
     public function login() {
 
-        global $smarty;
+        global $fenom;
         $errors = [];
 
         if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
-            $smarty->assign('login', 1);
-            return $smarty->display('registration.tpl');
+            $fenom->assign('login', 1);
+            return $fenom->display('registration.tpl');
         }
 
         if ( !empty($this->email) ) {
@@ -167,9 +171,9 @@ class RegistrationController {
         }
 
         if ( !empty($errors) ) {
-            $smarty->assign('login', 1);
-            $smarty->assign('errors', $errors);
-            return $smarty->display('registration.tpl');
+            $fenom->assign('login', 1);
+            $fenom->assign('errors', $errors);
+            return $fenom->display('registration.tpl');
         }
     }
 

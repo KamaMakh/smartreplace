@@ -1,7 +1,7 @@
 {extends 'layout.tpl'}
 
 {block 'content'}
-    {if $errors}
+    {*if $errors}
         <div class="mdl-components__warning">
             {foreach from=$errors item=e}
                 <div style="color:red; font-weight: bold">
@@ -9,7 +9,7 @@
                 </div>
             {/foreach}
         </div>
-    {/if}
+    {/if*}
 
 
     {if !$login}

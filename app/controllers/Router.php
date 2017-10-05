@@ -8,6 +8,10 @@
 
 namespace Megagroup\SmartReplace\Controllers;
 
+use Megagroup\SmartReplace\RegistrationController;
+
+require_once ('Db.php');
+
 class Router
 {
     protected $controller = 'Main';
@@ -28,10 +32,13 @@ class Router
             $url = explode('/', $url);
 
             $controller =  ucfirst($url[0]) . 'Controller';
-            echo $controller;
-            if (file_exists( DIR_PATH . '/app/core/' . $controller . '.php' )) {
+            $arr = scandir(__DIR__);
 
-                $controller = new $controller();
+            if (in_array(  $controller . '.php', $arr )) {
+
+                require_once ($controller.'.php');
+                echo $controller;
+                $controller = new $controller;
 
                 if ( !empty($url[1]) ) {
                     $action = $url[1];
@@ -41,6 +48,7 @@ class Router
                     $controller->init();
                 }
             } else {
+                require_once ('PageController.php');
                 $controller = new PageController($url[0]);
                 $controller->init();
             }
@@ -48,7 +56,9 @@ class Router
         } else {
 
             $controller = $this->controller . 'Controller';
-            $controller = new $controller;
+
+            require_once ($controller.'.php');
+            $controller = new MainController();
 
             $controller->init();
         }
