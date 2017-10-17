@@ -42,8 +42,17 @@ class AddelementsController
 
 
 
-        $page = $page . '<script src="/js/site.js"></script>';
+        $page = $page . '<script src="/js/site.js"></script>'
+                      .'<link rel="stylesheet" href="/css/site.css">'
+                      .'<div class="">';
 
         echo $page;
+    }
+
+    public function insert_to_db() {
+        if ( $_SERVER['REQUEST_METHOD'] == 'GET' && $_GET['createList'] == 1) {
+
+            print_r($_GET);
+        }
     }
 }

@@ -98,7 +98,17 @@ class Db {
         }
 
         $sql = "UPDATE $table_name $request";
-        echo $sql;
+        $stmt = self::$pdo->prepare($sql);
+        return $stmt->execute();
+    }
+
+    public static function delete($table_name, $where, $limit = null) {
+        self::$pdo || self::connect();
+
+        $sql = "DELETE FROM $table_name WHERE $where";
+        if ($limit) {
+            $sql = $sql . " LIMIT $limit";
+        }
         $stmt = self::$pdo->prepare($sql);
         return $stmt->execute();
     }

@@ -1,37 +1,52 @@
 (function(window, $) {
-    var iframe, data;
+    window.addEventListener('DOMContentLoaded', function () {
+        var iframe, data,
+            list = $('.result_list');
 
-    console.log('init')
 
-    document.addEventListener('DOMContentLoaded', function() {
-        iframe = document.getElementById('main_iframe');
+        var addToList = {
 
-        if (iframe) {
+            add(data) {
+                console.log(list);
+                list.append(`<div class="row"><div class="cell element-type">${data.element.title}</div><div class="cell element-name">${data.element.title}</div></div>`);
+            }
+        };
 
-            document.addEventListener('message', function(event) {
-                try {
-                    data = JSON.parse(event.data);
+        document.addEventListener('DOMContentLoaded', function() {
+            iframe = document.getElementById('main_iframe');
 
-                    if(data.test) {
-                        console.log('test');
-                        iframe.postMessage(JSON.stringify({
-                            getUrl: true
-                        }), '*');
-                    }
-                } catch (e) {}
-            }, false);
+            if (iframe) {
 
-            // Отправка в iframe
-            iframe.addEventListener('load', function () {
-                console.log('loaded');
-                console.log(this);
-                this.contentWindow.postMessage(JSON.stringify({
-                    getUrl: true
-                }), '*');
+                // Отправка в iframe
+                iframe.addEventListener('load', function () {
+                    this.contentWindow.postMessage(JSON.stringify({
+                        test: true
+                    }), '*');
 
-            }, false);
-        }
+                }, false);
+            }
 
-    }, false);
+        }, false);
+
+
+
+        //принимаем postMessage
+
+        window.addEventListener('message', function(event) {
+            try {
+                data = JSON.parse(event.data);
+                if (data.mode == 'add') {
+                    //console.log(data);
+                    addToList.add(data);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }, false);
+
+
+
+    })
+
     
 })(window, jQuery);

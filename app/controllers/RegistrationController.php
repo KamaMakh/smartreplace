@@ -16,6 +16,7 @@ class RegistrationController {
     private $hash_password;
 
     public function __construct(){
+        global $fenom;
 
         if (isset($_POST['nickName']))  {
             $this->nickName = $this->dataFilter($_POST['nickName']);
@@ -36,6 +37,7 @@ class RegistrationController {
         if (isset($_POST['confirm_password'])) {
             $this->confirm_password = $this->dataFilter($_POST['confirm_password']);
         }
+        $fenom->assign('login', 0);
 
     }
 
@@ -49,9 +51,8 @@ class RegistrationController {
 
 
         if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
-            $test = 'send';
-            $fenom->assign('test', $test);
             $fenom->display('registration.tpl');
+            echo 'blabalbalb';
             return;
         }
 
@@ -103,16 +104,17 @@ class RegistrationController {
             'password' => [$this->hash_password, 's']
         ];
 
-        $result = Db::insert($data_fields, 'users');
+        $result = Db::insert($data_fields, 'sr_users');
 
 
         if ( $result ) {
+
             $this->login();
         }
     }
 
     protected function check_email  ($email) {
-        $result = Db::select( "SELECT email FROM users WHERE email = '$email' " );
+        $result = Db::select( "SELECT email FROM sr_users WHERE email = '$email' " );
         if ( empty($result) ) {
             return false;
         }
@@ -138,7 +140,7 @@ class RegistrationController {
         }
 
         if ( !empty($this->email) ) {
-            $user = Db::select("SELECT email, password, nickname, status FROM users WHERE email = '$this->email'");
+            $user = Db::select("SELECT email, password, nickname, status FROM sr_users WHERE email = '$this->email'");
 
             $user = $user[0];
 
@@ -156,7 +158,7 @@ class RegistrationController {
                             'email' => $user['email'],
                             'nickname' => $user['nickname']
                         ];
-
+                        echo 'good';
                         header('Location: /');
                         exit();
                     }

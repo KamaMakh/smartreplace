@@ -50,18 +50,13 @@ class Router
                     $controller->init();
                 }
             } else {
-                require_once ('PageController.php');
                 $controller = new PageController($url[0]);
                 $controller->init();
             }
 
         } else {
 
-            $controller = $this->controller . 'Controller';
-
-            require_once ($controller.'.php');
             $controller = new MainController();
-
             $controller->init();
         }
     }
