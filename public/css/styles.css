@@ -137,3 +137,13 @@ body {
 .result_list  .element-name {
     width: 250px;
 }
+
+.get_iframe{
+    width: 500px;
+    margin: 20px auto;
+}
+
+.registr,.auth{
+    width: 500px;
+    margin: 20px auto;
+}

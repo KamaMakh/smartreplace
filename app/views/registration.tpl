@@ -13,46 +13,48 @@
 
 
     {if !$login}
-        <h3>Регистрация</h3>
-        <form action="" method="POST" id="auth-page">
-            <div >
-                <input  type="text" name="email" value="{$.post.email}">
+
+        <form  class="registr ui form small" action="" method="POST" id="auth-page">
+            <div class="ui medium header">Регистрация</div>
+            <div class="field">
                 <label>E-mail</label>
+                <input  type="text" name="email" value="{$.post.email}">
             </div>
-            <div >
-                <input type="text" name="name" value="{$.post.name}">
+            <div class="field">
                 <label>Имя</label>
+                <input type="text" name="name" value="{$.post.name}">
             </div>
-            <div >
-                <input type="password" name="password">
+            <div class="field">
                 <label>Пароль</label>
+                <input type="password" name="password">
             </div>
-            <div>
-                <input type="password" name="confirm_password">
+            <div class="field">
                 <label>Повторите пароль</label>
+                <input type="password" name="confirm_password">
             </div>
-            <div >
-                <input type="text" name="nickName" value="{$.post.nickName}">
+            <div class="field">
                 <label>Псевдоним</label>
+                <input type="text" name="nickName" value="{$.post.nickName}">
             </div>
             <input type="hidden" value="form" name="get_form">
-            <button type="submit">
+            <button type="submit" class="ui submit button">
                 Зарегистрироваться
             </button>
         </form>
 
     {else}
-        <h3>Авторизация</h3>
-        <form action="" method="POST" id="auth-page">
-            <div >
+
+        <form class="auth ui small form" action="" method="POST" id="auth-page">
+            <div class="ui medium header">Авторизация</div>
+            <div class="field">
+                <label class="ui label">E-mail</label>
                 <input type="text" name="email" value="{*$.post.email*}">
-                <label >E-mail</label>
             </div>
-            <div>
+            <div class="field">
+                <label class="ui label">Пароль</label>
                 <input type="password" name="password">
-                <label>Пароль</label>
             </div>
-            <button type="submit">
+            <button type="submit" class="ui button">
                 Войти
             </button>
         </form>

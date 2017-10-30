@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+     backupStaticAttributes="false"
+     colors="false"
+     convertErrorsToExceptions="true"
+     convertNoticesToExceptions="true"
+     convertWarningsToExceptions="true"
+     processIsolation="false"
+     stopOnFailure="false"
+     syntaxCheck="false"
+     bootstrap="tests/bootstrap.php">
+    <php> <!-- тут можно объявить PHP констнты, переменные и задать ini-директивы для тестов -->
+        <!-- например задать настройки БД
+        <const name="TEST_DB_HOST"     value="localhost"/>
+        <const name="TEST_DB_PORT"     value="3306"/>
+        <const name="TEST_DB_USER"     value="root"/>
+        <const name="TEST_DB_PASSWORD" value=""/>
+        <const name="TEST_DB_NAME"     value="test"/>
+        -->
+    </php>
+    <testsuites> <!-- указываем наборы тестов (test suites) -->
+        <testsuite>
+            <directory>tests/cases</directory>
+        </testsuite>
+    </testsuites>
+    <whitelist>  <!-- укажите путь тестируемых классов что бы не попал лишний "мусор" -->
+        <directory suffix=".php">./s3/lib</directory>
+    </whitelist>
+</phpunit>

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '<div class="sandbox info-value"></div>' +
         '</div>'+
         '<div class="sandbox sandbox-close"></div>' +
-        '<div class="sandbox sandbox-name"> Название подмены: <input class="sandbox" type="text" required></div>'+
+        '<div class="sandbox sandbox-name"> Название подмены: <input class="sandbox" value="Подмена №" type="text" required></div>'+
         '<div class="sandbox sandbox-button">Сделать заменяемым</div>' +
         '</div>',
 
@@ -118,7 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 excessWidth,
                 closeButton,
                 classes,
-                uniqueness;
+                uniqueness,
+                element_name,
+                element_type,
+                element_data;
 
             if ( !target.classList.contains('sandbox') ) {
 
@@ -162,14 +165,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     element_obj.title = 'Текст с кодом';
                     element_obj.data = target.innerHTML;
                 }
-                else if ( this.stringReplace(target.innerHTML) == this.stringReplace(target.innerText) ) {
+                else if ( this.stringReplace(target.innerHTML) == this.stringReplace(target.innerText) && this.isEmpty(target.innerText) ) {
                     element_obj.title = 'Текст';
                     element_obj.data = target.innerText;
+                }
+                else if ( !this.isEmpty(target.innerText)  && this.isEmpty(target.innerHTML) && target.style.background ) {
+                    element_obj.title = 'Картинка';
+                    element_obj.data = target.style.background;
                 }
                 else {
                     element_obj.title = 'Блок с кодом';
                     element_obj.data = target.innerHTML;
                 }
+
+                element_name = sandBoxWrap.querySelector('.sandbox .sandbox-name input').getAttribute('value');
+                element_obj.name = element_name + ' 1';
 
                 sandBoxWrap.querySelector('.sandbox-title .value').innerText = element_obj.title;
                 sandBoxWrap.querySelector('.sandbox .sandbox-info .info-value').innerText = element_obj.data.slice(0,200);
@@ -192,6 +202,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 oldSandBox.remove();
             }
         },
+
+        isEmpty(text) {
+            console.log(text.length);
+            if ( text.length > 0 ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
 
     };
@@ -260,15 +279,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-        window.addEventListener('message', function(event) {
-            try {
-                var data = JSON.parse(event.data);
-                if (data.test) {
+    window.addEventListener('message', function(event) {
+        try {
+            var data = JSON.parse(event.data);
+            if (data.test) {
 
-                }
-            } catch (e) {}
+            }
+        } catch (e) {}
 
-        });
+    });
 
 
 

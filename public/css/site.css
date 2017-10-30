@@ -95,6 +95,24 @@ body:hover{
     color: rgba(0,0,0, .5);
     word-wrap: break-word;
 }
+.sandbox .sandbox-name {
+    width: 100%;
+    font-size: 13px;
+    padding: 8px 10px;
+    text-align: center;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.sandbox .sandbox-name input{
+    width: 100%;
+    color: rgba(0,0,0, .5);
+    padding: 10px;
+    margin-top: 10px;
+    border:none;
+    box-sizing: border-box;
+    font-size: 13px;
+}
 
 div {
     pointer-events: all;

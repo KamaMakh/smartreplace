@@ -43,16 +43,15 @@ class AddelementsController
 
 
         $page = $page . '<script src="/js/site.js"></script>'
-                      .'<link rel="stylesheet" href="/css/site.css">'
-                      .'<div class="">';
+                      .'<link rel="stylesheet" href="/css/site.css">';
 
         echo $page;
     }
 
     public function insert_to_db() {
-        if ( $_SERVER['REQUEST_METHOD'] == 'GET' && $_GET['createList'] == 1) {
-
-            print_r($_GET);
+        if ( $_SERVER['REQUEST_METHOD'] == 'GET' && $_GET['mode'] == 'add') {
+            //print_r(json_decode($_GET[0]['element']));
+            echo "<div class='row'><div class='cell element-type'>{$_GET['type']}</div><div class='cell element-name'>{$_GET['type']}</div></div>";
         }
     }
 }
