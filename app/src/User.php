@@ -19,9 +19,10 @@ class User
     private $confirm_password;
     private $hash_password;
     private $method;
+    private $fenom;
 
-    public function __construct($nickName,$email,$name,$password,$confirm_password, $method){
-        global $fenom;
+    public function __construct($nickName,$email,$name,$password,$confirm_password, $method, $fenom){
+
 
         $this->nickName = $nickName;
         $this->email = $email;
@@ -29,21 +30,19 @@ class User
         $this->password = $password;
         $this->confirm_password = $confirm_password;
         $this->method = $method;
-        $fenom->assign('login', 0);
+        $this->fenom = $fenom;
+        $this->fenom->assign('login', 0);
 
     }
 
-//    protected function dataFilter($data){
-//        return strip_tags(trim($data));
-//    }
 
     public function init() {
-        global $fenom;
+
         $errors = [];
 
 
         if ( $this->method == 'GET' ) {
-            $fenom->display('registration.tpl');
+            $this->fenom->display('registration.tpl');
             return;
         }
 
@@ -76,14 +75,14 @@ class User
         }
 
         if ( !empty($errors)  ) {
-            $fenom->assign('errors', $errors);
+            $this->fenom->assign('errors', $errors);
             print_r($errors);
-            return $fenom->display('registration.tpl');
+            return $this->fenom->display('registration.tpl');
         } else {
             if ( $this->checkEmail($this->email) ) {
                 $errors[] = 'Пользователь с данным адресом почты уже существует!';
-                $fenom->assign('errors', $errors);
-                return $fenom->display('registration.tpl');
+                $this->fenom->assign('errors', $errors);
+                return $this->fenom->display('registration.tpl');
             };
         }
 
@@ -122,12 +121,12 @@ class User
 
     public function login() {
 
-        global $fenom;
+
         $errors = [];
 
         if ( $this->method == 'GET' ) {
-            $fenom->assign('login', 1);
-            return $fenom->display('registration.tpl');
+            $this->fenom->assign('login', 1);
+            return $this->fenom->display('registration.tpl');
         }
 
         if ( !empty($this->email) ) {
@@ -156,9 +155,9 @@ class User
         }
 
         if ( !empty($errors) ) {
-            $fenom->assign('login', 1);
-            $fenom->assign('errors', $errors);
-            return $fenom->display('registration.tpl');
+            $this->fenom->assign('login', 1);
+            $this->fenom->assign('errors', $errors);
+            return $this->fenom->display('registration.tpl');
         }
     }
 

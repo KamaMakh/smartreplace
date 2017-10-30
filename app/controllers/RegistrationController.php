@@ -3,6 +3,7 @@
 namespace Megagroup\SmartReplace\Controllers;
 
 use Megagroup\SmartReplace\User;
+use Megagroup\SmartReplace\Renders;
 
 /**
  * Created by PhpStorm.
@@ -19,6 +20,7 @@ class RegistrationController {
     private $password;
     private $confirm_password;
     private $method;
+    private $fenom;
 
     public function __construct(){
 
@@ -43,16 +45,18 @@ class RegistrationController {
         }
 
         $this->method = $_SERVER['REQUEST_METHOD'];
+
+        $this->fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
     }
 
     public function init () {
-        $user = new User($this->nickName, $this->email,$this->name, $this->password, $this->confirm_password, $this->method);
+        $user = new User($this->nickName, $this->email,$this->name, $this->password, $this->confirm_password, $this->method, $this->fenom);
         $user->init();
     }
 
     public function login () {
 
-        $user = new User($this->nickName, $this->email,$this->name, $this->password, $this->confirm_password, $this->method);
+        $user = new User($this->nickName, $this->email,$this->name, $this->password, $this->confirm_password, $this->method, $this->fenom);
 
         $result = $user->login();
 
@@ -71,7 +75,7 @@ class RegistrationController {
     }
 
     public function logout () {
-        $user = new User($this->nickName, $this->email,$this->name, $this->password, $this->confirm_password, $this->method);
+        $user = new User($this->nickName, $this->email,$this->name, $this->password, $this->confirm_password, $this->method, $this->fenom);
         $result = $user->logout();
 
         if ( $result == 'logOut' ) {
