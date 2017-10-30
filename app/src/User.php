@@ -80,14 +80,14 @@ class User
             print_r($errors);
             return $fenom->display('registration.tpl');
         } else {
-            if ( $this->check_email($this->email) ) {
+            if ( $this->checkEmail($this->email) ) {
                 $errors[] = 'Пользователь с данным адресом почты уже существует!';
                 $fenom->assign('errors', $errors);
                 return $fenom->display('registration.tpl');
             };
         }
 
-        $this->hash_password = $this->hashing_password($this->password);
+        $this->hash_password = $this->hashingPassword($this->password);
 
         $data_fields = [
             'email' => [$this->email, 's'],
@@ -104,7 +104,7 @@ class User
         }
     }
 
-    protected function check_email  ($email) {
+    protected function checkEmail  ($email) {
         $result = Controllers\Db::select( "SELECT email FROM sr_users WHERE email = '$email' " );
         if ( empty($result) ) {
             return false;
@@ -112,11 +112,11 @@ class User
         return true;
     }
 
-    protected function hashing_password ($password) {
+    protected function hashingPassword ($password) {
         return password_hash($password, PASSWORD_BCRYPT);
     }
 
-    protected function verify_password ($password, $hash) {
+    protected function verifyPassword ($password, $hash) {
         return password_verify($password, $hash);
     }
 
@@ -140,7 +140,7 @@ class User
             } else {
 
                 if ( !empty($this->password) ) {
-                    if ( $this->verify_password($this->password, $user['password']) ) {
+                    if ( $this->verifyPassword($this->password, $user['password']) ) {
 
                         return $user;
                     }
