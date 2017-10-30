@@ -2,6 +2,8 @@
 
 namespace Megagroup\SmartReplace;
 
+use Megagroup\SmartReplace\Controllers;
+
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -16,43 +18,31 @@ class User
     private $password;
     private $confirm_password;
     private $hash_password;
+    private $method;
 
-    public function __construct(){
+    public function __construct($nickName,$email,$name,$password,$confirm_password, $method){
         global $fenom;
 
-        if (isset($_POST['nickName']))  {
-            $this->nickName = $this->dataFilter($_POST['nickName']);
-        }
-
-        if (isset($_POST['email']))  {
-            $this->email = $this->dataFilter($_POST['email']);
-        }
-
-        if (isset($_POST['name'])) {
-            $this->name = $this->dataFilter($_POST['name']);
-        }
-
-        if (isset($_POST['password'])) {
-            $this->password = $this->dataFilter($_POST['password']);
-        }
-
-        if (isset($_POST['confirm_password'])) {
-            $this->confirm_password = $this->dataFilter($_POST['confirm_password']);
-        }
+        $this->nickName = $nickName;
+        $this->email = $email;
+        $this->name = $name;
+        $this->password = $password;
+        $this->confirm_password = $confirm_password;
+        $this->method = $method;
         $fenom->assign('login', 0);
 
     }
 
-    protected function dataFilter($data){
-        return strip_tags(trim($data));
-    }
+//    protected function dataFilter($data){
+//        return strip_tags(trim($data));
+//    }
 
     public function init() {
         global $fenom;
         $errors = [];
 
 
-        if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+        if ( $this->method == 'GET' ) {
             $fenom->display('registration.tpl');
             return;
         }
@@ -105,7 +95,7 @@ class User
             'password' => [$this->hash_password, 's']
         ];
 
-        $result = Db::insert($data_fields, 'sr_users');
+        $result = Controllers\Db::insert($data_fields, 'sr_users');
 
 
         if ( $result ) {
@@ -115,7 +105,7 @@ class User
     }
 
     protected function check_email  ($email) {
-        $result = Db::select( "SELECT email FROM sr_users WHERE email = '$email' " );
+        $result = Controllers\Db::select( "SELECT email FROM sr_users WHERE email = '$email' " );
         if ( empty($result) ) {
             return false;
         }
@@ -135,13 +125,13 @@ class User
         global $fenom;
         $errors = [];
 
-        if ( $_SERVER['REQUEST_METHOD'] == 'GET' ) {
+        if ( $this->method == 'GET' ) {
             $fenom->assign('login', 1);
             return $fenom->display('registration.tpl');
         }
 
         if ( !empty($this->email) ) {
-            $user = Db::select("SELECT email, password, nickname, status FROM sr_users WHERE email = '$this->email'");
+            $user = Controllers\Db::select("SELECT email, password, nickname, status FROM sr_users WHERE email = '$this->email'");
 
             $user = $user[0];
 
@@ -152,16 +142,7 @@ class User
                 if ( !empty($this->password) ) {
                     if ( $this->verify_password($this->password, $user['password']) ) {
 
-                        $_SESSION['check_user'] = 1;
-
-                        $_SESSION['user'] = [
-                            'status' => $user['status'],
-                            'email' => $user['email'],
-                            'nickname' => $user['nickname']
-                        ];
-                        echo 'good';
-                        header('Location: /');
-                        exit();
+                        return $user;
                     }
 
                 } else {
@@ -182,8 +163,6 @@ class User
     }
 
     public function logout () {
-        unset($_SESSION['check_user']);
-        unset($_SESSION['user']);
-        header('Location: /');
+        return 'logOut';
     }
 }
