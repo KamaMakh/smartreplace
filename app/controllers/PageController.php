@@ -1,6 +1,9 @@
 <?php
 namespace Megagroup\SmartReplace\Controllers;
 
+
+use Megagroup\SmartReplace\Pages;
+use Megagroup\SmartReplace\Renders;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -9,24 +12,17 @@ namespace Megagroup\SmartReplace\Controllers;
  */
 class PageController
 {
-    private $alias;
+    private $fenom;
+    private $url;
 
-    public function __construct($url) {
-        $this->alias = $url;
+    public function __construct($url)
+    {
+        $this->fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
+        $this->url = $url;
     }
 
     public function init() {
-        global $fenom;
-        $page = Db::select("SELECT * FROM pages WHERE url = '$this->alias'");
-
-        if ( $page ) {
-            $page = $page[0];
-
-            $fenom->assign('h1', $page['name']);
-            $fenom->assign('text', $page['content_text']);
-            $fenom->display('text.tpl');
-        } else {
-            $fenom->display('404.tpl');
-        }
+        $page = new Pages($this->url);
+        $page->init();
     }
 }

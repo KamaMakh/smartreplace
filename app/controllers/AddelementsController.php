@@ -1,57 +1,48 @@
 <?php
 namespace Megagroup\SmartReplace\Controllers;
 
+
 /**
  * Created by PhpStorm.
  * User: kamron
  * Date: 18.09.17
  * Time: 18:24
  */
+
+use Megagroup\SmartReplace\AddElements;
+use Megagroup\SmartReplace\Renders;
+
+
+
 class AddelementsController
 {
-    public $site_url;
-    public $domain;
-    public $class;
+    private $site_url;
+    private $fenom;
+    private $method;
+    private $mode;
+    private $addElements;
 
-
-    function init() {
-        global $fenom;
-        $fenom->display('addelements.tpl');
-    }
-
-    public function getcontent() {
+    public function __construct()
+    {
         $this->site_url = $_GET['site_url'];
+        $this->fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
+        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->addElements = new AddElements($this->fenom);
 
-        $url = explode('/', $this->site_url);
-
-        $client  =  new \GuzzleHttp\Client();
-        $res = $client->request('GET', $this->site_url);
-
-        $page = $res->getBody();
-
-
-        $new_url = $url[0] . '//' . $url[2];
-
-        $page = str_replace('href="', 'href="'.$new_url.'/', $page);
-        $page = str_replace('href=\'', 'href=\''.$new_url.'/', $page);
-        $page = str_replace('href="'.$new_url.'/'.$new_url, 'href="'.$new_url, $page);
-
-        $page = str_replace('src="', 'src="'.$new_url.'/', $page);
-        $page = str_replace('src=\'', 'src=\''.$new_url.'/', $page);
-        $page = str_replace('src="'.$new_url.'/'.$new_url, 'src="'.$new_url, $page);
-
-
-
-        $page = $page . '<script src="/js/site.js"></script>'
-                      .'<link rel="stylesheet" href="/css/site.css">';
-
-        echo $page;
+//        if ( $this->method == 'GET' && $_GET && $_GET['mode'] ) {
+//            $this->mode = $_GET['mode'];
+//        }
     }
 
-    public function insert_to_db() {
-        if ( $_SERVER['REQUEST_METHOD'] == 'GET' && $_GET['mode'] == 'add') {
-            //print_r(json_decode($_GET[0]['element']));
-            echo "<div class='row'><div class='cell element-type'>{$_GET['type']}</div><div class='cell element-name'>{$_GET['type']}</div></div>";
-        }
+    public function init () {
+        $this->addElements->init($this->site_url);
+    }
+
+    public function getcontent () {
+        $this->addElements->getcontent($this->site_url);
+    }
+
+    public function insert_to_db () {
+        $this->addElements->insert_to_db( $this->method, $this->mode );
     }
 }

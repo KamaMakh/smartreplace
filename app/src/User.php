@@ -12,58 +12,45 @@ use Megagroup\SmartReplace\Controllers;
  */
 class User
 {
-    private $nickName;
-    private $email;
-    private $name;
-    private $password;
-    private $confirm_password;
     private $hash_password;
-    private $method;
     private $fenom;
 
-    public function __construct($nickName,$email,$name,$password,$confirm_password, $method, $fenom){
+    public function __construct($fenom){
 
-
-        $this->nickName = $nickName;
-        $this->email = $email;
-        $this->name = $name;
-        $this->password = $password;
-        $this->confirm_password = $confirm_password;
-        $this->method = $method;
         $this->fenom = $fenom;
         $this->fenom->assign('login', 0);
 
     }
 
 
-    public function init() {
+    public function init($email,$name,$password,$confirm_password, $method) {
 
         $errors = [];
 
 
-        if ( $this->method == 'GET' ) {
+        if ( $method == 'GET' ) {
             $this->fenom->display('registration.tpl');
             return;
         }
 
-        if ( !empty($this->email) && $this->email ) {
-            if ( !filter_var($this->email, FILTER_VALIDATE_EMAIL) ) {
+        if ( !empty($email) && $email ) {
+            if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
                 $errors[] = "Email введен некорректно!";
             };
         } else {
             $errors[] = "Заполните поле E-MAIL!";
         }
 
-        if ( empty($this->name) ) {
+        if ( empty($name) ) {
             $errors[] = "Заполните поле ИМЯ!";
         }
 
-        if ( !empty($this->password) ) {
-            if ( mb_strlen($this->password) < 8 ) {
+        if ( !empty($password) ) {
+            if ( mb_strlen($password) < 8 ) {
                 $errors[] = "Пароль должен быть не меньше 8 символов!";
             } else {
-                if ( !empty($this->confirm_password) ) {
-                    if ( $this->password != $this->confirm_password ) {
+                if ( !empty($confirm_password) ) {
+                    if ( $password != $confirm_password ) {
                         $errors[] = 'Пароли не совпадают!';
                     }
                 } else {
@@ -77,20 +64,21 @@ class User
         if ( !empty($errors)  ) {
             $this->fenom->assign('errors', $errors);
             print_r($errors);
+
             return $this->fenom->display('registration.tpl');
         } else {
-            if ( $this->checkEmail($this->email) ) {
+            if ( $this->checkEmail($email) ) {
                 $errors[] = 'Пользователь с данным адресом почты уже существует!';
                 $this->fenom->assign('errors', $errors);
                 return $this->fenom->display('registration.tpl');
             };
         }
 
-        $this->hash_password = $this->hashingPassword($this->password);
+        $this->hash_password = $this->hashingPassword($password);
 
         $data_fields = [
-            'email' => [$this->email, 's'],
-            'nickname' =>  [$this->name, 's'],
+            'email' => [$email, 's'],
+            'nickname' =>  [$name, 's'],
             'password' => [$this->hash_password, 's']
         ];
 
@@ -98,8 +86,7 @@ class User
 
 
         if ( $result ) {
-
-            $this->login();
+            $this->login($email,$password, 'GET');
         }
     }
 
@@ -119,18 +106,17 @@ class User
         return password_verify($password, $hash);
     }
 
-    public function login() {
-
+    public function login($email,$password, $method) {
 
         $errors = [];
 
-        if ( $this->method == 'GET' ) {
+        if ( $method == 'GET' ) {
             $this->fenom->assign('login', 1);
             return $this->fenom->display('registration.tpl');
         }
 
-        if ( !empty($this->email) ) {
-            $user = Controllers\Db::select("SELECT email, password, nickname, status FROM sr_users WHERE email = '$this->email'");
+        if ( !empty($email) ) {
+            $user = Controllers\Db::select("SELECT email, password, nickname, status FROM sr_users WHERE email = '$email'");
 
             $user = $user[0];
 
@@ -138,9 +124,9 @@ class User
                 $errors[] = "Логин или пароль введен не правильно!";
             } else {
 
-                if ( !empty($this->password) ) {
-                    if ( $this->verifyPassword($this->password, $user['password']) ) {
-
+                if ( !empty($password) ) {
+                    if ( $this->verifyPassword($password, $user['password']) ) {
+                        $user['login'] = 'true';
                         return $user;
                     }
 
