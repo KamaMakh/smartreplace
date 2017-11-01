@@ -42,7 +42,7 @@ class AddelementsController
         $this->addElements->getcontent($this->site_url);
     }
 
-    public function insert_to_db () {
-        $this->addElements->insert_to_db( $this->method, $this->mode );
+    public function insertToDb () {
+        $this->addElements->insertToDb( $this->method, $this->mode );
     }
 }

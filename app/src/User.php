@@ -15,7 +15,7 @@ class User
     private $hash_password;
     private $fenom;
 
-    public function __construct($fenom){
+    public function __construct(\Fenom $fenom){
 
         $this->fenom = $fenom;
         $this->fenom->assign('login', 0);
@@ -23,7 +23,7 @@ class User
     }
 
 
-    public function init($email,$name,$password,$confirm_password, $method) {
+    public function init(string $email, string $name, string $password, string $confirm_password, string $method) {
 
         $errors = [];
 
@@ -90,7 +90,7 @@ class User
         }
     }
 
-    protected function checkEmail  ($email) {
+    protected function checkEmail  (string $email) {
         $result = Controllers\Db::select( "SELECT email FROM sr_users WHERE email = '$email' " );
         if ( empty($result) ) {
             return false;
@@ -98,15 +98,15 @@ class User
         return true;
     }
 
-    protected function hashingPassword ($password) {
+    protected function hashingPassword (string $password) {
         return password_hash($password, PASSWORD_BCRYPT);
     }
 
-    protected function verifyPassword ($password, $hash) {
+    protected function verifyPassword (string $password, string $hash) {
         return password_verify($password, $hash);
     }
 
-    public function login($email,$password, $method) {
+    public function login(string $email,string $password,string $method) {
 
         $errors = [];
 

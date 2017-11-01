@@ -15,7 +15,7 @@ class Pages
     private $alias;
     private $fenom;
 
-    public function __construct($url) {
+    public function __construct(string $url) {
         $this->alias = $url;
     }
 

@@ -20,7 +20,7 @@ class Db {
         self::$pdo = new \PDO("mysql:host=" . self::$host . ";dbname=" . self::$database. ";charset=" . self::$charset, self::$user, self::$password);
     }
 
-    public static function insert($query, $table, $where = null) {
+    public static function insert(array $query, string $table, string $where = null) {
         self::$pdo || self::connect();
 
         $fieldsBool = null;
@@ -75,7 +75,7 @@ class Db {
 
     }
 
-    public static function select($query) {
+    public static function select(string $query) {
         self::$pdo || self::connect();
 
         $result = self::$pdo->query($query);
@@ -85,7 +85,7 @@ class Db {
 
     }
 
-    public static function update($query, $table_name, $where) {
+    public static function update(array $query,string $table_name,string $where) {
         self::$pdo || self::connect();
 
         foreach($query as $name=>$value){
@@ -102,7 +102,7 @@ class Db {
         return $stmt->execute();
     }
 
-    public static function delete($table_name, $where, $limit = null) {
+    public static function delete(string $table_name,string $where,int $limit = null) {
         self::$pdo || self::connect();
 
         $sql = "DELETE FROM $table_name WHERE $where";

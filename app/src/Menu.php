@@ -17,7 +17,7 @@ class Menu
     private static $menu_type;
     private $fenom;
 
-    public function __construct($fenom)
+    public function __construct(\Fenom $fenom)
     {
         $this->fenom = $fenom;
         self::$menu_type = Db::select('SELECT alias,type FROM menu');

@@ -16,19 +16,19 @@ class AddElements
     public $site_url;
     private $fenom;
 
-    public  function __construct($fenom)
+    public  function __construct(\Fenom $fenom)
     {
         $this->fenom = $fenom;
     }
 
 
-    function init($site_url) {
+    function init(string $site_url) {
         $this->site_url = $site_url;
 
         $this->fenom->display('addelements.tpl');
     }
 
-    public function getcontent($site_url) {
+    public function getcontent(string $site_url) {
         $this->site_url = $site_url;
 
         $url = explode('/', $this->site_url);
@@ -57,7 +57,7 @@ class AddElements
         echo $page;
     }
 
-    public function insert_to_db($method, $mode) {
+    public function insertToDb(string $method,string $mode) {
         if ( $method == 'GET' && $mode == 'add') {
 
         }
