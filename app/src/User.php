@@ -25,54 +25,7 @@ class User
 
     public function init(string $email, string $name, string $password, string $confirm_password) {
 
-        $errors = [];
-
-        if (  $this->checkEmail($email, 0) === 'empty' ) {
-            $errors[] = 'Пользователь с данным адресом почты уже существует!';
-        }
-        else if ( !empty($email) && $email != 'empty' ) {
-            if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
-                $errors[] = "Email введен некорректно!";
-            }
-        }
-        else {
-            $errors[] = "Заполните поле E-MAIL!";
-        }
-
-        if ( empty($name) || $name == 'empty' ) {
-            $errors[] = "Заполните поле ИМЯ!";
-        }
-
-        if ( !empty($password) && $password != 'empty' ) {
-            if ( mb_strlen($password) < 8 ) {
-                $errors['ch'] = "Пароль должен быть не меньше 8 символов!";
-            }
-            else {
-                if ( !empty($confirm_password) ) {
-                    if ( $password != $confirm_password ) {
-                        $errors[] = 'Пароли не совпадают!';
-                    }
-                } else {
-                    $errors[] = 'Повторно введите пароль';
-                }
-            }
-        }
-        else {
-            $errors[] = "Заполните поле Пароль!";
-        }
-
-        if ( !empty($errors)  ) {
-            $this->showErrors($errors, 0);
-            return;
-        }
-
-        $this->hash_password = $this->hashingPassword($password);
-
-        $data_fields = [
-            'email' => [$email, 's'],
-            'nickname' =>  [$name, 's'],
-            'password' => [$this->hash_password, 's']
-        ];
+        $data_fields = $this->checkAll($email, $name, $password, $confirm_password, 0);
 
         $result = Controllers\Db::insert($data_fields, 'sr_users');
 
@@ -84,43 +37,101 @@ class User
     }
 
     public function login(string $email,string $password) {
-
-        $errors = [];
-
-        if ( !empty($email) && $email != 'empty' ) {
-            $user = $this->checkEmail($email, 1);
-
-            if ( $user ) {
-                $user = $user[0];
-            }
-
-            if ( empty($user) ) {
-                $errors[] = "Логин или пароль введен не правильно!";
-            } else {
-
-                if ( !empty($password) && $password != 'empty' && $this->verifyPassword($password, $user['password'])) {
-                        $user['login'] = 'true';
-                        return $user;
-                } else {
-                    $errors[] = "Логин или пароль введен не правильно!";
-                }
-
-            }
-
-        } else {
-            $errors[] = "Заполните поле E-MAIL!";
-        }
-
-        if ( !empty($errors) ) {
-            $this->showErrors($errors,1);
-            return;
-        }
+        $user = $this->checkAll($email, '', $password, '', 1);
+        return $user;
     }
 
     public function getHtml( string $method, int $login ){
         if ( $method == 'GET' ) {
             $this->fenom->assign('login', $login);
             return $this->fenom->display('registration.tpl');
+        }
+    }
+
+    protected function checkAll ( string $email, string $name, string $password, string $confirm_password, int $login ) {
+
+        $errors = [];
+
+        if ( $login == 1 ) {
+            if ( !empty($email) && $email != 'empty' ) {
+                $user = $this->checkEmail($email, 1);
+
+                if ( $user ) {
+                    $user = $user[0];
+                }
+
+                if ( empty($user) ) {
+                    $errors[] = "Логин или пароль введен не правильно!";
+                } else {
+
+                    if ( !empty($password) && $password != 'empty' && $this->verifyPassword($password, $user['password'])) {
+                        $user['login'] = 'true';
+                        return $user;
+                    } else {
+                        $errors[] = "Логин или пароль введен не правильно!";
+                    }
+
+                }
+
+            } else {
+                $errors[] = "Заполните поле E-MAIL!";
+            }
+
+            if ( !empty($errors) ) {
+                $this->showErrors($errors,1);
+                return;
+            }
+        }
+        else {
+
+            if (  $this->checkEmail($email, 0) === 'empty' ) {
+                $errors[] = 'Пользователь с данным адресом почты уже существует!';
+            }
+            else if ( !empty($email) && $email != 'empty' ) {
+                if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
+                    $errors[] = "Email введен некорректно!";
+                }
+            }
+            else {
+                $errors[] = "Заполните поле E-MAIL!";
+            }
+
+            if ( empty($name) || $name == 'empty' ) {
+                $errors[] = "Заполните поле ИМЯ!";
+            }
+
+            if ( !empty($password) && $password != 'empty' ) {
+                if ( mb_strlen($password) < 8 ) {
+                    $errors['ch'] = "Пароль должен быть не меньше 8 символов!";
+                }
+                else {
+                    if ( !empty($confirm_password) ) {
+                        if ( $password != $confirm_password ) {
+                            $errors[] = 'Пароли не совпадают!';
+                        }
+                    } else {
+                        $errors[] = 'Повторно введите пароль';
+                    }
+                }
+            }
+            else {
+                $errors[] = "Заполните поле Пароль!";
+            }
+
+            if ( !empty($errors)  ) {
+                $this->showErrors($errors, 0);
+                return;
+            }
+
+            $this->hash_password = $this->hashingPassword($password);
+
+            $data_fields = [
+                'email' => [$email, 's'],
+                'nickname' =>  [$name, 's'],
+                'password' => [$this->hash_password, 's']
+            ];
+
+            return $data_fields;
         }
     }
 
