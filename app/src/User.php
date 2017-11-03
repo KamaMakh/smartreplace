@@ -23,17 +23,11 @@ class User
     }
 
 
-    public function init(string $email, string $name, string $password, string $confirm_password, string $method) {
+    public function init(string $email, string $name, string $password, string $confirm_password) {
 
         $errors = [];
 
-
-        if ( $method == 'GET' ) {
-            $this->fenom->display('registration.tpl');
-            return;
-        }
-
-        if ( !empty($email) && $email ) {
+        if ( !empty($email) && $email != 'empty' ) {
             if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
                 $errors[] = "Email введен некорректно!";
             };
@@ -41,11 +35,11 @@ class User
             $errors[] = "Заполните поле E-MAIL!";
         }
 
-        if ( empty($name) ) {
+        if ( empty($name) && $name == 'empty' ) {
             $errors[] = "Заполните поле ИМЯ!";
         }
 
-        if ( !empty($password) ) {
+        if ( !empty($password) && $password != 'empty' ) {
             if ( mb_strlen($password) < 8 ) {
                 $errors[] = "Пароль должен быть не меньше 8 символов!";
             } else {
@@ -86,50 +80,30 @@ class User
 
 
         if ( $result ) {
-            $this->login($email,$password, 'GET');
+           // $this->login($email, $password);
+            return 'to_login';
         }
     }
 
-    protected function checkEmail  (string $email) {
-        $result = Controllers\Db::select( "SELECT email FROM sr_users WHERE email = '$email' " );
-        if ( empty($result) ) {
-            return false;
-        }
-        return true;
-    }
-
-    protected function hashingPassword (string $password) {
-        return password_hash($password, PASSWORD_BCRYPT);
-    }
-
-    protected function verifyPassword (string $password, string $hash) {
-        return password_verify($password, $hash);
-    }
-
-    public function login(string $email,string $password,string $method) {
+    public function login(string $email,string $password) {
 
         $errors = [];
 
-        if ( $method == 'GET' ) {
-            $this->fenom->assign('login', 1);
-            return $this->fenom->display('registration.tpl');
-        }
+        if ( !empty($email) && $email != 'empty' ) {
+            $user = $this->checkEmail($email);
 
-        if ( !empty($email) ) {
-            $user = Controllers\Db::select("SELECT email, password, nickname, status FROM sr_users WHERE email = '$email'");
+            if ( $user ) {
+                $user = $user[0];
+            }
 
-            $user = $user[0];
 
             if ( empty($user) ) {
                 $errors[] = "Логин или пароль введен не правильно!";
             } else {
 
-                if ( !empty($password) ) {
-                    if ( $this->verifyPassword($password, $user['password']) ) {
+                if ( !empty($password) && $password != 'empty' && $this->verifyPassword($password, $user['password'])) {
                         $user['login'] = 'true';
                         return $user;
-                    }
-
                 } else {
                     $errors[] = "Логин или пароль введен не правильно!";
                 }
@@ -143,8 +117,32 @@ class User
         if ( !empty($errors) ) {
             $this->fenom->assign('login', 1);
             $this->fenom->assign('errors', $errors);
+            print_r($errors);
             return $this->fenom->display('registration.tpl');
         }
+    }
+
+    public function getHtml( string $method, int $login ){
+        if ( $method == 'GET' ) {
+            $this->fenom->assign('login', $login);
+            return $this->fenom->display('registration.tpl');
+        }
+    }
+
+    protected function checkEmail  (string $email) {
+        $result = Controllers\Db::select( "SELECT email, password, nickname, status FROM sr_users WHERE email = '$email' " );
+        if ( empty($result) ) {
+            return false;
+        }
+        return $result;
+    }
+
+    protected function hashingPassword (string $password) {
+        return password_hash($password, PASSWORD_BCRYPT);
+    }
+
+    protected function verifyPassword (string $password, string $hash) {
+        return password_verify($password, $hash);
     }
 
     public function logout () {

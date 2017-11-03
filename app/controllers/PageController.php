@@ -2,7 +2,7 @@
 namespace Megagroup\SmartReplace\Controllers;
 
 
-use Megagroup\SmartReplace\Pages;
+use Megagroup\SmartReplace;
 use Megagroup\SmartReplace\Renders;
 /**
  * Created by PhpStorm.
@@ -22,7 +22,7 @@ class PageController
     }
 
     public function init() {
-        $page = new Pages($this->url);
+        $page = new SmartReplace\Pages($this->url,$this->fenom);
         $page->init();
     }
 }

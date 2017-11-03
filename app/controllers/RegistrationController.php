@@ -15,10 +15,10 @@ use Megagroup\SmartReplace\Renders;
 class RegistrationController {
 
     private $nickName;
-    private $email;
-    private $name;
-    private $password;
-    private $confirm_password;
+    private $email = 'empty';
+    private $name = 'empty';
+    private $password = 'empty';
+    private $confirm_password = 'empty';
     private $method;
     private $fenom;
     private $user;
@@ -52,24 +52,36 @@ class RegistrationController {
     }
 
     public function init () {
-        $this->user->init($this->email,$this->name, $this->password, $this->confirm_password, $this->method);
+        if ( $this->method == 'GET' ) {
+            $this->user->getHtml($this->method, 0);
+        }
+        else {
+            $result = $this->user->init($this->email,$this->name, $this->password, $this->confirm_password);
+            if ( $result == 'to_login' ) {
+                $this->login();
+            }
+        }
     }
 
     public function login () {
+        if ( $this->method == 'GET' ) {
+            $this->user->getHtml($this->method, 1);
+        }
+        else{
+            $result = $this->user->login($this->email, $this->password);
 
-        $result = $this->user->login($this->email, $this->password,  $this->method);
+            if( $result['login'] == 'true' ) {
+                $_SESSION['check_user'] = 1;
 
-        if( $result['login'] == 'true' ) {
-            $_SESSION['check_user'] = 1;
+                $_SESSION['user'] = [
+                    'status' => $result['status'],
+                    'email' => $result['email'],
+                    'nickname' => $result['nickname']
+                ];
 
-            $_SESSION['user'] = [
-                'status' => $result['status'],
-                'email' => $result['email'],
-                'nickname' => $result['nickname']
-            ];
-
-            header('Location: /');
-            exit();
+                header('Location: /');
+                exit();
+            }
         }
     }
 
