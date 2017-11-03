@@ -58,7 +58,8 @@ class RegistrationController {
         else {
             $result = $this->user->init($this->email,$this->name, $this->password, $this->confirm_password);
             if ( $result == 'to_login' ) {
-                $this->login();
+                $this->method = 'GET';
+                header('location: /registration/login');
             }
         }
     }

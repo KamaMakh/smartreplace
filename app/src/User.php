@@ -27,22 +27,27 @@ class User
 
         $errors = [];
 
-        if ( !empty($email) && $email != 'empty' ) {
+        if (  $this->checkEmail($email, 0) === 'empty' ) {
+            $errors[] = 'Пользователь с данным адресом почты уже существует!';
+        }
+        else if ( !empty($email) && $email != 'empty' ) {
             if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
                 $errors[] = "Email введен некорректно!";
-            };
-        } else {
+            }
+        }
+        else {
             $errors[] = "Заполните поле E-MAIL!";
         }
 
-        if ( empty($name) && $name == 'empty' ) {
+        if ( empty($name) || $name == 'empty' ) {
             $errors[] = "Заполните поле ИМЯ!";
         }
 
         if ( !empty($password) && $password != 'empty' ) {
             if ( mb_strlen($password) < 8 ) {
-                $errors[] = "Пароль должен быть не меньше 8 символов!";
-            } else {
+                $errors['ch'] = "Пароль должен быть не меньше 8 символов!";
+            }
+            else {
                 if ( !empty($confirm_password) ) {
                     if ( $password != $confirm_password ) {
                         $errors[] = 'Пароли не совпадают!';
@@ -51,21 +56,14 @@ class User
                     $errors[] = 'Повторно введите пароль';
                 }
             }
-        } else {
+        }
+        else {
             $errors[] = "Заполните поле Пароль!";
         }
 
         if ( !empty($errors)  ) {
-            $this->fenom->assign('errors', $errors);
-            print_r($errors);
-
-            return $this->fenom->display('registration.tpl');
-        } else {
-            if ( $this->checkEmail($email) ) {
-                $errors[] = 'Пользователь с данным адресом почты уже существует!';
-                $this->fenom->assign('errors', $errors);
-                return $this->fenom->display('registration.tpl');
-            };
+            $this->showErrors($errors, 0);
+            return;
         }
 
         $this->hash_password = $this->hashingPassword($password);
@@ -90,12 +88,11 @@ class User
         $errors = [];
 
         if ( !empty($email) && $email != 'empty' ) {
-            $user = $this->checkEmail($email);
+            $user = $this->checkEmail($email, 1);
 
             if ( $user ) {
                 $user = $user[0];
             }
-
 
             if ( empty($user) ) {
                 $errors[] = "Логин или пароль введен не правильно!";
@@ -115,10 +112,8 @@ class User
         }
 
         if ( !empty($errors) ) {
-            $this->fenom->assign('login', 1);
-            $this->fenom->assign('errors', $errors);
-            print_r($errors);
-            return $this->fenom->display('registration.tpl');
+            $this->showErrors($errors,1);
+            return;
         }
     }
 
@@ -129,12 +124,23 @@ class User
         }
     }
 
-    protected function checkEmail  (string $email) {
+    protected function checkEmail  ( string $email, int $login  ) {
         $result = Controllers\Db::select( "SELECT email, password, nickname, status FROM sr_users WHERE email = '$email' " );
-        if ( empty($result) ) {
-            return false;
+        if ( $login == 1 ) {
+            if ( !empty($result) ) {
+                return $result;
+            } else{
+                return false;
+            }
         }
-        return $result;
+        else {
+            if ( !empty($result) ) {
+                return 'empty';
+            } else{
+                return $result;
+            }
+        }
+
     }
 
     protected function hashingPassword (string $password) {
@@ -143,6 +149,18 @@ class User
 
     protected function verifyPassword (string $password, string $hash) {
         return password_verify($password, $hash);
+    }
+
+    public function showErrors (array $errors, int $login) {
+        if ( $login == 1 ) {
+            $this->fenom->assign('login', 1);
+        }
+        else{
+            $this->fenom->assign('login', 0);
+        }
+        $this->fenom->assign('errors', $errors);
+        print_r($errors['ch']);
+        return $this->fenom->display('registration.tpl');
     }
 
     public function logout () {
