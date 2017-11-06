@@ -23,9 +23,9 @@ class User
     }
 
 
-    public function init(string $email, string $name, string $password, string $confirm_password) {
+    public function init(string $email, string $name, string $password) {
 
-        $data_fields = $this->checkAll($email, $name, $password, $confirm_password, 0);
+        $data_fields = $this->checkAll($email, $name, $password, 0);
 
         $result = Controllers\Db::insert($data_fields, 'sr_users');
 
@@ -37,7 +37,7 @@ class User
     }
 
     public function login(string $email,string $password) {
-        $user = $this->checkAll($email, '', $password, '', 1);
+        $user = $this->checkAll($email, '', $password, 1);
         return $user;
     }
 
@@ -48,12 +48,12 @@ class User
         }
     }
 
-    protected function checkAll ( string $email, string $name, string $password, string $confirm_password, int $login ) {
+    protected function checkAll ( string $email, string $name, string $password, int $login ) {
 
         $errors = [];
 
         if ( $login == 1 ) {
-            if ( !empty($email) && $email != 'empty' ) {
+            if ( !empty($email) ) {
                 $user = $this->checkEmail($email, 1);
 
                 if ( $user ) {
@@ -87,7 +87,7 @@ class User
             if (  $this->checkEmail($email, 0) === 'empty' ) {
                 $errors[] = 'Пользователь с данным адресом почты уже существует!';
             }
-            else if ( !empty($email) && $email != 'empty' ) {
+            else if ( !empty($email) ) {
                 if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
                     $errors[] = "Email введен некорректно!";
                 }
@@ -100,18 +100,9 @@ class User
                 $errors[] = "Заполните поле ИМЯ!";
             }
 
-            if ( !empty($password) && $password != 'empty' ) {
+            if ( !empty($password) ) {
                 if ( mb_strlen($password) < 8 ) {
                     $errors['ch'] = "Пароль должен быть не меньше 8 символов!";
-                }
-                else {
-                    if ( !empty($confirm_password) ) {
-                        if ( $password != $confirm_password ) {
-                            $errors[] = 'Пароли не совпадают!';
-                        }
-                    } else {
-                        $errors[] = 'Повторно введите пароль';
-                    }
                 }
             }
             else {

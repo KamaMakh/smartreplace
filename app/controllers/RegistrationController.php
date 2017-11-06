@@ -15,10 +15,9 @@ use Megagroup\SmartReplace\Renders;
 class RegistrationController {
 
     private $nickName;
-    private $email = 'empty';
-    private $name = 'empty';
-    private $password = 'empty';
-    private $confirm_password = 'empty';
+    private $email ;
+    private $name ;
+    private $password;
     private $method;
     private $fenom;
     private $user;
@@ -40,9 +39,6 @@ class RegistrationController {
             $this->password = $this->dataFilter($_POST['password']);
         }
 
-        if (isset($_POST['confirm_password'])) {
-            $this->confirm_password = $this->dataFilter($_POST['confirm_password']);
-        }
 
         $this->method = $_SERVER['REQUEST_METHOD'];
 
@@ -56,7 +52,7 @@ class RegistrationController {
             $this->user->getHtml($this->method, 0);
         }
         else {
-            $result = $this->user->init($this->email,$this->name, $this->password, $this->confirm_password);
+            $result = $this->user->init($this->email,$this->name, $this->password);
             if ( $result == 'to_login' ) {
                 $this->method = 'GET';
                 header('location: /registration/login');

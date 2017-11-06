@@ -18,11 +18,8 @@ require_once('../app/renders/Render.php');
 $options = [
     "auto_reload" => "true"
 ];
-
-
-
 $fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
-$fenom->setCompileDir('../compile_views');
+$fenom->setCompileDir(__DIR__.'/../compile_views');
 $fenom->setOptions($options);
 
 
