@@ -6,7 +6,9 @@
  * Time: 18:57
  */
 
-use Megagroup\SmartReplace\Renders;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
+use Megagroup\Smart_Replace;
 
 require_once('../configs/config.php');
 require_once ('../vendor/autoload.php');
@@ -18,12 +20,15 @@ require_once('../app/renders/Render.php');
 $options = [
     "auto_reload" => "true"
 ];
-$fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
+$fenom = Smart_Replace::getInstance()->getFenom();
 $fenom->setCompileDir(__DIR__.'/../compile_views');
 $fenom->setOptions($options);
 
 
+$logger = Smart_Replace::getInstance()->getLogger();
 
+$logger->pushHandler(new StreamHandler(__DIR__.'/../logs/my_app.log', $logger::DEBUG));
+$logger->pushHandler(new FirePHPHandler());
 
 
 $router = new \Megagroup\SmartReplace\Router();

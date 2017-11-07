@@ -3,7 +3,7 @@
 namespace Megagroup\SmartReplace\Controllers;
 
 use Megagroup\SmartReplace\User;
-use Megagroup\SmartReplace\Renders;
+use Megagroup\Smart_Replace;
 
 /**
  * Created by PhpStorm.
@@ -42,7 +42,7 @@ class RegistrationController {
 
         $this->method = $_SERVER['REQUEST_METHOD'];
 
-        $this->fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
+        $this->fenom = Smart_Replace::getInstance()->getFenom();
 
         $this->user = new User($this->fenom);
     }

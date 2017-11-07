@@ -3,7 +3,7 @@ namespace Megagroup\SmartReplace\Controllers;
 
 
 use Megagroup\SmartReplace;
-use Megagroup\SmartReplace\Renders;
+use Megagroup\Smart_Replace;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -17,7 +17,7 @@ class PageController
 
     public function __construct($url)
     {
-        $this->fenom = new Renders\Render(new \Fenom\Provider('../app/views'));
+        $this->fenom = Smart_Replace::getInstance()->getFenom();
         $this->url = $url;
     }
 

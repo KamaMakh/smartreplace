@@ -1,6 +1,7 @@
 <?php
 namespace Megagroup\SmartReplace\Controllers;
 
+use Megagroup\Smart_Replace;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -9,15 +10,15 @@ namespace Megagroup\SmartReplace\Controllers;
  */
 class MainController
 {
+    public $fenom;
+
+    public function __construct()
+    {
+        $this->fenom = Smart_Replace::getInstance()->getFenom();
+    }
 
     public function init() {
-        global $fenom;
-
-//        $fenom->assign('check_user', $_SESSION['check_user']);
-//        $fenom->assign('user', $_SESSION['user']);
-//        $fenom->assign('check_user', $_SESSION['check_user']);
-        $fenom->display('main.tpl');
-
+        $this->fenom->display('main.tpl');
     }
 
 }

@@ -15,7 +15,8 @@
     "fenom/storage": "1.*",
     "guzzlehttp/psr7": "^1.4",
     "guzzlehttp/guzzle": "6.*",
-    "sebastian/object-enumerator": "^3.0.3"
+    "sebastian/object-enumerator": "^3.0.3",
+    "monolog/monolog": "^1.23"
   },
   "require-dev": {
     "ext-curl": "*",
@@ -26,7 +27,8 @@
   "autoload": {
     "classmap": [
       "app/controllers/",
-      "app/src"
+      "app/src",
+      "app/patterns"
     ],
     "psr-4": {
       "Megagroup\\SmartReplace\\" : "app/"
