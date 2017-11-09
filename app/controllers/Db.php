@@ -2,6 +2,7 @@
 namespace Megagroup\SmartReplace\Controllers;
 
 use Megagroup\Singleton\Application;
+
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -11,15 +12,16 @@ use Megagroup\Singleton\Application;
 class Db {
 
     private static $pdo;
+    public static $log;
 
-    public function __construct()
+    public static function connect()
     {
         self::$pdo = Application::getInstance()->getBdConnect();
     }
 
 
     public static function insert(array $query, string $table, string $where = null) {
-        self::$pdo;
+        self::$pdo || self::connect();
 
         $fieldsBool = null;
 
