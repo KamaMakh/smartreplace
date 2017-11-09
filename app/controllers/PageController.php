@@ -2,8 +2,8 @@
 namespace Megagroup\SmartReplace\Controllers;
 
 
+use Megagroup\Singleton\Application;
 use Megagroup\SmartReplace;
-use Megagroup\Smart_Replace;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -17,7 +17,7 @@ class PageController
 
     public function __construct($url)
     {
-        $this->fenom = Smart_Replace::getInstance()->getFenom();
+        $this->fenom = Application::getInstance()->getFenom();
         $this->url = $url;
     }
 

@@ -10,7 +10,7 @@ namespace Megagroup\SmartReplace\Controllers;
  */
 
 use Megagroup\SmartReplace\AddElements;
-use Megagroup\Smart_Replace;
+use Megagroup\Singleton\Application;
 
 
 
@@ -25,7 +25,7 @@ class AddelementsController
     public function __construct()
     {
         $this->site_url = $_GET['site_url'];
-        $this->fenom = Smart_Replace::getInstance()->getFenom();
+        $this->fenom = Application::getInstance()->getFenom();
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->addElements = new AddElements($this->fenom);
 

@@ -27,8 +27,7 @@
   "autoload": {
     "classmap": [
       "app/controllers/",
-      "app/src",
-      "app/patterns"
+      "app/src"
     ],
     "psr-4": {
       "Megagroup\\SmartReplace\\" : "app/"

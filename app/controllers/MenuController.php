@@ -3,7 +3,7 @@ namespace Megagroup\SmartReplace\Controllers;
 
 
 use Megagroup\SmartReplace\Menu;
-use Megagroup\Smart_Replace;
+use Megagroup\Singleton\Application;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -18,7 +18,7 @@ class MenuController
 
     public function __construct()
     {
-        $this->fenom = Smart_Replace::getInstance()->getFenom();
+        $this->fenom = Application::getInstance()->getFenom();
         $this->menu = new Menu($this->fenom);
     }
 }

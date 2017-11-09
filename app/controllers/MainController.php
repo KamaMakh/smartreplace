@@ -1,7 +1,7 @@
 <?php
 namespace Megagroup\SmartReplace\Controllers;
 
-use Megagroup\Smart_Replace;
+use Megagroup\Singleton\Application;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -14,7 +14,7 @@ class MainController
 
     public function __construct()
     {
-        $this->fenom = Smart_Replace::getInstance()->getFenom();
+        $this->fenom = Application::getInstance()->getFenom();
     }
 
     public function init() {

@@ -1,6 +1,7 @@
 <?php
 namespace Megagroup\SmartReplace\Controllers;
 
+use Megagroup\Singleton\Application;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -10,44 +11,24 @@ namespace Megagroup\SmartReplace\Controllers;
 class Db {
 
     private static $pdo;
-    protected static $host     = DB_CONF['host'];
-    protected static $database = DB_CONF['database'];
-    protected static $user     = DB_CONF['user'];
-    protected static $password = DB_CONF['password'];
-    protected static $charset  = DB_CONF['charset'];
 
-    private static function connect() {
-        self::$pdo = new \PDO("mysql:host=" . self::$host . ";dbname=" . self::$database. ";charset=" . self::$charset, self::$user, self::$password);
+    public function __construct()
+    {
+        self::$pdo = Application::getInstance()->getBdConnect();
     }
 
+
     public static function insert(array $query, string $table, string $where = null) {
-        self::$pdo || self::connect();
+        self::$pdo;
 
         $fieldsBool = null;
 
         foreach ($query as $field => $val) {
 
-//            if ( is_array($val) ) {
-//
-//                if ($fieldsBool !== false) $fieldsBool = true;
-//
-//                foreach ($val as $val_key => $item) {
-//                    if ( $fieldsBool ) {
-//                        $fields[] = $val_key;
-//                    }
-//                    $fieldsVal[] = $item;
-//                }
-//
-//                if ( $fieldsBool ) $fieldsBool = false;
-//
-//                continue;
-//            }
-
             $fields[] = $field;
             $fieldsVal[] = $val;
         }
-        //echo count($fieldsVal);
-        //echo count($fields);
+
         $fields = implode(',', $fields);
         $fieldsHolder = str_repeat('?,', count($fieldsVal));
         $fieldsHolder = substr($fieldsHolder, 0, -1);
