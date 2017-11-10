@@ -25,12 +25,8 @@
     "satooshi/php-coveralls": "*"
   },
   "autoload": {
-    "classmap": [
-      "app/controllers/",
-      "app/src"
-    ],
     "psr-4": {
-      "Megagroup\\SmartReplace\\" : "app/"
+      "Megagroup\\SmartReplace\\" : "app/src"
     }
   },
   "autoload-dev": {

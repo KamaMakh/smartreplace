@@ -1,7 +1,5 @@
 <?php
-namespace Megagroup\SmartReplace\Controllers;
-
-use Megagroup\Singleton\Application;
+namespace Megagroup\SmartReplace;
 
 /**
  * Created by PhpStorm.

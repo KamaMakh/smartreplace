@@ -1,24 +1,25 @@
 <?php
 namespace Megagroup\SmartReplace\Controllers;
 
-
-use Megagroup\SmartReplace\Menu;
-use Megagroup\Singleton\Application;
+use Megagroup\SmartReplace\Application;
 /**
  * Created by PhpStorm.
  * User: kamron
- * Date: 19.09.17
- * Time: 20:06
+ * Date: 17.09.17
+ * Time: 16:42
  */
-class MenuController
+class MainController
 {
-
-    private $fenom;
-    private $menu;
+    public $fenom;
 
     public function __construct()
     {
         $this->fenom = Application::getInstance()->getFenom();
-        $this->menu = new Menu($this->fenom);
     }
+
+    public function init() {
+        $this->fenom->display('main.tpl');
+    }
+
 }
+

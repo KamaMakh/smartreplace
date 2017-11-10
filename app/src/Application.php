@@ -1,6 +1,6 @@
 <?php
 
-namespace Megagroup\Singleton;
+namespace Megagroup\SmartReplace;
 
 use Megagroup\SmartReplace\Renders;
 use Monolog\Logger;
@@ -28,7 +28,7 @@ class Application
         return new \PDO("mysql:host=" . DB_CONF['host'] . ";dbname=" . DB_CONF['database'] . ";charset=" . DB_CONF['charset'], DB_CONF['user'], DB_CONF['password']);
     }
     public  function getFenom () {
-        return new Renders\Render(new \Fenom\Provider(__DIR__ . '/../views'));
+        return new Render(new \Fenom\Provider(__DIR__ . '/../views'));
     }
 
     public function getLogger () {

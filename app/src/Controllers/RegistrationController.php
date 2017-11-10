@@ -3,7 +3,7 @@
 namespace Megagroup\SmartReplace\Controllers;
 
 use Megagroup\SmartReplace\User;
-use Megagroup\Singleton\Application;
+use Megagroup\SmartReplace\Application;
 
 /**
  * Created by PhpStorm.

@@ -10,7 +10,7 @@ namespace Megagroup\SmartReplace\Controllers;
  */
 
 use Megagroup\SmartReplace\AddElements;
-use Megagroup\Singleton\Application;
+use Megagroup\SmartReplace\Application;
 
 
 

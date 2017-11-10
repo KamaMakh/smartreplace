@@ -8,29 +8,30 @@
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
-use Megagroup\Singleton\Application;
+use Megagroup\SmartReplace;
 
 require_once('../configs/config.php');
 require_once ('../vendor/autoload.php');
-require_once('../app/controllers/Router.php');
-require_once('../app/renders/Render.php');
+require_once('../app/src/Router.php');
+require_once('../app/src/Render.php');
+require_once('../app/src/Application.php');
 
 /* ------------ Include plugin Venom ------------ */
 
 $options = [
     "auto_reload" => "true"
 ];
-$fenom = Application::getInstance()->getFenom();
+$fenom = SmartReplace\Application::getInstance()->getFenom();
 $fenom->setCompileDir(__DIR__.'/../compile_views');
 $fenom->setOptions($options);
 
 
-$logger = Application::getInstance()->getLogger();
+$logger = SmartReplace\Application::getInstance()->getLogger();
 
 $logger->pushHandler(new StreamHandler(__DIR__.'/../logs/my_app.log', $logger::DEBUG));
 $logger->pushHandler(new FirePHPHandler());
 
 
-$router = new \Megagroup\SmartReplace\Router();
+$router = new SmartReplace\Router();
 session_start();
 $router->run();

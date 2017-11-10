@@ -1,8 +1,6 @@
 <?php
 
 namespace Megagroup\SmartReplace;
-
-use Megagroup\SmartReplace\Controllers;
 /**
  * Created by PhpStorm.
  * User: kamron
@@ -21,7 +19,8 @@ class Pages
     }
 
     public function init() {
-        $page = Controllers\Db::select("SELECT * FROM pages WHERE url = '$this->alias'");
+        $page = new Db();
+        $page = $page::select("SELECT * FROM pages WHERE url = '$this->alias'");
 
         if ( $page ) {
             $page = $page[0];
@@ -30,6 +29,7 @@ class Pages
             $this->fenom->assign('text', $page['content_text']);
             $this->fenom->display('text.tpl');
         } else {
+            echo 'lllllll'.$page;
             $this->fenom->display('404.tpl');
         }
     }

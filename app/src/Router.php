@@ -10,8 +10,10 @@ namespace Megagroup\SmartReplace;
 
 use Megagroup\SmartReplace\Controllers\MainController;
 use Megagroup\SmartReplace\Controllers\PageController;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 
-require_once ('Db.php');
+require_once('Db.php');
 
 class Router
 {
@@ -33,12 +35,18 @@ class Router
             $url = explode('/', $url);
 
             $controller = ucfirst($url[0]) . 'Controller';
-            $arr = scandir(__DIR__);
+            $arr = scandir(__DIR__.'/Controllers');
+            $logger = Application::getInstance()->getLogger();
+            $logger->pushHandler(new StreamHandler(__DIR__.'/../../logs/my_app.log', $logger::DEBUG));
+            $logger->pushHandler(new FirePHPHandler());
+            $logger->info($controller);
+            $logger->info(__DIR__);
+            $logger->info(__DIR__.'/Controllers');
 
             if (in_array(  $controller . '.php', $arr )) {
 
                $controller = 'Megagroup\SmartReplace\Controllers\\' . $controller;
-                //echo $controller;
+
 
                 $controller = new $controller;
 
