@@ -14,4 +14,3 @@ const DB_CONF = [
     'charset' => 'utf8'
 ];
 
-define( 'DIR_PATH', str_replace('\\', '/', __DIR__) );

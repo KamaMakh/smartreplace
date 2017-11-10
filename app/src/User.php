@@ -28,7 +28,7 @@ class User
 
         $data_fields = $this->checkAll($email, $name, $password, 0);
 
-        $result = Controllers\Db::insert($data_fields, 'sr_users');
+        $result = Db::insert($data_fields, 'sr_users');
 
 
         if ( $result ) {
@@ -130,7 +130,7 @@ class User
     }
 
     protected function checkEmail  ( string $email, int $login  ) {
-        $result = Controllers\Db::select( "SELECT email, password, nickname, status FROM sr_users WHERE email = '$email' " );
+        $result = Db::select( "SELECT email, password, nickname, status FROM sr_users WHERE email = '$email' " );
         if ( $login == 1 ) {
             if ( !empty($result) ) {
                 return $result;
