@@ -19,12 +19,14 @@ class Db {
 
 
     public static function insert(array $query, string $table, string $where = null) {
+        /**
+        $query - это массив со значениями. Ключ = название колонки => значение массив [значение, тип]
+         */
         self::$pdo || self::connect();
 
         $fieldsBool = null;
 
         foreach ($query as $field => $val) {
-
             $fields[] = $field;
             $fieldsVal[] = $val;
         }

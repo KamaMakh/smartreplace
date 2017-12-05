@@ -3,7 +3,6 @@
 namespace Megagroup\SmartReplace;
 
 use Megagroup\SmartReplace\Controllers;
-use Monolog\Logger;
 
 /**
  * Created by PhpStorm.
@@ -39,8 +38,6 @@ class User
 
     public function login(string $email,string $password) {
         $user = $this->checkAll($email, '', $password, 1);
-        $log = $logger = new Logger('my_logger');
-        $log->info($user);
         return $user;
     }
 

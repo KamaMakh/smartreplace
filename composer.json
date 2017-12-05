@@ -16,7 +16,8 @@
     "guzzlehttp/psr7": "^1.4",
     "guzzlehttp/guzzle": "6.*",
     "sebastian/object-enumerator": "^3.0.3",
-    "monolog/monolog": "^1.23"
+    "monolog/monolog": "^1.23",
+    "pimple/pimple": "~3.0"
   },
   "require-dev": {
     "ext-curl": "*",

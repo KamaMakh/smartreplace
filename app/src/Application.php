@@ -32,6 +32,9 @@ class Application
     }
 
     public function getLogger () {
-        return new Logger('my_logger');
+        $logger = new Logger('my_logger');
+        $logger->pushHandler(new StreamHandler(__DIR__.'/../../logs/my_app.log', $logger::DEBUG));
+        $logger->pushHandler(new FirePHPHandler());
+        return $logger;
     }
 }

@@ -31,7 +31,7 @@
                     type = data.element.title,
                     inner = data.element.data,
                     wayToElement = data.element.wayToElement;
-                request.open('Get', `http://megayagla.local/addelements/insert_to_db?mode=${mode}&type=${type}&inner=${inner}&wayToElement=${wayToElement}`);
+                request.open('Get', `http://megayagla.local/addelements/insertToDb?mode=${mode}&type=${type}&inner=${inner}&wayToElement=${wayToElement}`);
                 request.send(data);
             }
         };

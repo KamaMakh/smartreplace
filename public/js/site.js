@@ -204,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         isEmpty(text) {
-            console.log(text.length);
             if ( text.length > 0 ) {
                 return true;
             } else {

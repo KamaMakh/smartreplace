@@ -37,11 +37,6 @@ class Router
             $controller = ucfirst($url[0]) . 'Controller';
             $arr = scandir(__DIR__.'/Controllers');
             $logger = Application::getInstance()->getLogger();
-            $logger->pushHandler(new StreamHandler(__DIR__.'/../../logs/my_app.log', $logger::DEBUG));
-            $logger->pushHandler(new FirePHPHandler());
-            $logger->info($controller);
-            $logger->info(__DIR__);
-            $logger->info(__DIR__.'/Controllers');
 
             if (in_array(  $controller . '.php', $arr )) {
 

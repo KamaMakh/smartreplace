@@ -40,6 +40,7 @@ class AddelementsController
     }
 
     public function insertToDb () {
+        $this->mode = $_GET['mode'];
         $this->addElements->insertToDb( $this->method, $this->mode );
     }
 }
