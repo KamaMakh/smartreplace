@@ -1,11 +1,8 @@
 <?php
 
 namespace Megagroup\SmartReplace;
+use Megagroup\SmartReplace\container;
 
-use Megagroup\SmartReplace\Renders;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\FirePHPHandler;
 
 /**
  * Created by PhpStorm.
@@ -17,6 +14,12 @@ use Monolog\Handler\FirePHPHandler;
 class Application
 {
     private static $_instance;
+    private $container;
+
+    public function __construct()
+    {
+        $this->container = new container\Containers();
+    }
 
     public static function getInstance() {
         if (self::$_instance === null) {
@@ -25,16 +28,13 @@ class Application
         return self::$_instance;
     }
     public function getBdConnect () {
-        return new \PDO("mysql:host=" . DB_CONF['host'] . ";dbname=" . DB_CONF['database'] . ";charset=" . DB_CONF['charset'], DB_CONF['user'], DB_CONF['password']);
+        return $this->container->container['bd'];
     }
     public  function getFenom () {
-        return new Render(new \Fenom\Provider(__DIR__ . '/../views'));
+        return $this->container->container['fenom'];
     }
 
     public function getLogger () {
-        $logger = new Logger('my_logger');
-        $logger->pushHandler(new StreamHandler(__DIR__.'/../../logs/my_app.log', $logger::DEBUG));
-        $logger->pushHandler(new FirePHPHandler());
-        return $logger;
+        return $this->container->container['logger'];
     }
 }

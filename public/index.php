@@ -8,23 +8,23 @@
 
 use Megagroup\SmartReplace;
 
-require_once('../configs/config.php');
-require_once ('../vendor/autoload.php');
-require_once('../app/src/Router.php');
-require_once('../app/src/Render.php');
-require_once('../app/src/Application.php');
-require_once('../app/src/container/Containers.php');
+require_once(__DIR__.'/../configs/config.php');
+require_once (__DIR__.'/../vendor/autoload.php');
+require_once(__DIR__.'/../app/src/Router.php');
+require_once(__DIR__.'/../app/src/Render.php');
+require_once(__DIR__.'/../app/src/Application.php');
+
 
 /* ------------ Include plugin Venom ------------ */
 
-$options = [
-    "auto_reload" => "true"
-];
-$fenom = $container['fenom'];
-$fenom->setCompileDir(__DIR__.'/../compile_views');
-$fenom->setOptions($options);
+//$options = [
+//    "auto_reload" => "true"
+//];
+$fenom = SmartReplace\Application::getInstance()->getFenom();
+//$fenom->setCompileDir(__DIR__.'/../compile_views');
+//$fenom->setOptions($options);
 
-$logger = $container['logger'];
+$logger = SmartReplace\Application::getInstance()->getLogger();
 
 
 $router = new SmartReplace\Router();
