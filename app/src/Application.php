@@ -1,7 +1,7 @@
 <?php
 
 namespace Megagroup\SmartReplace;
-use Megagroup\SmartReplace\container;
+use Megagroup\SmartReplace\Сontainer;
 
 
 /**
@@ -18,7 +18,7 @@ class Application
 
     public function __construct()
     {
-        $this->container = new container\Containers();
+        $this->container = new Сontainer\Containers();
     }
 
     public static function getInstance() {
@@ -28,7 +28,7 @@ class Application
         return self::$_instance;
     }
     public function getBdConnect () {
-        return $this->container->container['bd'];
+        return $this->container->container['db'];
     }
     public  function getFenom () {
         return $this->container->container['fenom'];
