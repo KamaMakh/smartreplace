@@ -10,7 +10,8 @@ namespace Megagroup\SmartReplace;
 class Db {
 
     private static $pdo;
-    public static $log;
+    public static $logger;
+
 
     public static function connect()
     {
@@ -20,7 +21,7 @@ class Db {
 
     public static function insert(array $query, string $table, string $where = null) {
         /**
-        $query - это массив со значениями. Ключ = название колонки => значение массив [значение, тип]
+        $query - это массив со значениями. Ключ = название колонки => значение, массив - [значение, тип]
          */
         self::$pdo || self::connect();
 
@@ -35,23 +36,36 @@ class Db {
         $fieldsHolder = str_repeat('?,', count($fieldsVal));
         $fieldsHolder = substr($fieldsHolder, 0, -1);
 
-        $sql = "INSERT INTO $table ($fields) VALUES ($fieldsHolder)";
+        $sql = "INSERT INTO $table ($fields) VALUES ( $fieldsHolder )";
 
         if ($where) {
-            $sql .= " " . $where;
+            $sql .= " where " . $where;
         }
+        self::$logger = Application::getInstance()->getLogger();
+
 
         $stmt = self::$pdo->prepare($sql);
 
         $i = 1;
-        foreach($fieldsVal as $val) {
-            if ( strtolower($val[1]) == 's' ) {
-                $val[1] = \PDO::PARAM_STR;
-            } else if ( strtolower($val[1]) == 'i' ) {
-                $val[1] = \PDO::PARAM_INT;
+        if ( count($fieldsVal) == 1 ) {
+            if ( strtolower($fieldsVal[0][1]) == 's' ) {
+                $fieldsVal[0][1] = \PDO::PARAM_STR;
+            } else if ( strtolower($fieldsVal[0][1]) == 'i' ) {
+                $fieldsVal[0][1] = \PDO::PARAM_INT;
             }
-            $stmt->bindParam($i, $val[0], $val[1]);
-            $i++;
+            $stmt->bindParam($i, $fieldsVal[0][0], $fieldsVal[0][1]);
+        } else {
+            foreach($fieldsVal as $val) {
+
+                if ( strtolower($val[1]) == 's' ) {
+                    $val[1] = \PDO::PARAM_STR;
+                } else if ( strtolower($val[1]) == 'i' ) {
+                    $val[1] = \PDO::PARAM_INT;
+                }
+
+                $stmt->bindParam($i, $val[0], $val[1]);
+                $i++;
+            }
         }
 
         return $stmt->execute();
@@ -60,9 +74,11 @@ class Db {
 
     public static function select(string $query) {
         self::$pdo || self::connect();
-
+        self::$logger = Application::getInstance()->getLogger();
+        self::$logger->info($query);
         $result = self::$pdo->query($query);
         if (is_object($result)) {
+            //self::$logger->addWarning('dbresult',$result->fetchAll(\PDO::FETCH_ASSOC));
             return $result->fetchAll(\PDO::FETCH_ASSOC);
         }
 
@@ -70,17 +86,24 @@ class Db {
 
     public static function update(array $query,string $table_name,string $where) {
         self::$pdo || self::connect();
+        self::$logger = Application::getInstance()->getLogger();
 
         foreach($query as $name=>$value){
-            $request[]= $name.'='.$value;
+            $request[]= $name.' = "'.$value.'"';
         }
 
-        $request = implode(" ," , $request);
+        if ( count($request) > 1 ) {
+            $request = implode(" ," , $request);
+        } else {
+            $request = $request[0];
+        }
+
         if ($where) {
-            $request = " " . $where;
+            $request .= " where " . $where;
         }
 
-        $sql = "UPDATE $table_name $request";
+        $sql = "UPDATE $table_name SET $request";
+
         $stmt = self::$pdo->prepare($sql);
         return $stmt->execute();
     }

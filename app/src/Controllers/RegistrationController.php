@@ -21,6 +21,7 @@ class RegistrationController {
     private $method;
     private $fenom;
     private $user;
+    private $logger;
 
     public function __construct(){
         if (isset($_POST['nickName']))  {
@@ -44,7 +45,9 @@ class RegistrationController {
 
         $this->fenom = Application::getInstance()->getFenom();
 
-        $this->user = new User($this->fenom);
+        $this->logger = Application::getInstance()->getLogger();
+
+        $this->user = new User($this->fenom, $this->logger);
     }
 
     public function init () {
@@ -67,7 +70,7 @@ class RegistrationController {
         else{
             $result = $this->user->login($this->email, $this->password);
 
-            if( $result['login'] == 'true' ) {
+            if( $result['login'] == true ) {
                 $_SESSION['check_user'] = 1;
 
                 $_SESSION['user'] = [
@@ -76,8 +79,10 @@ class RegistrationController {
                     'nickname' => $result['nickname']
                 ];
 
-                header('Location: /');
+                header('location: /');
                 exit();
+            } else {
+                $_SESSION['check_user'] = false;
             }
         }
     }
@@ -94,5 +99,9 @@ class RegistrationController {
 
     protected function dataFilter($data){
         return strip_tags(trim($data));
+    }
+
+    public function checkCookie() {
+        return $this->user->checkCookie();
     }
 }

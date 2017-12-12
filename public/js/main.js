@@ -6,12 +6,24 @@
 
         var addToList = {
 
+            showElements(arr) {
+                console.log(arr + '4444');
+                let $length = arr.length,
+                    $container = $('.added-elements-wrap .list');
+                $container.html('');
+
+                for ( let i=0; i<$length; i++ ) {
+                    $container.append(`<div class="column">arr[i][type]</div><div class="column">arr[i][data]</div>`);
+                }
+            },
+
             add(data) {
                 console.log(data.mode);
                 //list.append(`<div class="row"><div class="cell element-type">${data.element.title}</div><div class="cell element-name">${data.element.title}</div></div>`);
 
                 // устанавливаем запрос
-                var request = new XMLHttpRequest();
+                var request = new XMLHttpRequest(),
+                    ajaxresult;
 
                 // отслеживаем запрос
                 request.onreadystatechange = function() {
@@ -20,7 +32,14 @@
                         // alert('Ответ пришел');
                         if(request.status === 200) {
                            // console.log(request);
-                            console.log(request.responseText);
+                            console.log(JSON.parse(request.responseText));
+                            let $length = JSON.parse(request.responseText).length,
+                                $container = $('.added-elements-wrap .list');
+                            $container.html('');
+
+                            for ( let i=0; i<$length; i++ ) {
+                                $container.append('<div class="column">' +JSON.parse(request.responseText)[i]['type']+ '</div><div class="column">' +JSON.parse(request.responseText)[i]['data']+ '</div>');
+                            }
                         } else {
                             alert('Произошла ошибка')
                         }
@@ -33,6 +52,8 @@
                     wayToElement = data.element.wayToElement;
                 request.open('Get', `http://megayagla.local/addelements/insertToDb?mode=${mode}&type=${type}&inner=${inner}&wayToElement=${wayToElement}`);
                 request.send(data);
+
+
             }
         };
 
@@ -51,6 +72,28 @@
             }
 
         }, false);
+
+
+        //burger
+        let $button = $('.burger'),
+            $elementsWrap = $('.added-elements-wrap'),
+            $closeButton = $('.close-button');
+
+        $button.on('click', function(e){
+           $(this).hide();
+            $elementsWrap.animate({
+                left: '5px'
+            },500)
+        });
+
+        $closeButton.on('click', function(e){
+            $elementsWrap.animate({
+                left: '-100%'
+            },500);
+            $button.show();
+        });
+
+        //end burger
 
 
 

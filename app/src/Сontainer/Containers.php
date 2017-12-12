@@ -22,13 +22,6 @@ class Containers
         $this->container = new Container();
 
         $this->container['fenom'] = function ($c) {
-//            $fenom =  new SmartReplace\Render(new \Fenom\Provider(__DIR__ . '/../../views'));
-//            $fenom->setCompileDir(__DIR__.'/../../../compile_views');
-//            $options = [
-//                "auto_reload" => true
-//            ];
-//
-//            $fenom->setOptions($options);
 
             $fenom = SmartReplace\Render::factory(__DIR__.'/../../views',__DIR__.'/../../../compile_views',$options = [
                "auto_reload" => true

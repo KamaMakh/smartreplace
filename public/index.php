@@ -7,6 +7,7 @@
  */
 
 use Megagroup\SmartReplace;
+use Megagroup\SmartReplace\Controllers;
 
 require_once(__DIR__.'/../configs/config.php');
 require_once (__DIR__.'/../vendor/autoload.php');
@@ -17,13 +18,8 @@ require_once(__DIR__.'/../app/src/Application.php');
 
 /* ------------ Include plugin Venom ------------ */
 
-//$options = [
-//    "auto_reload" => "true"
-//];
-$fenom = SmartReplace\Application::getInstance()->getFenom();
-//$fenom->setCompileDir(__DIR__.'/../compile_views');
-//$fenom->setOptions($options);
 
+$fenom = SmartReplace\Application::getInstance()->getFenom();
 $logger = SmartReplace\Application::getInstance()->getLogger();
 
 

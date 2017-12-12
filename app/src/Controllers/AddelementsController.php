@@ -18,6 +18,7 @@ class AddelementsController
 {
     private $site_url;
     private $fenom;
+    private $logger;
     private $method;
     private $mode;
     private $addElements;
@@ -26,8 +27,9 @@ class AddelementsController
     {
         $this->site_url = $_GET['site_url'];
         $this->fenom = Application::getInstance()->getFenom();
+        $this->logger = Application::getInstance()->getLogger();
         $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->addElements = new AddElements($this->fenom);
+        $this->addElements = new AddElements($this->fenom, $this->logger);
 
     }
 

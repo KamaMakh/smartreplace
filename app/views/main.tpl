@@ -3,9 +3,14 @@
 {block 'title'} Main page {/block}
 
 {block 'content'}
-    {if $.session.check_user != 1}
-        <h3>Авторизуйтесь и создайте проект</h3>
-        <a class="auth_main ui button" href="/registration/login">Авторизация</a>
+    {$.cookie|print_r}
+    {if $.session.check_user != true}
+
+        <h3 class="main-title">Авторизуйтесь и создайте проект</h3>
+        <div class="ui center aligned segment">
+            <a class="auth_main ui button" href="/registration/login">Авторизация</a>
+        </div>
+
     {else}
 
         <form action="/addelements" method="get" class="get_iframe ui mini equal width form ">
@@ -16,5 +21,6 @@
                 <input type="submit" class="get_iframe_button  ui submit button">
             </div>
         </form>
+
     {/if}
 {/block}

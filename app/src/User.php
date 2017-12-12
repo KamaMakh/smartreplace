@@ -14,12 +14,13 @@ class User
 {
     private $hash_password;
     private $fenom;
+    private $logger;
 
-    public function __construct(\Fenom $fenom){
+    public function __construct(\Fenom $fenom, $logger){
 
         $this->fenom = $fenom;
         $this->fenom->assign('login', 0);
-
+        $this->logger = $logger;
     }
 
 
@@ -65,8 +66,23 @@ class User
                 } else {
 
                     if ( !empty($password) && $password != 'empty' && $this->verifyPassword($password, $user['password'])) {
-                        $user['login'] = 'true';
-                        return $user;
+
+                        // Ставим куки
+                        //setcookie("id", $user['id'], time()+60*60*24*30);
+                        //setcookie("passwordhash", $user['password'], time()+60*60*24*30,null,null,null,true);
+                        //setcookie("auth", '1', time()+60*60*24*30);
+
+                        $hash = $_COOKIE['PHPSESSID'];
+
+                        $result = Db::update(['user_hash'=>$hash],'sr_users', 'id ='.$user['id']);
+
+                        if ( $result ) {
+                            $user['login'] = true;
+                            return $user;
+                        } else {
+                            $this->logger->info('что-то пошло нетак');
+                        }
+
                     } else {
                         $errors[] = "Логин или пароль введен не правильно!";
                     }
@@ -127,7 +143,7 @@ class User
     }
 
     protected function checkEmail  ( string $email, int $login  ) {
-        $result = Db::select( "SELECT email, password, nickname, status FROM sr_users WHERE email = '$email' " );
+        $result = Db::select( "SELECT * FROM sr_users WHERE email = '$email' " );
         if ( $login == 1 ) {
             if ( !empty($result) ) {
                 return $result;
@@ -142,6 +158,19 @@ class User
                 return $result;
             }
         }
+
+    }
+
+    public function checkCookie () {
+
+            $query = Db::select("SELECT * FROM sr_users WHERE user_hash=".$_COOKIE['PHPSESSID']);
+
+            if ( $query ) {
+                $_SESSION['check_user'] = false;
+                return true;
+            } else {
+                return false;
+            }
 
     }
 
@@ -161,11 +190,11 @@ class User
             $this->fenom->assign('login', 0);
         }
         $this->fenom->assign('errors', $errors);
-        print_r($errors['ch']);
         return $this->fenom->display('registration.tpl');
     }
 
     public function logout () {
+        setcookie("passwordhash", "", time() - 3600*24*30*12, "/");
         return 'logOut';
     }
 }
