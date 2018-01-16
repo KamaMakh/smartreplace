@@ -31,6 +31,7 @@ class AddElements
 
     function init(string $site_url) {
         $this->site_url = $site_url;
+        $this->sendToClient(null, substr($this->site_url, 0 , -1));
         $this->fenom->display('addelements.tpl');
     }
 
@@ -60,19 +61,20 @@ class AddElements
 
 
         $page = $page . '<script src="/js/site.js"></script>'
-            .'<link rel="stylesheet" href="/css/site.css">';
+            .'<link rel="stylesheet" href="/css/site.css">'
+            .'<div class="preload"></div>';
 
         echo $page;
     }
 
     public function insertToDb(string $method,string $mode) {
-        if ( $method == 'GET' && $mode == 'add') {
+        if ( $mode == 'add') {
             if ( $_SESSION['user'] ) {
-
+                //$this->logger->addWarning('session222', $_SESSION);
                 $this->email = $_SESSION['user']['email'];
                 $this->user_id = Db::select("SELECT id FROM sr_users WHERE email='$this->email'");
                 $this->project_name = $_SESSION['user']['project_name'];
-
+                $this->fenom->assign('project_name', $this->project_name);
                 $check_project = Db::select("SELECT * FROM sr_projects WHERE project_name='$this->project_name' ");
 
                 if ( !$check_project ) {
@@ -85,32 +87,77 @@ class AddElements
                     $check_project = Db::select("SELECT * FROM sr_projects WHERE project_name='$this->project_name' ");
                 }
 
-                $check_template = Db::select("SELECT * FROM sr_templates WHERE project_id=".$check_project[0]['project_id']." and param ="."'".$_GET['wayToElement']."'");
+                //$this->logger->addWarning('get', $_GET);
+
+                $check_template = Db::select("SELECT * FROM sr_templates WHERE project_id=".$check_project[0]['project_id']." and param ="."'".$_POST['wayToElement']."'");
+
+                //$this->logger->addWarning('inner', $_POST);
 
                 if ( !$check_template ) {
                     $data_fields = [
                         'project_id'=> [$check_project[0]['project_id'], 'i'],
-                        'param'=> [$_GET['wayToElement'], 's'],
-                        'type'=> [$_GET['type'], 's'],
-                        'data'=> [$_GET['inner'], 's']
+                        'param'=> [$_POST['wayToElement'], 's'],
+                        'type'=> [$_POST['type'], 's'],
+                        'data'=> [$_POST['inner'], 's'],
+                        'name'=> [$_POST['name'], 's']
                     ];
                     $this->logger->addWarning('data-fields', $data_fields);
                     Db::insert($data_fields, 'sr_templates');
                 }
-
-                $this->sendToClient();
-
-            } else {
+                return $check_project[0]['project_id'];
+                $this->sendToClient($check_project[0]['project_id']);
 
             }
 
         }
     }
-    public function sendToClient () {
-        $elements = Db::select("SELECT * FROM sr_templates");
-        $this->logger->addWarning('elements', $elements);
-        if ( $elements ) {
-            echo json_encode($elements);
+    public function sendToClient ($project_id, $project_name = null) {
+        if ( !$project_id ) {
+
+            $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
+            $project_id = $project_id[0]['project_id'];
+
+            $elements = Db::select("SELECT * FROM sr_templates WHERE project_id =".$project_id);
+
+            $this->fenom->assign('dataFields', json_encode($elements));
+            $this->fenom->assign('firstCheck', true);
+
+        } else {
+
+            $elements = Db::select("SELECT * FROM sr_templates WHERE project_id =".$project_id);
+
+            $this->fenom->assign('firstCheck', false);
+            if ( $elements ) {
+                echo json_encode($elements);
+            }
         }
+    }
+
+    public function complete() {
+        $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name=". "'" .$_SESSION['user']['project_name']."'");
+        $project_id = $project_id[0]['project_id'];
+        $list = Db::select("SELECT * FROM sr_templates WHERE project_id = $project_id");
+
+
+        //$this->logger->addWarning('list', $listToClient);
+        $this->fenom->assign('project_name', $_SESSION['user']['project_name']);
+        $this->fenom->assign('list', $list);
+        $this->fenom->display('complete.tpl');
+    }
+
+    public function reset ($project_name) {
+
+        $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
+
+        $project_id = $project_id[0]['project_id'];
+
+        //$this->logger->info($project_id);
+
+        $result = Db::delete('sr_templates', 'project_id='.'"'.$project_id.'"');
+
+        if ( $result ) {
+            return $project_id;
+        }
+
     }
 }

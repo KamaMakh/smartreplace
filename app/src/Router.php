@@ -20,6 +20,12 @@ class Router
     protected $controller = 'Main';
     protected $action     = 'init';
     protected $params;
+    public $logger;
+
+    public function __construct()
+    {
+        $this->logger = Application::getInstance()->getLogger();
+    }
 
     public function run() {
 
@@ -36,7 +42,6 @@ class Router
 
             $controller = ucfirst($url[0]) . 'Controller';
             $arr = scandir(__DIR__.'/Controllers');
-            $logger = Application::getInstance()->getLogger();
 
             if (in_array(  $controller . '.php', $arr )) {
 
@@ -47,7 +52,7 @@ class Router
 
                 if ( !empty($url[1]) ) {
                     $action = $url[1];
-
+                    //$this->logger->info($action);
                     $controller->$action();
                 } else {
                     $controller->init();

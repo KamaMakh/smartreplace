@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '<div class="sandbox info-value"></div>' +
         '</div>'+
         '<div class="sandbox sandbox-close"></div>' +
-        '<div class="sandbox sandbox-name"> Название подмены: <input class="sandbox" value="Подмена №" type="text" required></div>'+
+        '<div class="sandbox sandbox-name"> Название подмены: <span style="color:red;">*</span> <input class="sandbox edit-name" value="" placeholder="Введите название" type="text" required name="element-name"></div>'+
         '<div class="sandbox sandbox-button">Сделать заменяемым</div>' +
         '</div>',
 
@@ -178,8 +178,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     element_obj.data = target.innerHTML;
                 }
 
-                element_name = sandBoxWrap.querySelector('.sandbox .sandbox-name input').getAttribute('value');
-                element_obj.name = element_name + ' 1';
+                element_name = sandBoxWrap.querySelector('.sandbox .sandbox-name input');
+                element_name = element_name.value;
+                element_obj.name = element_name;
 
                 sandBoxWrap.querySelector('.sandbox-title .value').innerText = element_obj.title;
                 sandBoxWrap.querySelector('.sandbox .sandbox-info .info-value').innerText = element_obj.data.slice(0,200);
@@ -193,6 +194,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.cloud = element_obj;
                 console.log(this.cloud);
                 return element_obj;
+            }
+        },
+
+        editName(data, input){
+            if( data.keyCode != 32) {
+                input.setAttribute('value', input.innerText);
             }
         },
 
@@ -210,37 +217,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
         }
-
-
     };
 
 
 
 
- //   var catchedElementsList = {
-        // request(data) {
-        //     // устанавливаем запрос
-        //     var request = new XMLHttpRequest();
-        //
-        //     // отслеживаем запрос
-        //     request.onreadystatechange = function() {
-        //         // проверяем вернулись запрошенные данные
-        //         if(request.readyState === 4) {
-        //             // alert('Ответ пришел');
-        //             if(request.status === 200) {
-        //                 console.log(request);
-        //                 alert(request.responseText);
-        //             } else {
-        //                 alert('Произошла ошибка')
-        //             }
-        //         }
-        //     }
-        //     // определяем тип запроса
-        //     request.open('Get', 'http://megayagla.local/addelements/insert_to_db?createList=1', 'test=abc');
-        //     request.send(data);
-        // }
-
-    //};
 
 
     var sendToParent = {
@@ -256,10 +237,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+
     window.onload = function () {
-        // document.querySelector('.preload').classList.remove('preload');
-        // var html = document.getElementsByTagName('html');
-        //html[0].style.overflow = 'auto';
+        document.querySelector('.preload').classList.remove('preload');
+        var html = document.getElementsByTagName('html');
+        html[0].style.overflow = 'auto';
     };
 
     document.body.addEventListener('mouseover', function(e){
@@ -272,7 +256,15 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopImmediatePropagation();
         elementCatch.onClick(e);
         if (e.target.classList.contains('sandbox-button')) {
-            sendToParent.send(elementCatch.cloud);
+
+            var editName = document.querySelector('.sandbox.edit-name').value;
+            if ( !editName ) {
+                alert('Назовите подменяемый элемент');
+            } else {
+                elementCatch.cloud.name = editName;
+                sendToParent.send(elementCatch.cloud);
+                elementCatch.removeSandbox();
+            }
         }
     });
 

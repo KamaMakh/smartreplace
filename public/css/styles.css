@@ -88,6 +88,7 @@ body {
 .main_iframe {
     margin-top: 20px;
     overflow: auto;
+    min-height:800px;
 }
 
 .mdl-layout__content {
@@ -170,14 +171,13 @@ body {
 .added-elements-wrap{
     width: 460px !important;
     box-sizing: border-box;
-    position: fixed;
     display: flex;
-    left: -100%;
     top: 20px;
     background: #fff !important;
     min-height: 300px;
     padding: 10px;
     flex-flow: wrap column;
+    font-weight: normal !important;
 }
 
 .burger {
@@ -187,7 +187,7 @@ body {
     box-sizing: border-box;
     top: 20px;
     left: 20px;
-    background: lightblue;
+    /*background: lightblue;*/
     cursor: pointer;
     border-radius: 50%
 }
@@ -195,11 +195,67 @@ body {
 .close-button{
     width: 30px;
     height: 30px;
-    background: lightcoral;
     position: absolute;
-    top: 0;
+    top: 20px;
     left: auto;
     right:0px;
     cursor: pointer;
     border-radius: 50%;
+}
+
+.add-elements-button{
+    width: 200px;
+    margin: 20px auto 0 !important;
+}
+
+.added-elements-wrap{
+    display: flex;
+    flex-flow: wrap column;
+}
+
+.added-elements-wrap-scroll{
+    max-height: 600px;
+    overflow-y: auto;
+    position: fixed;
+    left: -100%;
+    top: 20px;
+}
+
+.reset{
+    margin-left: 20px !important;
+    margin-right: 20px;
+}
+
+.added-elements-wrap * {
+    max-width:100%;
+}
+
+.list{
+    max-width:100%;
+}
+
+.reset-wrap{
+    cursor: pointer;
+}
+
+.buttons-wrap{
+    display: flex;
+    flex-flow: wrap row;
+    align-items: center;
+}
+
+.add-button{
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid lightblue;
+    cursor: pointer;
+}
+
+#content {
+    padding: 20px;
+}
+
+.request-textarea{
+    width: 100%;
 }

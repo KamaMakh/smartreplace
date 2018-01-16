@@ -17,7 +17,7 @@
     z-index: 999;
 }
 html{
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 body:hover{

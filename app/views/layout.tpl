@@ -5,10 +5,10 @@
             <title>{block 'title'} SmartReplace {/block}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <link rel="stylesheet" type="text/css" href="http://megayagla.local/css/styles.css">
+            <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
-            <script src="http://megayagla.local/js/jquery-3.2.1.js"></script>
-            <script src="http://megayagla.local/js/main.js"></script>
+            <script src="/js/jquery-3.2.1.js"></script>
+            <script src="/js/main.js"></script>
 
             <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet"/>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js" ></script>

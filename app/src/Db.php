@@ -21,7 +21,7 @@ class Db {
 
     public static function insert(array $query, string $table, string $where = null) {
         /**
-        $query - это массив со значениями. Ключ = название колонки => значение, массив - [значение, тип]
+        $query - это массив со значениями. [название колонки => [значение, тип]]
          */
         self::$pdo || self::connect();
 
@@ -75,7 +75,7 @@ class Db {
     public static function select(string $query) {
         self::$pdo || self::connect();
         self::$logger = Application::getInstance()->getLogger();
-        self::$logger->info($query);
+        //self::$logger->info($query);
         $result = self::$pdo->query($query);
         if (is_object($result)) {
             //self::$logger->addWarning('dbresult',$result->fetchAll(\PDO::FETCH_ASSOC));
@@ -111,10 +111,13 @@ class Db {
     public static function delete(string $table_name,string $where,int $limit = null) {
         self::$pdo || self::connect();
 
+        self::$logger = Application::getInstance()->getLogger();
+
         $sql = "DELETE FROM $table_name WHERE $where";
         if ($limit) {
             $sql = $sql . " LIMIT $limit";
         }
+        self::$logger->info($sql);
         $stmt = self::$pdo->prepare($sql);
         return $stmt->execute();
     }

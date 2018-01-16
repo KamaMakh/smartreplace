@@ -42,7 +42,32 @@ class AddelementsController
     }
 
     public function insertToDb () {
-        $this->mode = $_GET['mode'];
-        $this->addElements->insertToDb( $this->method, $this->mode );
+        //$this->mode = $_GET['mode'];
+        $this->logger->addWarning('post',$_POST);
+//        $this->logger->addWarning('request',$_REQUEST);
+//        $this->logger->addWarning('get', $_GET);
+
+
+        $result = $this->addElements->insertToDb( $this->method, 'add' );
+        if ($result) {
+            $this->sendToClient($result);
+        }
+    }
+
+    public function sendToClient ($data) {
+        $this->addElements->sendToClient($data);
+    }
+
+    public function complete () {
+        $this->addElements->complete();
+    }
+
+    public function reset () {
+        //$this->logger->addWarning('5555', $_GET);
+        $result = $this->addElements->reset($_GET['project_name']);
+
+        if ( $result ) {
+            $this->sendToClient($result);
+        }
     }
 }

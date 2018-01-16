@@ -3,7 +3,7 @@
 {block 'title'} Main page {/block}
 
 {block 'content'}
-    {$.cookie|print_r}
+    {*$.cookie|print_r*}
     {if $.session.check_user != true}
 
         <h3 class="main-title">Авторизуйтесь и создайте проект</h3>
