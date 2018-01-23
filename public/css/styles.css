@@ -234,7 +234,7 @@ body {
     max-width:100%;
 }
 
-.reset-wrap{
+.reset-wrap,.remove-group{
     cursor: pointer;
 }
 

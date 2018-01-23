@@ -87,11 +87,7 @@ class AddElements
                     $check_project = Db::select("SELECT * FROM sr_projects WHERE project_name='$this->project_name' ");
                 }
 
-                //$this->logger->addWarning('get', $_GET);
-
                 $check_template = Db::select("SELECT * FROM sr_templates WHERE project_id=".$check_project[0]['project_id']." and param ="."'".$_POST['wayToElement']."'");
-
-                //$this->logger->addWarning('inner', $_POST);
 
                 if ( !$check_template ) {
                     $data_fields = [
@@ -137,11 +133,26 @@ class AddElements
         $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name=". "'" .$_SESSION['user']['project_name']."'");
         $project_id = $project_id[0]['project_id'];
         $list = Db::select("SELECT * FROM sr_templates WHERE project_id = $project_id");
+        $eq_goup = Db::select("SELECT * FROM sr_groups WHERE project_id=$project_id");
 
+        $this->fenom->assign('elements',$eq_goup[0]['elements']);
 
-        //$this->logger->addWarning('list', $listToClient);
+        if ( !$eq_goup ) {
+            Db::insert([
+                'project_id' => [$project_id, 'i'],
+                'elements' => [ json_encode($list), 's']
+            ], 'sr_groups');
+        } else if ( (count(json_decode($eq_goup[0]['elements'])) != count($list)) ) {
+            Db::update(['elements'=>json_encode($list)], 'sr_groups', "project_id= $project_id");
+        }
+
+        $groups_whith_data = Db::select("SELECT * FROM sr_replacements WHERE project_id =". $project_id);
+        $eq_goup = Db::select("SELECT * FROM sr_groups WHERE project_id=$project_id");
+
+        $this->fenom->assign('groups', $eq_goup);
         $this->fenom->assign('project_name', $_SESSION['user']['project_name']);
         $this->fenom->assign('list', $list);
+        $this->fenom->assign('project_id', $project_id);
         $this->fenom->display('complete.tpl');
     }
 
@@ -151,13 +162,52 @@ class AddElements
 
         $project_id = $project_id[0]['project_id'];
 
-        //$this->logger->info($project_id);
-
         $result = Db::delete('sr_templates', 'project_id='.'"'.$project_id.'"');
 
         if ( $result ) {
             return $project_id;
         }
+    }
+    public function insertGroup($groups) {
 
+        foreach ( $groups as $key=>$group ) {
+           if ( is_array($group)  ) {
+
+               $get_param = Db::select("SELECT data FROM sr_replacements WHERE project_id=".$groups['project_id'] . " AND get_param='".$group['keyword']."'");
+
+                if (  !$get_param ) {
+
+                    $groups_params = [
+                        'group_id'=>[$group['group_id'], 'i'],
+                        'get_param'=>[$group['keyword'], 's'],
+                        'channel_name'=>[$group['name'], 's'],
+                        'data'=>[json_encode($group['replacements']), 's'],
+                        'project_id'=>[$groups['project_id'], 'i']
+                    ];
+                    Db::insert($groups_params,'sr_replacements');
+
+                } else if ( $get_param != json_encode($group['replacements']) ) {
+
+                    Db::update(['data'=>json_encode($group['replacements']),'channel_name'=>$group['name']], 'sr_replacements', "project_id=".$groups['project_id']. " AND group_id=". $group['group_id']);
+
+                }
+            }
+        }
+    }
+    public function addNewGroup ($new_group) {
+        $new_group_params = [
+            'project_id'=>[$new_group['project_id'], 'i'],
+            'elements'=>[json_encode($new_group['elements']),'s']
+        ];
+
+        Db::insert($new_group_params, 'sr_groups');
+
+        $backToClient = Db::select('SELECT * FROM sr_groups WHERE group_id>'.$new_group['last_id'].' LIMIT 1');
+        $this->logger->addWarning('new_group', $backToClient);
+        return json_encode($backToClient[0]);
+    }
+
+    public function removeGroup ($group_id) {
+        Db::delete('sr_groups', 'group_id='.$group_id);
     }
 }

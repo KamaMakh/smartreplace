@@ -2,7 +2,7 @@
 {block 'content'}
     {*$.cookie|print_r*}
 
-    <div class="burger teal column"><i class=" sidebar icon large"></i></div>
+    <div class="burger teal column"><i class=" sidebar icon large blue"></i></div>
     <span class="hidden dataFields">
             {$dataFields|escape}
         </span>
@@ -23,12 +23,12 @@
 
             </div>
             <div class="buttons-wrap">
-                <a href="/addelements/complete" class="add-elements-button ui submit button">
+                <a href="/addelements/complete" class="add-elements-button ui submit button blue">
                     Перейти к редактированию
                 </a>
                 <div class="reset-wrap">
                     <input type="hidden" value="{$.session['user']['project_name']}">
-                    <i class="reset repeat icon large"></i>Сбросить
+                    <i class="reset repeat icon large red"></i>Сбросить
                 </div>
             </div>
         </div>

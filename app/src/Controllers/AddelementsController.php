@@ -42,11 +42,7 @@ class AddelementsController
     }
 
     public function insertToDb () {
-        //$this->mode = $_GET['mode'];
         $this->logger->addWarning('post',$_POST);
-//        $this->logger->addWarning('request',$_REQUEST);
-//        $this->logger->addWarning('get', $_GET);
-
 
         $result = $this->addElements->insertToDb( $this->method, 'add' );
         if ($result) {
@@ -63,11 +59,22 @@ class AddelementsController
     }
 
     public function reset () {
-        //$this->logger->addWarning('5555', $_GET);
         $result = $this->addElements->reset($_GET['project_name']);
 
         if ( $result ) {
             $this->sendToClient($result);
         }
+    }
+    public function insertGroup() {
+        $groups = $_POST;
+        $this->addElements->insertGroup($groups);
+    }
+    public function addNewGroup () {
+        $new_group = $_POST;
+        echo $this->addElements->addNewGroup($new_group);
+    }
+    public function removeGroup () {
+        $group_id = $_POST['group_id'];
+        $this->addElements->removeGroup($group_id);
     }
 }

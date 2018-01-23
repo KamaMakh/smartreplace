@@ -75,25 +75,31 @@ class Db {
     public static function select(string $query) {
         self::$pdo || self::connect();
         self::$logger = Application::getInstance()->getLogger();
-        //self::$logger->info($query);
         $result = self::$pdo->query($query);
         if (is_object($result)) {
-            //self::$logger->addWarning('dbresult',$result->fetchAll(\PDO::FETCH_ASSOC));
             return $result->fetchAll(\PDO::FETCH_ASSOC);
         }
 
     }
 
     public static function update(array $query,string $table_name,string $where) {
+        /**
+         * $query = [column_name=>some_query]
+         *
+         * column_name - название колонки которуюу надо обновить
+         * some_query - новое значение
+         *
+         * */
+
         self::$pdo || self::connect();
         self::$logger = Application::getInstance()->getLogger();
 
         foreach($query as $name=>$value){
-            $request[]= $name.' = "'.$value.'"';
+            $request[]= $name." = '".$value."'";
         }
 
         if ( count($request) > 1 ) {
-            $request = implode(" ," , $request);
+            $request = implode(' ,' , $request);
         } else {
             $request = $request[0];
         }
@@ -101,8 +107,8 @@ class Db {
         if ($where) {
             $request .= " where " . $where;
         }
-
         $sql = "UPDATE $table_name SET $request";
+        self::$logger->info($sql);
 
         $stmt = self::$pdo->prepare($sql);
         return $stmt->execute();
