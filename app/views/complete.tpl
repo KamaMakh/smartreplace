@@ -23,7 +23,7 @@
                     </th>
                 {/foreach}
             </tr>
-{*{$groups|print_r}*}
+
 {foreach $groups as $key=>$value}
     <tr class="group-row odd row-odd" style="height: 100%;" data-group-id="{$value['group_id']}">
         <td class="cell-name"  rowspan="1" style="vertical-align: top">

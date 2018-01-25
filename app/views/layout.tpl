@@ -40,6 +40,5 @@
                     <div class="copyright"></div>
                 {/block}
             </footer>
-
         </body>
 </html>

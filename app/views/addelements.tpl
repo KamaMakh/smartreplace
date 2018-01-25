@@ -1,6 +1,6 @@
 {extends 'layout.tpl'}
 {block 'content'}
-    {*$.cookie|print_r*}
+
 
     <div class="burger teal column"><i class=" sidebar icon large blue"></i></div>
     <span class="hidden dataFields">

@@ -1,6 +1,7 @@
 {extends 'layout.tpl'}
 
 {block 'content'}
+
     <h3 class="center"></h3>
 
     <div class="ui huge input center aligned segment center" style="width:100%;">

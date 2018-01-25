@@ -50,7 +50,7 @@
             <div class="ui medium header">Авторизация</div>
             <div class="field">
                 <label class="ui label">E-mail</label>
-                <input type="text" name="email" value="{*$.post.email*}">
+                <input type="text" name="email" value="">
             </div>
             <div class="field">
                 <label class="ui label">Пароль</label>
