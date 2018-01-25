@@ -22,7 +22,6 @@ require_once(__DIR__.'/../app/src/Application.php');
 $fenom = SmartReplace\Application::getInstance()->getFenom();
 $logger = SmartReplace\Application::getInstance()->getLogger();
 
-
 $router = new SmartReplace\Router();
 session_start();
 $router->run();

@@ -29,8 +29,6 @@ class Router
 
     public function run() {
 
-       // $url =    ( isset( $_GET['url'] )  &&  $_GET['url'] != '/' )    ?    trim($_GET['url'], '/')    :    '/';
-
         if ( isset( $_GET['url'] )  &&  $_GET['url'] != '/' ) {
             $url = trim($_GET['url'], '/');
         } else {
@@ -38,9 +36,11 @@ class Router
         }
 
         if ($url != '/') {
+
             $url = explode('/', $url);
 
             $controller = ucfirst($url[0]) . 'Controller';
+
             $arr = scandir(__DIR__.'/Controllers');
 
             if (in_array(  $controller . '.php', $arr )) {
@@ -63,7 +63,6 @@ class Router
             }
 
         } else {
-
             $controller = new MainController();
             $controller->init();
         }

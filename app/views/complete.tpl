@@ -10,8 +10,8 @@
                 <th rowspan="2" style="border: none;" class="cell-keywords" colspan="1">Ссылка, которую нужно скопировать в канал</th>
                 {*<th rowspan="2" class="editor-controls" colspan="1">Действия</th>*}
                 <th id="template-header" colspan="5">
-                    <div style="float: left; margin-top: 2px;">Подменяемые элементы для страницы megagroup.ru/</div>
-                    <a class="button-gray2" style="font-weight: normal; margin-left: 10px" data-tooltip="Добавить еще одну подмену,<br>перейдя в указатель подмен" href="/repTemplate/select/43906?template=124357">Разметить</a>
+                    <div style="float: left; margin-top: 2px;">Подменяемые элементы для страницы {$project_name}</div>
+
                 </th>
 
             </tr>

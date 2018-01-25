@@ -31,7 +31,7 @@ class AddElements
 
     function init(string $site_url) {
         $this->site_url = $site_url;
-        $this->sendToClient(null, substr($this->site_url, 0 , -1));
+        $this->sendToClient(null, $this->site_url);
         $this->fenom->display('addelements.tpl');
     }
 
@@ -112,6 +112,7 @@ class AddElements
 
             $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
             $project_id = $project_id[0]['project_id'];
+            $this->logger->info("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
 
             $elements = Db::select("SELECT * FROM sr_templates WHERE project_id =".$project_id);
 
@@ -146,7 +147,6 @@ class AddElements
             Db::update(['elements'=>json_encode($list)], 'sr_groups', "project_id= $project_id");
         }
 
-        $groups_whith_data = Db::select("SELECT * FROM sr_replacements WHERE project_id =". $project_id);
         $eq_goup = Db::select("SELECT * FROM sr_groups WHERE project_id=$project_id");
 
         $this->fenom->assign('groups', $eq_goup);
@@ -194,6 +194,11 @@ class AddElements
             }
         }
     }
+
+    public function getScript() {
+        $this->fenom->display('getscript.tpl');
+    }
+
     public function addNewGroup ($new_group) {
         $new_group_params = [
             'project_id'=>[$new_group['project_id'], 'i'],

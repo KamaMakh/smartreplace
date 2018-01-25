@@ -28,7 +28,7 @@
                 </a>
                 <div class="reset-wrap">
                     <input type="hidden" value="{$.session['user']['project_name']}">
-                    <i class="reset repeat icon large red"></i>Сбросить
+                    <i class="reset repeat icon large blue"></i>Сбросить
                 </div>
             </div>
         </div>

@@ -77,4 +77,7 @@ class AddelementsController
         $group_id = $_POST['group_id'];
         $this->addElements->removeGroup($group_id);
     }
+    public function getScript () {
+        $this->addElements->getScript();
+    }
 }

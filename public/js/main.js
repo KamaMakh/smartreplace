@@ -30,8 +30,8 @@
             buildList (dataFromDb) {
                 //console.log(dataFromDb);
                 let $container = $('.added-elements-wrap .list');
-                if (dataFromDb){
-
+                if (dataFromDb && dataFromDb.trim() != 'null'){
+                    console.log(dataFromDb.trim());
                     dataFromDb = JSON.parse(dataFromDb);
 
                     let $length = dataFromDb.length;
@@ -352,8 +352,18 @@
 
             }
             else if ( target.hasClass('sr-end') ) {
+                //document.location.href
 
-                utilities.insertGroup();
+                let promise = new Promise((resolve, reject) => {
+                    resolve('Success!')
+                });
+
+                promise.then(() => {
+                    utilities.insertGroup();
+                }).then(() => {
+                    document.location.href = '/addelements/getScript'
+                })
+
 
             }
             else if ( target.hasClass('reset-wrap') ) {
