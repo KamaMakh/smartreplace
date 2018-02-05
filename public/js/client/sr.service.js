@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            fetch(`http://kamron-pc.dyn.frg.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
+            fetch(`http://kamron.webx.brn.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
                 {
                     mode: 'cors',
                     method: 'get',
