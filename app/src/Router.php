@@ -30,7 +30,7 @@ class Router
     public function run() {
         $this->logger->addWarning('get',$_SERVER);
         if ( isset( $_SERVER['REQUEST_URI'] )  &&  $_SERVER['REQUEST_URI'] != '/' ) {
-            $url = trim($_GET['url'], '/');
+            $url = trim($_SERVER['REQUEST_URI'], '/');
         } else {
             $url = '/';
         }
