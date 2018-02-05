@@ -28,7 +28,7 @@ class Router
     }
 
     public function run() {
-        $this->logger->addWarning('get',$_SERVER);
+
         if ( isset( $_SERVER['REQUEST_URI'] )  &&  $_SERVER['REQUEST_URI'] != '/' ) {
             $url = trim($_SERVER['REQUEST_URI'], '/');
         } else {
@@ -40,7 +40,7 @@ class Router
             $url = explode('/', $url);
 
             $controller = ucfirst($url[0]) . 'Controller';
-            $this->logger->info($controller);
+
             $arr = scandir(__DIR__.'/Controllers');
 
             if (in_array(  $controller . '.php', $arr )) {
