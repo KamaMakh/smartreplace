@@ -3,3 +3,4 @@ logs/
 vendor
 node_modules
 compile_views/
+configs/config.php
