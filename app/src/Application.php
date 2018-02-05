@@ -1,7 +1,7 @@
 <?php
 
 namespace Megagroup\SmartReplace;
-use Megagroup\SmartReplace\Сontainer;
+use Megagroup\SmartReplace\Container;
 
 
 /**
@@ -18,7 +18,7 @@ class Application
 
     public function __construct()
     {
-        $this->container = new Сontainer\Containers();
+        $this->container = new Container\Containers();
     }
 
     public static function getInstance() {

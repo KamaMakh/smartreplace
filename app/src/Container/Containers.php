@@ -1,5 +1,5 @@
 <?php
-namespace Megagroup\SmartReplace\Сontainer;
+namespace Megagroup\SmartReplace\Container;
 /**
  * Created by PhpStorm.
  * User: kamron
