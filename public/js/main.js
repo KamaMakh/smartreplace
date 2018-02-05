@@ -53,7 +53,7 @@
             },
             confirmPassword() {
                 //    confirm password
-
+                console.log(5656565656);
                 var $password = $("#password");
                 var $confirmPassword = $("#confir_password");
                 var $userName = $("#username");
@@ -274,7 +274,6 @@
 
 
 
-        document.addEventListener('DOMContentLoaded', function() {
             iframe = document.getElementById('main_iframe');
 
             if (iframe) {
@@ -294,7 +293,7 @@
                 utilities.confirmPassword();
             }
 
-        }, false);
+
 
         //передача данных в бургер при открытии страницы
         if ( $firstCheck.attr('value') ) {

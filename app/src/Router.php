@@ -40,7 +40,7 @@ class Router
             $url = explode('/', $url);
 
             $controller = ucfirst($url[0]) . 'Controller';
-
+            $this->logger->info($controller);
             $arr = scandir(__DIR__.'/Controllers');
 
             if (in_array(  $controller . '.php', $arr )) {
