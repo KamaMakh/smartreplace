@@ -19,7 +19,7 @@ class Db {
     }
 
 
-    public static function insert(array $query, string $table, string $where = null) {
+    public static function insert(array $query, string $table, string $where = null, $last_id = null) {
         /**
         $query - это массив со значениями. [название колонки => [значение, тип]]
          */
@@ -42,7 +42,7 @@ class Db {
             $sql .= " where " . $where;
         }
         self::$logger = Application::getInstance()->getLogger();
-
+        self::$logger->info($sql);
 
         $stmt = self::$pdo->prepare($sql);
 
@@ -56,7 +56,7 @@ class Db {
             $stmt->bindParam($i, $fieldsVal[0][0], $fieldsVal[0][1]);
         } else {
             foreach($fieldsVal as $val) {
-
+                self::$logger->addWarning('val',$val);
                 if ( strtolower($val[1]) == 's' ) {
                     $val[1] = \PDO::PARAM_STR;
                 } else if ( strtolower($val[1]) == 'i' ) {
@@ -68,7 +68,13 @@ class Db {
             }
         }
 
-        return $stmt->execute();
+
+        if ($last_id) {
+            $stmt->execute();
+            return self::$pdo->lastInsertId();
+        } else {
+            return $stmt->execute();
+        }
 
     }
 
@@ -108,7 +114,7 @@ class Db {
             $request .= " where " . $where;
         }
         $sql = "UPDATE $table_name SET $request";
-        self::$logger->info($sql);
+        //self::$logger->info($sql);
 
         $stmt = self::$pdo->prepare($sql);
         return $stmt->execute();
@@ -123,7 +129,7 @@ class Db {
         if ($limit) {
             $sql = $sql . " LIMIT $limit";
         }
-        self::$logger->info($sql);
+        //self::$logger->info($sql);
         $stmt = self::$pdo->prepare($sql);
         return $stmt->execute();
     }

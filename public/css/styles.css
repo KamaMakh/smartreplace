@@ -212,13 +212,16 @@ body {
     display: flex;
     flex-flow: wrap column;
 }
+.added-elements-wrap .column {
+    word-break: break-all !important;
+}
 
 .added-elements-wrap-scroll{
     max-height: 600px;
-    overflow-y: auto;
     position: fixed;
     left: -100%;
     top: 20px;
+    overflow: auto;
 }
 
 .reset{

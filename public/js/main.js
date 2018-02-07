@@ -24,6 +24,14 @@
             clear (name) {
                 fetch('/addelements/reset?project_name='+name)
                     .then(function (response) {
+                        iframe = document.getElementById('main_iframe');
+
+                        if (iframe) {
+                            iframe.contentWindow.postMessage(JSON.stringify({
+                                clear: true
+                            }), '*');
+                            // Отправка в iframe
+                        }
                     })
                     .catch(alert);
             },
@@ -31,8 +39,21 @@
                 //console.log(dataFromDb);
                 let $container = $('.added-elements-wrap .list');
                 if (dataFromDb && dataFromDb.trim() != 'null'){
-                    console.log(dataFromDb.trim());
                     dataFromDb = JSON.parse(dataFromDb);
+                    console.log(dataFromDb);
+
+                    iframe = document.getElementById('main_iframe');
+
+                    if (iframe) {
+                        console.log(123);
+                        iframe.addEventListener('load', function () {
+                            this.contentWindow.postMessage(JSON.stringify({
+                                elements: JSON.stringify(dataFromDb)
+                            }), '*');
+                        });
+                        // Отправка в iframe
+                    }
+
 
                     let $length = dataFromDb.length;
 
@@ -41,7 +62,8 @@
                     for ( let i=0; i<$length; i++ ) {
                         var type = dataFromDb[i]['type'],
                             name = dataFromDb[i]['name'],
-                            data = dataFromDb[i]['data'];
+                            data = dataFromDb[i]['data'],
+                            param = dataFromDb[i]['param'];
                         data = this.replaceForHtmlTags(data);
                         //console.log(data);
                         $container.append('<div class="column">' + name + '</div><div class="column">' + data.substring(0,200) +'...</div>');
@@ -118,10 +140,13 @@
                 let $groups = $('.group-row'),
                     setGroups = {},
                     project_id = $('.elements-table-wrap').attr('data-project-id'),
-                    i = 0;
+                    i = 0,
+                    y = 0;
+                console.log($groups);
                 if ( $groups ) {
                     $groups.each(function(e){
-                        let name = $(this).find('.cell-name textarea').val(),
+
+                        let channel_name = $(this).find('.cell-name textarea').val(),
                             keyword = $(this).find('.group-row-keyword').attr('data-keyword'),
                             replacements = {},
                             group_id = $(this).attr('data-group-id'),
@@ -130,25 +155,37 @@
 
                         cell_element.each(function(){
                             let eq_param = $(this).find('textarea').attr('data-param'),
-                                eq_new_text = $(this).find('textarea').val();
-                            replacements[eq_param] = eq_new_text;
+                                eq_new_text = $(this).find('textarea').val(),
+                                $type = $(this).find('.textarea').attr('data-template-type'),
+                                template_id= $(this).find('.textarea').attr('data-template-id'),
+                                name = $(this).find('.textarea').attr('data-template-name');
+                            replacements[y] = {
+                                name: name,
+                                template_id: template_id,
+                                project_id:project_id,
+                                type:$type,
+                                param:eq_param,
+                                new_text:eq_new_text
+                            };
+                            y++;
                         });
 
                         setGroups[i] = {
-                            name: name,
-                            keyword: keyword,
+                            channel_name: channel_name,
                             group_id: group_id,
-                            replacements: replacements
+                            replacements: JSON.stringify(replacements)
                         };
                         i++;
                     });
                     setGroups['project_id'] = project_id;
                 }
+                console.log(setGroups);
 
                 $.post({
                     url: '/addelements/insertGroup',
                     method: 'POST',
                     data: setGroups,
+                    dataText: JSON.stringify(setGroups),
                     success: function(response) {}
                 });
             },
@@ -201,7 +238,7 @@
 
             },
 
-            buildNewGroup(group) {
+            buildNewGroup(group, new_group=null) {
                 //console.log(group);
                 let table = $('.elements-table-wrap .groups-container'),
                     last_group = $('.group-row').last().clone(),
@@ -213,8 +250,9 @@
 
                 last_group.attr('data-group-id', group['group_id'])
                     .find('.group-row-keyword').attr('data-keyword', keyword)
-                    .text(`${project_name}=${keyword}`);
-
+                    .text(`${project_name}=${keyword}`)
+                last_group.find('.textarea textarea').text('');
+                last_group.find('.cell-name textarea').text('');
             },
             removeGroup (remove_button) {
                 let group_id = {
@@ -240,7 +278,7 @@
             add(data) {
 
                 var mode = data.mode,
-                    type = data.element.title,
+                    type = data.element.type,
                     //inner = encodeURIComponent(data.element.data),
                     inner = data.element.data,
                     wayToElement = data.element.wayToElement,
@@ -252,7 +290,7 @@
                         wayToElement: wayToElement,
                         name: name
                     };
-
+                console.log(params);
                 $.post({
                     url: '/addelements/insertToDb',
                     method: 'POST',
@@ -274,18 +312,18 @@
 
 
 
-            iframe = document.getElementById('main_iframe');
+            //iframe = document.getElementById('main_iframe');
 
-            if (iframe) {
-
-                // Отправка в iframe
-                iframe.addEventListener('load', function () {
-                    this.contentWindow.postMessage(JSON.stringify({
-                        test: true
-                    }), '*');
-
-                }, false);
-            }
+            // if (iframe) {
+            //
+            //     // Отправка в iframe
+            //     iframe.addEventListener('load', function () {
+            //         this.contentWindow.postMessage(JSON.stringify({
+            //             test: true
+            //         }), '*');
+            //
+            //     }, false);
+            // }
 
             var password = document.getElementById('password');
 
@@ -351,7 +389,7 @@
 
             }
             else if ( target.hasClass('sr-end') ) {
-                //document.location.href
+
 
                 let promise = new Promise((resolve, reject) => {
                     resolve('Success!')
@@ -360,16 +398,14 @@
                 promise.then(() => {
                     utilities.insertGroup();
                 }).then(() => {
-                    document.location.href = '/addelements/getScript'
+                   //document.location.reload();
                 })
 
 
             }
             else if ( target.hasClass('reset-wrap') ) {
-
                 utilities.clear($project_name);
                 utilities.buildList();
-
             }
         });
 

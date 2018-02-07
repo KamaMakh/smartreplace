@@ -23,36 +23,74 @@
                     </th>
                 {/foreach}
             </tr>
+{*------------------------------------------*}
+{*if $old_groups*}
+    {*foreach $old_groups as $key=>$value}
+        <tr class="group-row old-group odd row-odd" style="height: 100%;" data-group-id="{$value['group_id']}">
+            <td class="cell-name"  rowspan="1" style="vertical-align: top">
 
-{foreach $groups as $key=>$value}
-    <tr class="group-row odd row-odd" style="height: 100%;" data-group-id="{$value['group_id']}">
-        <td class="cell-name"  rowspan="1" style="vertical-align: top">
-
-            <div class="manual-textarea">
-                <textarea rows="4" placeholder="Введите название канала, куда будет скопирована ссылка" data-id="" data-type="" class="request-textarea" name="request-title" id=""></textarea>
-            </div>
-        </td>
-        <td class="cell-keywords" data-type-column="keyword" rowspan="1" style=";vertical-align: top">
+                <div class="manual-textarea">
+                    <textarea rows="4" placeholder="Введите название канала, куда будет скопирована ссылка" data-id="" data-type="" class="request-textarea" name="request-title" id="">
+                        {$value['channel_name']}
+                    </textarea>
+                </div>
+            </td>
+            <td class="cell-keywords" data-type-column="keyword" rowspan="1" style=";vertical-align: top">
                 <div class="advert-request group-row-keyword" title="{$project_name}" data-keyword="{$value['group_id']}s{$value['project_id']}" id="">
                     {$project_name}?sr={$value['group_id']}s{$value['project_id']}
                 </div>
-            <i class="remove-group trash icon blue big"></i>
+                <i class="remove-group trash icon blue big"></i>
                 <div style="clear: both"></div>
-        </td>
-
-        {foreach json_decode($value['elements']) as $key=>$value}
-            <td class="cell-element" data-type-column="element">
-                <div class="element-value">
-                    <div data-type="element" class="textarea"  data-project-id="{$value->project_id}" data-template-id="{$value->template_id}"  data-template-name="{$value->name}" data-template-type="{$value->type}"><br>
-                        <textarea class="request-textarea" data-param="{$value->param}" name="replace-textarea"></textarea>
-                    </div>
-                </div>
             </td>
-        {/foreach}
-    </tr>
-{/foreach}
+
+            {foreach json_decode($value['data'], true) as $key2=>$value2}
+                <td class="cell-element" data-type-column="element">
+                    <div class="element-value">
+                        <div data-type="element" class="textarea"  data-project-id="{$value['project_id']}" data-template-id="$value['template_id']"  data-template-name="$value['name']" data-template-type="{$value2['type']}"><br>
+                            <textarea class="request-textarea" data-param="{$value2['param']}" name="replace-textarea">{$value2['text']}</textarea>
+                        </div>
+                    </div>
+                </td>
+            {/foreach}
+        </tr>
+    {/foreach*}
+{*else*}
+    {foreach $groups as $key=>$value}
+        {*if $key<1*}
+            <tr class="group-row odd row-odd" style="height: 100%;" data-group-id="{$value['group_id']}">
+                <td class="cell-name"  rowspan="1" style="vertical-align: top">
+
+                    <div class="manual-textarea">
+                        <textarea rows="4" placeholder="Введите название канала, куда будет скопирована ссылка" data-id="" data-type="" class="request-textarea" name="request-title" id="">{$value['channel_name']}</textarea>
+                    </div>
+                </td>
+                <td class="cell-keywords" data-type-column="keyword" rowspan="1" style=";vertical-align: top">
+                    <div class="advert-request group-row-keyword" title="{$project_name}" data-keyword="{$value['group_id']}s{$value['project_id']}" id="">
+                        {$project_name}?sr={$value['group_id']}s{$value['project_id']}
+                    </div>
+                    <i class="remove-group trash icon blue big"></i>
+                    <div style="clear: both"></div>
+                </td>
+
+                {foreach json_decode($value['elements'], true) as $key2=>$value2}
+                    <td class="cell-element" data-type-column="element">
+                        <div class="element-value">
+                            <div data-type="element" class="textarea"  data-project-id="{$value2['project_id']}" data-template-id="{$value2['template_id']}"  data-template-name="{$value2['name']}" data-template-type="{$value2['type']}"><br>
+                                <textarea placeholder="{$value2['type']}" class="request-textarea" data-param="{$value2['param']}" name="replace-textarea">{$value2['new_text']}</textarea>
+                            </div>
+                        </div>
+                    </td>
+                {/foreach}
+            </tr>
+        {*/if*}
+    {/foreach}
+{*/if*}
+
+            {*-----------------------------------------*}
+
+
         </thead>
     </table>
-    <button class="add-group ui blue basic button">Добавить еще</button>
-    <button class="sr-end ui green basic button">Завершить</button>
+    <button class="add-group ui blue basic button">Добавить</button>
+    <button class="sr-end ui green basic button">Сохранить</button>
 {/block}

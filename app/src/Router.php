@@ -28,28 +28,20 @@ class Router
     }
 
     public function run() {
-        //$this->logger->info($_SERVER['REQUEST_URI']);
-        //$this->logger->info($_GET['url']);
         if ( isset( $_SERVER['REQUEST_URI'] )  &&  $_SERVER['REQUEST_URI'] != '/' ) {
             $pre_url = explode('?', $_SERVER['REQUEST_URI']);
-            //$this->logger->addWarning('pre_uri', $pre_url);
             if (!empty($pre_url[1])) {
                 $url = trim($pre_url[0], '/');
             } else {
                 $url = trim($_SERVER['REQUEST_URI'], '/');
             }
-
         } else {
             $url = '/';
         }
 
         if ($url != '/') {
-            $this->logger->info('999'.$url);
-
             $url = explode('/', $url);
-
             $controller = ucfirst($url[0]) . 'Controller';
-//$this->logger->info($controller);
             $arr = scandir(__DIR__.'/Controllers');
 
             if (in_array(  $controller . '.php', $arr )) {
@@ -61,7 +53,6 @@ class Router
 
                 if ( !empty($url[1]) ) {
                     $action = $url[1];
-                    //$this->logger->info($action);
                     $controller->$action();
                 } else {
                     $controller->init();

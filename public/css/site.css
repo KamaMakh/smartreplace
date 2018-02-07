@@ -1,5 +1,6 @@
 .smarthover{
     outline: #5ab1ef solid 2px !important;
+    cursor: pointer;
 }
 
 .preload{
@@ -119,6 +120,10 @@ div {
 }
 svg path, p *{
 pointer-events: none;
+}
+
+.selected{
+    outline: darkolivegreen solid 2px !important;
 }
 
 

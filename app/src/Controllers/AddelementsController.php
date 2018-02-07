@@ -42,7 +42,7 @@ class AddelementsController
     }
 
     public function insertToDb () {
-        $this->logger->addWarning('post',$_POST);
+       // $this->logger->addWarning('post',$_POST);
 
         $result = $this->addElements->insertToDb( $this->method, 'add' );
         if ($result) {
@@ -59,6 +59,7 @@ class AddelementsController
     }
 
     public function reset () {
+        $this->logger->addWarning('reset get',$_GET);
         $result = $this->addElements->reset($_GET['project_name']);
 
         if ( $result ) {
@@ -75,6 +76,7 @@ class AddelementsController
     }
     public function removeGroup () {
         $group_id = $_POST['group_id'];
+
         $this->addElements->removeGroup($group_id);
     }
     public function getScript () {

@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 element_type,
                 element_data;
 
-            if ( !target.classList.contains('sandbox') ) {
+            if ( !target.classList.contains('sandbox') && !target.classList.contains('selected') ) {
 
                 this.removeSandbox();
 
@@ -159,22 +159,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if ( target.tagName == 'IMG' ) {
                     element_obj.title = 'Картинка';
+                    element_obj.type = 'image';
                     element_obj.data = target.getAttribute('src');
                 }
                 else if ( target.tagName == 'svg' ) {
-                    element_obj.title = 'Текст с кодом';
+                    element_obj.title = 'svg';
+                    element_obj.type = 'svg';
                     element_obj.data = target.innerHTML;
                 }
                 else if ( this.stringReplace(target.innerHTML) == this.stringReplace(target.innerText) && this.isEmpty(target.innerText) ) {
                     element_obj.title = 'Текст';
+                    element_obj.type = 'text';
                     element_obj.data = target.innerText;
                 }
                 else if ( !this.isEmpty(target.innerText)  && this.isEmpty(target.innerHTML) && target.style.background ) {
                     element_obj.title = 'Картинка';
+                    element_obj.type = 'style_image';
                     element_obj.data = target.style.background;
                 }
                 else {
                     element_obj.title = 'Блок с кодом';
+                    element_obj.type = 'code';
                     element_obj.data = target.innerHTML;
                 }
 
@@ -190,9 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     element_obj.wayToElement = this.iter(target);
                 }
-               // console.log(element_obj);
                 this.cloud = element_obj;
-                console.log(this.cloud);
                 return element_obj;
             }
         },
@@ -216,17 +219,27 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 return false;
             }
+        },
+
+        replaceHref(){
+            let elements = document.head.querySelectorAll('link'),
+                url = document.location.search.split('=')[1];
+
+            for (let i=0; i<elements.length; i++) {
+                let newer = elements[i]['href'].replace(document.location.origin, url);
+                elements[i]['href'] = newer;
+            }
         }
     };
 
-
+    elementCatch.replaceHref();
 
 
 
 
     var sendToParent = {
         send(data, mode = 'add') {
-            //console.log(data);
+
             parent.postMessage(JSON.stringify({
                 mode: mode,
                 element: data
@@ -241,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     window.onload = function () {
+
         document.querySelector('.preload').classList.remove('preload');
         var html = document.getElementsByTagName('html');
         html[0].style.overflow = 'auto';
@@ -255,12 +269,14 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation();
         e.stopImmediatePropagation();
         elementCatch.onClick(e);
-        if (e.target.classList.contains('sandbox-button')) {
+        if (e.target.classList.contains('sandbox-button') ) {
 
             var editName = document.querySelector('.sandbox.edit-name').value;
             if ( !editName ) {
                 alert('Назовите подменяемый элемент');
             } else {
+
+                document.querySelector(elementCatch.cloud.wayToElement).classList.add('selected');
                 elementCatch.cloud.name = editName;
                 sendToParent.send(elementCatch.cloud);
                 elementCatch.removeSandbox();
@@ -273,8 +289,20 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('message', function(event) {
         try {
             var data = JSON.parse(event.data);
-            if (data.test) {
+            if (data.elements) {
+                data.elements = JSON.parse(data.elements);
+                for ( let i=0; i<data.elements.length; i++ ) {
 
+                    document.querySelector(data.elements[i]['param']).classList.add("selected");
+                }
+            }
+            if ( data.clear ) {
+
+                let selected_elements = document.querySelectorAll('.selected');
+
+                for (let i = 0; i<selected_elements.length; i++) {
+                    selected_elements[i].classList.remove('selected');
+                }
             }
         } catch (e) {}
 

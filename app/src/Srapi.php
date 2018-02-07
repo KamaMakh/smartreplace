@@ -21,10 +21,9 @@ class Srapi
 
     public function getGroup($get_param) {
 
-        $elemetns = Db::select("SELECT data FROM sr_replacements WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
+        $elemetns = Db::select("SELECT elements FROM sr_groups WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
         //$this->logger->info("SELECT elements FROM sr_groups WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
         $this->logger->addWarning('elements', $elemetns);
-        //setcookie('elements', json_encode($elemetns), + 60*60*24*30, '/', $get_param['project_name']);
 
         return $elemetns;
     }

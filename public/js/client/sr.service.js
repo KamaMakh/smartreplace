@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         getUrl() {
             let project_name = document.location.origin,
-                get_params = document.location.search
+                get_params = document.location.search;
 
             get_params = get_params.split('?')[1];
             if (get_params) {
@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            fetch(`http://kamron.webx.brn.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
+            fetch(`http://kamron-pc.dyn.frg.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
                 {
                     mode: 'cors',
                     method: 'get',
@@ -39,15 +39,18 @@ window.addEventListener('DOMContentLoaded', function() {
                     return response.json();
                 })
                 .then((data) =>{
-                    let elements = JSON.parse(data[0]['data']);
 
-                    console.log(elements);
+                    let elements = JSON.parse(data[0]['elements']);
 
-                    for (let selector in elements) {
-                       // if ( elements.hasOwnProperty(selector) ) {
-                            document.querySelector(selector).innerText = elements[selector];
-                            document.querySelector(selector).style.outline = '3px solid lightblue';
-                        //}
+                    for (let key in elements) {
+
+                        if ( elements[key]['type'] == 'image' ) {
+                            document.querySelector(elements[key]['param']).setAttribute('src', elements[key]['new_text']);
+                        } else if ( elements[key]['type'] == 'text' ) {
+                            document.querySelector(elements[key]['param']).innerText = elements[key]['new_text'];
+                        } else if ( elements[key]['type'] == 'code' ) {
+                            document.querySelector(elements[key]['param']).innerHTML = elements[key]['new_text'];
+                        }
                     }
                 })
                 .catch( (error) => {
@@ -57,12 +60,15 @@ window.addEventListener('DOMContentLoaded', function() {
 
         run() {
             let get_params = this.getUrl();
-            this.requestParam(get_params);
+            if (get_params) {
+                this.requestParam(get_params);
+            }
+
         }
     };
     setTimeout(function(){
         module.run();
-    },1000);
+    },100);
 
 
     // document.body.addEventListener('click', function(e){
