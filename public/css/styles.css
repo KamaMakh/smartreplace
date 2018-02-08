@@ -280,3 +280,8 @@ body {
     pointer-events: none;
     background: rgba(153, 153, 153, 0.5);
 }
+
+.sr-save-group, .sr-save-reject {
+    width: 115px;
+    margin-bottom: 5px !important;
+}
