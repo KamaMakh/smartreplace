@@ -1,7 +1,7 @@
 {extends 'layout.tpl'}
 
 {block 'content'}
-    <div class="ui huge input center aligned segment left" style="display:block; text-align: left;"><div>Вставьте данный скрипт в "head" вашего сайта: </div><br/><div><i> <input style="width:100% !important;" type="text" value='<script src="http://kamron-pc.dyn.frg.m/js/client/sr.service.js"></script>'></i></div></div>
+    <div class="ui huge input center aligned segment left" style="display:block; text-align: left;"><div>Вставьте данный скрипт в "head" вашего сайта: </div><br/><div><i> <input style="width:100% !important;" type="text" value='<script src="http://kamron.webx.brn.m//js/client/sr.service.js"></script>'></i></div></div>
     <table class="elements-table-wrap ui celled padded table" data-project-id="{$project_id}">
 
 
