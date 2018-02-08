@@ -5,7 +5,7 @@
 
 .preload{
     background-image: url(../images/loader.gif);
-    background-color: rgba(0, 0, 0, 0.81);
+    background-color: rgba(0, 0, 0, 0.95);
     background-repeat: no-repeat;
     background-position: 50%;
     position: absolute;

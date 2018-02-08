@@ -30,7 +30,7 @@ class AddElements
 
 
     function init(string $site_url) {
-        $this->site_url = $site_url;
+        $this->site_url = explode('//',$site_url)[1];
         $this->sendToClient(null, $this->site_url);
         $this->fenom->display('addelements.tpl');
     }
@@ -48,7 +48,7 @@ class AddElements
 
         $new_url = $url[0] . '//' . $url[2];
         $this->project_name = $new_url;
-        $_SESSION['user']['project_name'] = $this->project_name;
+   //     $_SESSION['user']['project_name'] = $this->project_name;
 
 //        $page = str_replace('href="', 'href="'.$new_url.'/', $page);
 //        $page = str_replace('href=\'', 'href=\''.$new_url.'/', $page);
@@ -62,21 +62,21 @@ class AddElements
 
 
 
-        $page = $page . '<script src="/js/site.js"></script>'
-            .'<link rel="stylesheet" href="/css/site.css">'
-            .'<div class="preload"></div>';
+        $page = $page .'<link rel="stylesheet" href="/css/site.css">'
+            .'<div class="preload"></div>'
+            .'<script src="/js/site.js"></script>';
 
         echo $page;
     }
 
-    public function insertToDb(string $method,string $mode) {
+    public function insertToDb(string $mode) {
         if ( $mode == 'add') {
             if ( $_SESSION['user'] ) {
                 //$this->logger->addWarning('session222', $_SESSION);
                 $this->email = $_SESSION['user']['email'];
                 $this->user_id = Db::select("SELECT id FROM sr_users WHERE email='$this->email'");
-                $this->project_name = $_SESSION['user']['project_name'];
-                $this->fenom->assign('project_name', $this->project_name);
+                $this->project_name = $_POST['project_name'];
+                //$this->fenom->assign('project_name', $this->project_name);
                 $check_project = Db::select("SELECT * FROM sr_projects WHERE project_name='$this->project_name' ");
 
                 if ( !$check_project ) {
@@ -132,8 +132,9 @@ class AddElements
         }
     }
 
-    public function complete() {
-        $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name=". "'" .$_SESSION['user']['project_name']."'");
+    public function complete($project_name) {
+        //$this->logger->info($project_name.'99999');
+        $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name=". "'" .$project_name."'");
         $project_id = $project_id[0]['project_id'];
         $list = Db::select("SELECT name,template_id,project_id,type,param,new_text FROM sr_templates WHERE project_id = $project_id");
         $eq_goup = Db::select("SELECT group_id FROM sr_groups WHERE project_id=$project_id");
@@ -150,39 +151,39 @@ class AddElements
                 'elements' => [ json_encode($list), 's']
             ], 'sr_groups', null, true);
 
-            foreach ( $list as $element ) {
-                $check_group = Db::select("SELECT group_id FROM sr_replacements WHERE template_id=".$element['template_id']);
-                //$this->logger->info('wwww');
-                if ( !$check_group ) {
-                   // $this->logger->info('aaaa');
-                    $dd= Db::insert([
-                        'project_id'=> [$element['project_id'], 'i'],
-                        'group_id'=>[$insertId, 'i'],
-                        'template_id'=>[$element['template_id'], 'i'],
-                        'type'=>[$element['type'], 's'],
-                        'selector'=>[$element['param'], 's']
-                    ], 'sr_replacements');
-                  //  $this->logger->info(boolval($dd) );
-                }
-            }
+//            foreach ( $list as $element ) {
+//                $check_group = Db::select("SELECT group_id FROM sr_replacements WHERE template_id=".$element['template_id']);
+//
+//                if ( !$check_group ) {
+//
+//                    $dd= Db::insert([
+//                        'project_id'=> [$element['project_id'], 'i'],
+//                        'group_id'=>[$insertId, 'i'],
+//                        'template_id'=>[$element['template_id'], 'i'],
+//                        'type'=>[$element['type'], 's'],
+//                        'selector'=>[$element['param'], 's']
+//                    ], 'sr_replacements');
+//
+//                }
+//            }
 
         } else {
 
-            foreach ( $list as $element ) {
-                $check_group = Db::select("SELECT group_id FROM sr_replacements WHERE template_id=".$element['template_id']);
-                if ( !$check_group ) {
-                    foreach ($eq_goup as $group_id) {
-                        Db::insert([
-                            'project_id'=> [$element['project_id'], 'i'],
-                            'group_id'=>[$group_id["group_id"], 'i'],
-                            'template_id'=>[$element['template_id'], 'i'],
-                            'type'=>[$element['type'], 's'],
-                            'selector'=>[$element['param'], 's']
-                        ], 'sr_replacements');
-                    }
-
-                }
-            }
+//            foreach ( $list as $element ) {
+//                $check_group = Db::select("SELECT group_id FROM sr_replacements WHERE template_id=".$element['template_id']);
+//                if ( !$check_group ) {
+//                    foreach ($eq_goup as $group_id) {
+//                        Db::insert([
+//                            'project_id'=> [$element['project_id'], 'i'],
+//                            'group_id'=>[$group_id["group_id"], 'i'],
+//                            'template_id'=>[$element['template_id'], 'i'],
+//                            'type'=>[$element['type'], 's'],
+//                            'selector'=>[$element['param'], 's']
+//                        ], 'sr_replacements');
+//                    }
+//
+//                }
+//            }
         }
 
 
@@ -195,7 +196,7 @@ class AddElements
 
         $this->fenom->assign('groups', $groups);
         $this->fenom->assign('old_groups', $old_groups);
-        $this->fenom->assign('project_name', $_SESSION['user']['project_name']);
+        $this->fenom->assign('project_name', $project_name);
         $this->fenom->assign('list', $list);
         $this->fenom->assign('project_id', $project_id);
         $this->fenom->display('complete.tpl');
@@ -206,7 +207,7 @@ class AddElements
         $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
 
         $project_id = $project_id[0]['project_id'];
-        $this->logger->info($project_id);
+        //$this->logger->info($project_id);
         $result = Db::delete('sr_templates', 'project_id='.'"'.$project_id.'"');
         Db::delete('sr_groups', 'project_id='.'"'.$project_id.'"');
         Db::delete('sr_replacements', 'project_id='.'"'.$project_id.'"');
@@ -234,7 +235,7 @@ class AddElements
                     ];
                     $groupId = Db::insert($groups_params,'sr_groups');
 
-                    $this->logger->info('---'.$groupId);
+                    //$this->logger->info('---'.$groupId);
 
                 } else if ( $get_param != json_encode($group['replacements']) ) {
 
@@ -259,7 +260,7 @@ class AddElements
             'elements'=>[json_encode($new_group['elements']),'s']
         ];
 
-        $last_id = Db::insert($new_group_params, 'sr_groups');
+        $last_id = Db::insert($new_group_params, 'sr_groups', null, true);
 
         //$this->logger->info($add_new_group);
 
@@ -271,5 +272,51 @@ class AddElements
     public function removeGroup ($group_id) {
         Db::delete('sr_replacements', 'group_id='.$group_id);
         Db::delete('sr_groups', 'group_id='.$group_id);
+    }
+
+    public function saveGroup () {
+        //$this->logger->addWarning('save', $_POST);
+
+        $old_val = Db::select("SELECT elements, channel_name FROM sr_groups WHERE group_id=".$_POST['group_id']);
+
+        $i=1;
+        $y=0;
+
+       // $this->logger->addWarning('old_val', $old_val);
+
+        if ($old_val) {
+            $elements = json_decode($old_val[0]['elements']);
+            foreach ($elements as $key=>$val) {
+                $this->logger->info($val->new_text);
+                $this->logger->info($_POST['element-'.$i]);
+                if ($val->new_text != $_POST['element-'.$i]) {
+                    $val->new_text = $_POST['element-'.$i];
+                    $this->logger->info('111');
+                }
+                else {
+                    $this->logger->info('222');
+                }
+
+                $i++;
+
+            }
+
+
+            $old_val[0]['elements'] = json_encode($elements, JSON_UNESCAPED_UNICODE);
+            $old_val[0]['channel_name'] = $_POST['channel_name'];
+
+            //$this->logger->addWarning('elements', $elements);
+
+            //$this->logger->addWarning('new_val', $old_val);
+
+            Db::update(['channel_name'=>$old_val[0]['channel_name'], 'elements'=>$old_val[0]['elements']], 'sr_groups', 'group_id='.$_POST['group_id']);
+        }
+        else {
+
+        }
+
+        //$old_val
+
+        $this->complete($_POST['project_name']);
     }
 }

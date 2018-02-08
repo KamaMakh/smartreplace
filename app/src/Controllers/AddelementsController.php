@@ -30,7 +30,7 @@ class AddelementsController
         $this->logger = Application::getInstance()->getLogger();
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->addElements = new AddElements($this->fenom, $this->logger);
-
+        //$this->logger->addWarning('site_url', $_GET);
     }
 
     public function init () {
@@ -42,9 +42,9 @@ class AddelementsController
     }
 
     public function insertToDb () {
-       // $this->logger->addWarning('post',$_POST);
+        //$this->logger->addWarning('post',$_POST);
 
-        $result = $this->addElements->insertToDb( $this->method, 'add' );
+        $result = $this->addElements->insertToDb( 'add' );
         if ($result) {
             $this->sendToClient($result);
         }
@@ -55,11 +55,11 @@ class AddelementsController
     }
 
     public function complete () {
-        $this->addElements->complete();
+        $this->addElements->complete($_GET['project_name']);
     }
 
     public function reset () {
-        $this->logger->addWarning('reset get',$_GET);
+        //$this->logger->addWarning('reset get',$_GET);
         $result = $this->addElements->reset($_GET['project_name']);
 
         if ( $result ) {
@@ -81,5 +81,8 @@ class AddelementsController
     }
     public function getScript () {
         $this->addElements->getScript();
+    }
+    public function saveGroup () {
+        $this->addElements->saveGroup();
     }
 }

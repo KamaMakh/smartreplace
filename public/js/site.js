@@ -223,7 +223,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         replaceHref(){
             let elements = document.head.querySelectorAll('link'),
-                url = document.location.search.split('=')[1];
+                url;
+
+            url = document.location.search.split('=')[1];
+            url = url.split('/');
+            url = url[0]+'//'+url[2];
+
+            console.log(url);
 
             for (let i=0; i<elements.length; i++) {
                 let newer = elements[i]['href'].replace(document.location.origin, url);

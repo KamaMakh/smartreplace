@@ -2,17 +2,24 @@
     window.addEventListener('DOMContentLoaded', function () {
         var iframe, data,
             list = $('.result_list'),
-            sr_end = $('.sr-end'),
-            add_group = $('.add-group'),
-            remove_group = $('.remove-group'),
-            $reset = $('.reset-wrap'),
-            $project_name = $reset.find('input').attr('value'),
+            $project_name,
+            completeButton= $('.added-elements-wrap form input.for-p-name'),
             $firstCheck = $('.firstCheck'),
             $dataFields = $('.dataFields').text(),
             $button = $('.burger'),
             $elementsWrap = $('.added-elements-wrap-scroll'),
             $closeButton = $('.close-button');
 
+        $project_name = document.location.search.split('%2F%2F')[1];
+
+        if ($project_name && $project_name.split('%2F').length>1) {
+
+            $project_name = $project_name.split('%2F')[0] +'/'+ $project_name.split('%2F')[1];
+        }
+        //console.log($project_name);
+
+        // $project_name = $project_name.replace(/%2F/g, '/');
+        completeButton.attr('value', $project_name);
         var utilities = {
             replaceForHtmlTags(data) {
                 //console.log(1212+data);
@@ -140,8 +147,8 @@
                 let $groups = $('.group-row'),
                     setGroups = {},
                     project_id = $('.elements-table-wrap').attr('data-project-id'),
-                    i = 0,
-                    y = 0;
+                    i = 0;
+
                 console.log($groups);
                 if ( $groups ) {
                     $groups.each(function(e){
@@ -152,7 +159,7 @@
                             group_id = $(this).attr('data-group-id'),
                             cell_element = $(this).find('.cell-element');
                         //console.log(cell_element);
-
+                        let y = 0;
                         cell_element.each(function(){
                             let eq_param = $(this).find('textarea').attr('data-param'),
                                 eq_new_text = $(this).find('textarea').val(),
@@ -200,6 +207,7 @@
                     newGroup;
 
 
+
                 //console.log(cell_elements);
 
                 cell_elements.each(function(){
@@ -209,11 +217,11 @@
                         eq_type = $(this).find('.textarea').attr('data-template-type');
 
                     cell_elements_obj[i] = {
+                        name: eq_name,
                         template_id: eq_template_id,
                         project_id: $project_id,
-                        param: eq_param,
-                        type: eq_type,
-                        name: eq_name
+                        type:eq_type,
+                        param:eq_param
                     };
                     i++;
                 });
@@ -221,8 +229,7 @@
                 newGroup = {
                     group_id: group_id,
                     project_id: $project_id,
-                    elements: cell_elements_obj,
-                    last_id: last_id
+                    elements: cell_elements_obj
                 };
 
 
@@ -232,7 +239,8 @@
                     data: newGroup,
                     success: function(response) {
                         //console.log(JSON.parse(response));
-                        utilities.buildNewGroup(JSON.parse(response));
+                        utilities.buildNewGroup(JSON.parse(response), true);
+
                     }
                 });
 
@@ -241,10 +249,12 @@
             buildNewGroup(group, new_group=null) {
                 //console.log(group);
                 let table = $('.elements-table-wrap .groups-container'),
-                    last_group = $('.group-row').last().clone(),
+                    last_group = $('.group-row.to-clone').clone(),
                     project_name = last_group.find('.group-row-keyword').attr('title'),
-                    keyword = `${group['group_id']}s${group['project_id']}`;
+                    keyword = `${group['group_id']}s${group['project_id']}`,
+                    textareas = last_group.find('.request-textarea');
                 console.log(last_group);
+
                 table.append(last_group);
 
 
@@ -253,6 +263,19 @@
                     .text(`${project_name}=${keyword}`)
                 last_group.find('.textarea textarea').text('');
                 last_group.find('.cell-name textarea').text('');
+                last_group.addClass('sr-cloned');
+                last_group.removeClass('hidden');
+                last_group.removeClass('to-clone');
+
+                textareas.each(function(){
+                   $(this).attr('old-val','');
+                });
+
+                if ( new_group ) {
+                    let $newGroup_target = $('.sr-cloned .edit-group');
+                    console.log($newGroup_target);
+                    utilities.editGroup($newGroup_target);
+                }
             },
             removeGroup (remove_button) {
                 let group_id = {
@@ -269,6 +292,88 @@
                     }
                 });
                 remove_button.parents('.group-row').remove();
+            },
+            editGroup (target) {
+                let equal_group = target.parents('.group-row'),
+                    siblings_groups = equal_group.siblings('.group-row'),
+                    form = equal_group.find('.edit-group-form'),
+                    remove_icon = equal_group.find('.remove-group'),
+                    group_id = equal_group.attr('data-group-id'),
+                    project_id = $('.elements-table-wrap').attr('data-project-id'),
+                    channel_name = equal_group.find('.cell-name textarea').val(),
+                    textarea = equal_group.find('textarea.request-textarea'),
+                    elements = equal_group.find('.cell-element'),
+                    reject_button = equal_group.find('.sr-save-reject'),
+                    index = 1;
+
+                equal_group.addClass('editing');
+                form.removeClass('hidden');
+                reject_button.removeClass('hidden');
+                remove_icon.addClass('hidden');
+                target.addClass('hidden');
+                textarea.removeAttr('disabled');
+
+                form.prepend(`<input type="hidden" name="elements_count" value="${elements.length}">`);
+                form.find('#form-group-id').attr('value', group_id);
+                form.find('#form-project-id').attr('value', project_id);
+
+
+
+                elements.each(function(){
+                    let $input = $(this).find('textarea');
+                    form.prepend(`<textarea class="hidden element-${index}" name="element-${index}">${$input.val()}</textarea>`);
+                    index++;
+                });
+
+                textarea.on('keyup', function () {
+                    channel_name = equal_group.find('.cell-name textarea').val();
+                    form.find('#form-channel-name').attr('value', channel_name);
+                    index = 1;
+
+                    elements.each(function(){
+                        let $input = $(this).find('textarea');
+                        // console.log(`${$input.val()}`);
+                        form.find(`textarea.element-${index}`).text(`${$input.val()}`);
+                        //form.prepend(`<textarea class="hidden" name="element-${index}">${$input.val()}</textarea>`);
+                        index++;
+                    });
+
+                    form.find('button').removeAttr('disabled');
+
+                });
+                $('.add-group').attr('disabled',true);
+                siblings_groups.find('.edit-group').addClass('hidden');
+            },
+            rejectEditing (target) {
+                let equal_group = target.parents('.group-row'),
+                    textarea = equal_group.find('textarea.request-textarea'),
+                    form = equal_group.find('.edit-group-form'),
+                    edit_icon = equal_group.find('.edit-group'),
+                    remove_icon = equal_group.find('.remove-group'),
+                    reject_button = equal_group.find('.sr-save-reject'),
+                    siblings_groups = equal_group.siblings('.group-row');
+
+                if (!equal_group.hasClass('sr-cloned')) {
+                    //console.log(888);
+                    textarea.each(function(){
+                       // console.log($(this).text());
+                        $(this).val($(this).attr('old-val'));
+                       // console.log($(this).text());
+                        $(this).attr('disabled', true);
+                    });
+                }
+                else {
+                    //console.log(777);
+                    utilities.removeGroup(target);
+                }
+
+                form.addClass('hidden');
+                reject_button.addClass('hidden');
+                equal_group.removeClass('editing');
+                edit_icon.removeClass('hidden');
+                remove_icon.removeClass('hidden');
+                siblings_groups.find('.edit-group').removeClass('hidden');
+                $('.add-group').removeAttr('disabled');
             }
         };
 
@@ -288,7 +393,8 @@
                         type: type,
                         inner: inner,
                         wayToElement: wayToElement,
-                        name: name
+                        name: name,
+                        project_name: $project_name
                     };
                 console.log(params);
                 $.post({
@@ -406,6 +512,16 @@
             else if ( target.hasClass('reset-wrap') ) {
                 utilities.clear($project_name);
                 utilities.buildList();
+            }
+            else if (target.hasClass('edit-group')) {
+                console.log($(target));
+                utilities.editGroup(target);
+
+            }
+            else if (target.hasClass('sr-save-reject')) {
+
+                utilities.rejectEditing(target);
+
             }
         });
 

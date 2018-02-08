@@ -16,7 +16,7 @@
         <form action="/addelements" method="get" class="get_iframe ui mini equal width form ">
             <div class="ui medium header">Введите url сайта</div>
             <div class="two fields">
-                <input required type="text" name="site_url" placeholder="http://example.ru/" class="ui input" rows="2">
+                <input required type="text" name="site_url" placeholder="http://example.ru" class="ui input" rows="2">
                 <input type="hidden" value="iframe">
                 <input type="submit" class="get_iframe_button  ui submit button blue">
             </div>

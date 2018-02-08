@@ -1,4 +1,5 @@
 window.addEventListener('DOMContentLoaded', function() {
+    //console.log('start');
     var module = {
 
         getUrl() {
@@ -41,16 +42,20 @@ window.addEventListener('DOMContentLoaded', function() {
                 .then((data) =>{
 
                     let elements = JSON.parse(data[0]['elements']);
-
+                    console.log(elements);
                     for (let key in elements) {
 
-                        if ( elements[key]['type'] == 'image' ) {
-                            document.querySelector(elements[key]['param']).setAttribute('src', elements[key]['new_text']);
-                        } else if ( elements[key]['type'] == 'text' ) {
-                            document.querySelector(elements[key]['param']).innerText = elements[key]['new_text'];
-                        } else if ( elements[key]['type'] == 'code' ) {
-                            document.querySelector(elements[key]['param']).innerHTML = elements[key]['new_text'];
+                        if (elements[key]['new_text'].length) {
+                            if ( elements[key]['type'] == 'image' ) {
+                                document.querySelector(elements[key]['param']).setAttribute('src', elements[key]['new_text']);
+                            } else if ( elements[key]['type'] == 'text' ) {
+                                document.querySelector(elements[key]['param']).innerText = elements[key]['new_text'];
+                            } else if ( elements[key]['type'] == 'code' ) {
+                                document.querySelector(elements[key]['param']).innerHTML = elements[key]['new_text'];
+                            }
                         }
+
+
                     }
                 })
                 .catch( (error) => {

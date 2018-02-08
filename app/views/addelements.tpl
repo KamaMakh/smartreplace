@@ -23,9 +23,14 @@
 
             </div>
             <div class="buttons-wrap">
-                <a href="/addelements/complete" class="add-elements-button ui submit button blue">
-                    Перейти к редактированию
-                </a>
+                <form action="/addelements/complete" method="get">
+                    <input type="hidden" name="project_name" class="for-p-name" value="">
+                    <button type="submit" class="add-elements-button ui submit button blue" >Перейти к редактированию</button>
+                    {*<a href="/addelements/complete" class="add-elements-button ui submit button blue">*}
+                        {*Перейти к редактированию*}
+                    {*</a>    *}
+                </form>
+
                 <div class="reset-wrap">
                     <input type="hidden" value="{$.session['user']['project_name']}">
                     <i class="reset repeat icon large blue"></i>Сбросить

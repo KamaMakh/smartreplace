@@ -42,7 +42,7 @@ class Db {
             $sql .= " where " . $where;
         }
         self::$logger = Application::getInstance()->getLogger();
-        self::$logger->info($sql);
+        //self::$logger->info($sql);
 
         $stmt = self::$pdo->prepare($sql);
 
@@ -56,7 +56,7 @@ class Db {
             $stmt->bindParam($i, $fieldsVal[0][0], $fieldsVal[0][1]);
         } else {
             foreach($fieldsVal as $val) {
-                self::$logger->addWarning('val',$val);
+               // self::$logger->addWarning('val',$val);
                 if ( strtolower($val[1]) == 's' ) {
                     $val[1] = \PDO::PARAM_STR;
                 } else if ( strtolower($val[1]) == 'i' ) {

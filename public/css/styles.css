@@ -110,7 +110,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .result_list {
@@ -237,7 +237,7 @@ body {
     max-width:100%;
 }
 
-.reset-wrap,.remove-group{
+.reset-wrap,.remove-group, .edit-group{
     cursor: pointer;
 }
 
@@ -261,4 +261,22 @@ body {
 
 .request-textarea{
     width: 100%;
+}
+
+.editing{
+    outline: 2px solid lightgreen;
+}
+
+
+.disbl{
+    position: absolute;
+    display: block;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 999999;
+    pointer-events: none;
+    background: rgba(153, 153, 153, 0.5);
 }
