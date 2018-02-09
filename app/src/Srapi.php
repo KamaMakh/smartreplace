@@ -21,7 +21,7 @@ class Srapi
 
     public function getGroup($get_param) {
 
-        $elemetns = Db::select("SELECT elements FROM sr_groups WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
+        $elemetns = Db::select("SELECT selector,type,new_text FROM sr_replacements WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
         //$this->logger->info("SELECT elements FROM sr_groups WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
         $this->logger->addWarning('elements', $elemetns);
 

@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            fetch(`http://kamron.webx.brn.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
+            fetch(`http://kamron-pc.dyn.frg.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
                 {
                     mode: 'cors',
                     method: 'get',
@@ -40,18 +40,18 @@ window.addEventListener('DOMContentLoaded', function() {
                     return response.json();
                 })
                 .then((data) =>{
-
-                    let elements = JSON.parse(data[0]['elements']);
-                    console.log(elements);
+                    //console.log(data);
+                    let elements = data;
+                    //console.log(elements);
                     for (let key in elements) {
 
                         if (elements[key]['new_text'].length) {
                             if ( elements[key]['type'] == 'image' ) {
-                                document.querySelector(elements[key]['param']).setAttribute('src', elements[key]['new_text']);
+                                document.querySelector(elements[key]['selector']).setAttribute('src', elements[key]['new_text']);
                             } else if ( elements[key]['type'] == 'text' ) {
-                                document.querySelector(elements[key]['param']).innerText = elements[key]['new_text'];
+                                document.querySelector(elements[key]['selector']).innerText = elements[key]['new_text'];
                             } else if ( elements[key]['type'] == 'code' ) {
-                                document.querySelector(elements[key]['param']).innerHTML = elements[key]['new_text'];
+                                document.querySelector(elements[key]['selector']).innerHTML = elements[key]['new_text'];
                             }
                         }
 

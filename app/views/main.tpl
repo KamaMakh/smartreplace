@@ -13,6 +13,10 @@
 
     {else}
 
+        {*{foreach $.session.email}*}
+            {**}
+        {*{/foreach}*}
+
         <form action="/addelements" method="get" class="get_iframe ui mini equal width form ">
             <div class="ui medium header">Введите url сайта</div>
             <div class="two fields">

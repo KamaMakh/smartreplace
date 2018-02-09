@@ -25,7 +25,7 @@ class SrApiController
 
     public function getGroup () {
 
-        $this->logger->addWarning('from_client', $_GET);
+        //$this->logger->addWarning('from_client', $_GET);
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Credentials: true");
         header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');

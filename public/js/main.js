@@ -165,14 +165,16 @@
                                 eq_new_text = $(this).find('textarea').val(),
                                 $type = $(this).find('.textarea').attr('data-template-type'),
                                 template_id= $(this).find('.textarea').attr('data-template-id'),
-                                name = $(this).find('.textarea').attr('data-template-name');
+                                name = $(this).find('.textarea').attr('data-template-name'),
+                                replace_id = $(this).find('.textarea').attr('data-replace-id');
                             replacements[y] = {
                                 name: name,
                                 template_id: template_id,
                                 project_id:project_id,
                                 type:$type,
                                 param:eq_param,
-                                new_text:eq_new_text
+                                new_text:eq_new_text,
+                                replace_id:replace_id
                             };
                             y++;
                         });
@@ -203,7 +205,6 @@
                     cell_elements_obj={},
                     $project_id = $('.elements-table-wrap').attr('data-project-id'),
                     i = 0,
-                    last_id = $('.group-row').last().last().attr('data-group-id'),
                     newGroup;
 
 
@@ -213,11 +214,9 @@
                 cell_elements.each(function(){
                     let eq_param = $(this).find('textarea').attr('data-param'),
                         eq_template_id = $(this).find('.textarea').attr('data-template-id'),
-                        eq_name = $(this).find('.textarea').attr('data-template-name'),
                         eq_type = $(this).find('.textarea').attr('data-template-type');
 
                     cell_elements_obj[i] = {
-                        name: eq_name,
                         template_id: eq_template_id,
                         project_id: $project_id,
                         type:eq_type,
@@ -250,9 +249,11 @@
                 //console.log(group);
                 let table = $('.elements-table-wrap .groups-container'),
                     last_group = $('.group-row.to-clone').clone(),
+                    elements = last_group.find('.cell-element'),
                     project_name = last_group.find('.group-row-keyword').attr('title'),
                     keyword = `${group['group_id']}s${group['project_id']}`,
-                    textareas = last_group.find('.request-textarea');
+                    textareas = last_group.find('.request-textarea'),
+                    i=0;
                 console.log(last_group);
 
                 table.append(last_group);
@@ -260,20 +261,22 @@
 
                 last_group.attr('data-group-id', group['group_id'])
                     .find('.group-row-keyword').attr('data-keyword', keyword)
-                    .text(`${project_name}=${keyword}`)
-                last_group.find('.textarea textarea').text('');
-                last_group.find('.cell-name textarea').text('');
+                    .text(`${project_name}=${keyword}`);
+
+                elements.each(function () {
+                   $(this).find('.textarea').attr('data-replace-id', group['ids'][i]);
+                   i++;
+                });
+
                 last_group.addClass('sr-cloned');
                 last_group.removeClass('hidden');
                 last_group.removeClass('to-clone');
 
-                textareas.each(function(){
-                   $(this).attr('old-val','');
-                });
 
                 if ( new_group ) {
                     let $newGroup_target = $('.sr-cloned .edit-group');
-                    console.log($newGroup_target);
+
+                    console.log(group['ids']);
                     utilities.editGroup($newGroup_target);
                 }
             },
@@ -320,8 +323,11 @@
 
 
                 elements.each(function(){
-                    let $input = $(this).find('textarea');
+                    let $input = $(this).find('textarea'),
+                        replace_id = $(this).find('.textarea').attr('data-replace-id');
+
                     form.prepend(`<textarea class="hidden element-${index}" name="element-${index}">${$input.val()}</textarea>`);
+                    form.prepend(`<input type="hidden" name="replace-id-${index}" value="${replace_id}">`);
                     index++;
                 });
 
