@@ -79,6 +79,9 @@ class AddelementsController
 
         $this->addElements->removeGroup($group_id);
     }
+    public function removeProject(){
+        $this->addElements->removeProject();
+    }
     public function getScript () {
         $this->addElements->getScript();
     }

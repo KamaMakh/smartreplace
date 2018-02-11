@@ -1,8 +1,27 @@
 {extends 'layout.tpl'}
 
 {block 'content'}
-    <div class="ui huge input center aligned segment left" style="display:block; text-align: left;"><div>Вставьте данный скрипт в "head" вашего сайта: </div><br/><div><i> <input style="width:100% !important;" type="text" value='<script src="http://kamron.webx.brn.m//js/client/sr.service.js"></script>'></i></div></div>
-    <select name="project_list"></select>
+    <div class="top-part-wrap">
+        <div class="show-script-wrap ui huge input center aligned segment left" style="display:block; text-align: left;">
+            <div class="show-script-head">Вставьте данный скрипт в "head" вашего сайта: </div><br/>
+            <div>
+                <i> <input style="width:100% !important;" type="text" value='<script src="http://kamron.webx.brn.m//js/client/sr.service.js"></script>'></i>
+            </div>
+        </div>
+
+        <div class="comlete-projects-list">
+            <div class="comlete-projects-list-head">Выберите проект</div>
+            <ul>
+                {foreach $projects as $pr}
+                    <li>
+                        <a {$project_name == $pr['project_name'] ? 'onclick="return false" class="active"': ''} href="/addelements/complete?project_name={$pr['project_name']}">
+                            {$pr['project_name']}
+                        </a>
+                    </li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
     <table class="elements-table-wrap ui celled padded table" data-project-id="{$project_id}">
 
 
@@ -90,13 +109,13 @@
                         </div>
                         <i class="edit-group write icon blue big"></i>
                         <i class="remove-group trash icon blue big"></i>
-                        <button class="sr-save-reject ui red basic button hidden">Отменить</button>
+                        <button class="sr-save-reject ui grey basic button hidden">Отменить</button>
                         <form class="edit-group-form hidden" action="/addelements/saveGroup" method="post">
                             <input type="hidden" name="group_id" id="form-group-id">
                             <input type="hidden" name="project_id" id="form-project-id">
                             <input type="hidden" name="channel_name" id="form-channel-name">
                             <input type="hidden" name="project_name" value="{$project_name}">
-                            <button type="submit" class="sr-save-group ui green basic button" disabled>Сохранить</button>
+                            <button type="submit" class="sr-save-group ui blue basic button" disabled>Сохранить</button>
                         </form>
                         <div style="clear: both"></div>
                     </td>
@@ -139,13 +158,13 @@
                         </div>
                         <i class="edit-group write icon blue big"></i>
                         <i class="remove-group trash icon blue big"></i>
-                        <button class="sr-save-reject ui red basic button hidden">Отменить</button>
+                        <button class="sr-save-reject ui grey basic button hidden">Отменить</button>
                         <form class="edit-group-form hidden" action="/addelements/saveGroup" method="post">
                             <input type="hidden" name="group_id" id="form-group-id">
                             <input type="hidden" name="project_id" id="form-project-id">
                             <input type="hidden" name="channel_name" id="form-channel-name">
                             <input type="hidden" name="project_name" value="{$project_name}">
-                            <button type="submit" class="sr-save-group ui green basic button" disabled>Сохранить</button>
+                            <button type="submit" class="sr-save-group ui blue basic button" disabled>Сохранить</button>
                         </form>
                         <div style="clear: both"></div>
                     </td>

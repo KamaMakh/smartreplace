@@ -14,9 +14,18 @@
 
         if ($project_name && $project_name.split('%2F').length>1) {
 
-            $project_name = $project_name.split('%2F')[0] +'/'+ $project_name.split('%2F')[1];
+            let url_arr = $project_name.split('%2F');
+            $project_name='';
+
+            url_arr.forEach(function(item, key){
+                $project_name = key>0 ? $project_name+'/'+item : $project_name+item;
+            });
+
+            //$project_name = $project_name.split('%2F')[0] +'/'+ $project_name.split('%2F')[1];
         }
-        //console.log($project_name);
+
+        console.log($project_name);
+
 
         // $project_name = $project_name.replace(/%2F/g, '/');
         completeButton.attr('value', $project_name);
@@ -380,6 +389,23 @@
                 remove_icon.removeClass('hidden');
                 siblings_groups.find('.edit-group').removeClass('hidden');
                 $('.add-group').removeAttr('disabled');
+            },
+
+            removeProject(target){
+                let question = confirm('Проект будет удален');
+                if (!question) {
+                    return false;
+                }
+                else {
+                    let project_item = target.parents('.project-item'),
+                        project_id = project_item.attr('data-project-id');
+                    fetch('/addelements/removeproject?project_id='+project_id)
+                        .then(function(response){
+                            console.log(response);
+                            project_item.remove();
+                        });
+                    console.log(project_id);
+                }
             }
         };
 
@@ -528,6 +554,9 @@
 
                 utilities.rejectEditing(target);
 
+            }
+            else if (target.hasClass('remove-project')){
+                utilities.removeProject(target);
             }
         });
 

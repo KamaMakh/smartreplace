@@ -23,7 +23,7 @@ class Srapi
 
         $elemetns = Db::select("SELECT selector,type,new_text FROM sr_replacements WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
         //$this->logger->info("SELECT elements FROM sr_groups WHERE group_id=".$get_param['group_id']. " AND project_id=".$get_param['project_id']);
-        $this->logger->addWarning('elements', $elemetns);
+        $this->logger->addWarning('get', $get_param);
 
         return $elemetns;
     }

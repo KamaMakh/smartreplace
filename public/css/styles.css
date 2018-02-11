@@ -1,5 +1,5 @@
 body {
-    background: #eee;
+    background: #eee !important;
 }
 
 .site-container {
@@ -147,6 +147,9 @@ body {
 .get_iframe{
     width: 500px;
     margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    z-index: 9999;
 }
 
 .registr,.auth{
@@ -264,7 +267,7 @@ body {
 }
 
 .editing{
-    outline: 2px solid lightgreen;
+    outline: 2px solid rgba(33,133,208,0.5);
 }
 
 
@@ -284,4 +287,123 @@ body {
 .sr-save-group, .sr-save-reject {
     width: 115px;
     margin-bottom: 5px !important;
+}
+
+.main-project-list{
+    padding: 0;
+    max-width:960px;
+    display: flex;
+    flex-flow:wrap column;
+}
+
+.main-project-list .project-item{
+    list-style: none;
+    background: #fff;
+    padding: 10px;
+    border:1px solid #85B7D9;
+    margin: 10px 0;
+    display: flex;
+    flex-flow:wrap row;
+}
+.project-item-left{
+    display: flex;
+    flex-flow:wrap column;
+    margin-right: 30px;
+    max-width:400px;
+}
+
+.project-item-right{
+    display: flex;
+    flex-flow:wrap column;
+    margin-left: auto;
+}
+
+.project-item-right .remove-button {
+    text-align: right;
+}
+
+.main-project-list .number{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+.add-new-project-wrap{
+     display: flex;
+    flex-flow: wrap row;
+    margin-bottom: 30px;
+}
+
+.add-new-project-wrap .top-line{
+    display: flex;
+    flex-flow:wrap row;
+}
+
+.add-new-project-wrap .top-line .all-projects-head{
+    margin-right: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.add-new-project-wrap .top-line .add-new-project-button{
+    font-size: 15px;
+}
+
+.add-new-project-button a {
+    color: #fff;
+}
+
+.remove-project{
+    cursor: pointer;
+}
+
+.add-new-element{
+    display: flex;
+    flex-flow:wrap column;
+}
+
+.comlete-projects-list ul{
+    padding: 0;
+    max-width:400px;
+}
+
+.comlete-projects-list ul li{
+    list-style: none;
+}
+
+.comlete-projects-list ul li a {
+    padding: 8px 10px;
+    background: #b9b9bb;
+    display: block;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.comlete-projects-list ul li a.active {
+    background: #68686b;
+}
+
+.show-script-wrap{
+    max-width:500px !important;
+}
+
+.top-part-wrap{
+    display: flex;
+    flex-flow:wrap column;
+}
+
+.show-script-wrap{
+    margin-right: 30px !important;
+}
+
+.show-script-head, .show-script-wrap input{
+    font-size: 15px !important;
+}
+
+.comlete-projects-list-head{
+    text-transform: uppercase;
+    font-weight: bold;
 }

@@ -37,7 +37,7 @@ class AddElements
 
     public function getcontent(string $site_url) {
         $this->site_url = $site_url;
-
+        $this->logger->info($this->site_url);
         $url = explode('/', $this->site_url);
 
         $client  =  new GuzzleHttp\Client();
@@ -48,6 +48,7 @@ class AddElements
 
         $new_url = $url[0] . '//' . $url[2];
         $this->project_name = $new_url;
+       // $this->logger->info($new_url);
    //     $_SESSION['user']['project_name'] = $this->project_name;
 
 //        $page = str_replace('href="', 'href="'.$new_url.'/', $page);
@@ -132,7 +133,7 @@ class AddElements
         }
     }
 
-    public function complete($project_name) {
+    public function complete(string $project_name) {
         //$this->logger->info($project_name.'99999');
         $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name=". "'" .$project_name."'");
         $project_id = $project_id[0]['project_id'];
@@ -191,9 +192,10 @@ class AddElements
 
         $groups = Db::select("SELECT * FROM sr_groups WHERE project_id=$project_id");
         $old_groups = Db::select("SELECT * FROM sr_replacements WHERE project_id=$project_id");
+        $projects = Db::select("SELECT project_id,user_id,project_name FROM sr_projects JOIN sr_users WHERE email="."'".$_SESSION['user']['email']."'");
 
         //$this->logger->addWarning('groups', $eq_goup);
-
+        $this->fenom->assign('projects', $projects);
         $this->fenom->assign('groups', $groups);
         $this->fenom->assign('old_groups', $old_groups);
         $this->fenom->assign('project_name', $project_name);
@@ -351,8 +353,8 @@ class AddElements
         for ($s=0; $s<$_POST['elements_count']; $s++) {
             $old_text = Db::select("SELECT new_text FROM sr_replacements WHERE group_id=".$_POST['group_id']." AND replace_id=".$_POST['replace-id-'.($s+1)]);
 
-            $this->logger->info($old_text['new_text']);
-            $this->logger->info($_POST['element-'.($s+1)]);
+            //$this->logger->info($old_text['new_text']);
+           // $this->logger->info($_POST['element-'.($s+1)]);
 
             if ( $old_text['new_text'] != $_POST['element-'.($s+1)] ) {
                 Db::update(['new_text'=>$_POST['element-'.($s+1)]], 'sr_replacements', 'group_id='.$_POST['group_id'].' AND replace_id='.$_POST['replace-id-'.($s+1)]);
@@ -363,5 +365,10 @@ class AddElements
         //$old_val
 
         $this->complete($_POST['project_name']);
+    }
+    public function removeProject(){
+        $project_id = $_GET['project_id'];
+       // $this->logger->addWarning('get',$_GET);
+        Db::delete('sr_projects', 'project_id='.$project_id);
     }
 }
