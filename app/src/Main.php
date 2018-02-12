@@ -21,7 +21,7 @@ class Main
     }
 
     public function init() {
-        $projects = Db::select("SELECT project_id,user_id,project_name FROM sr_projects JOIN sr_users WHERE email="."'".$_SESSION['user']['email']."'");
+        $projects = Db::select("SELECT project_id,user_id,project_name,code_status FROM sr_projects JOIN sr_users WHERE email="."'".$_SESSION['user']['email']."'");
         //$this->logger->info("SELECT project_id,user_id,project_name FROM sr_projects JOIN sr_users WHERE email=".$_SESSION['user']['email']);
         //$this->logger->addWarning('$projects', $projects);
 

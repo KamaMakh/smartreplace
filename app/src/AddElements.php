@@ -37,7 +37,7 @@ class AddElements
 
     public function getcontent(string $site_url) {
         $this->site_url = $site_url;
-        $this->logger->info($this->site_url);
+        //$this->logger->info($this->site_url);
         $url = explode('/', $this->site_url);
 
         $client  =  new GuzzleHttp\Client();
@@ -48,7 +48,7 @@ class AddElements
 
         $new_url = $url[0] . '//' . $url[2];
         $this->project_name = $new_url;
-       // $this->logger->info($new_url);
+        //$this->logger->info($new_url.'55');
    //     $_SESSION['user']['project_name'] = $this->project_name;
 
 //        $page = str_replace('href="', 'href="'.$new_url.'/', $page);
@@ -61,7 +61,13 @@ class AddElements
         $page = str_replace('src=\'', 'src=\''.$new_url.'/', $page);
         $page = str_replace('src="'.$new_url.'/'.$new_url, 'src="'.$new_url, $page);
 
-
+        $check_script = strstr($page, 'sr.service.js');
+        if($check_script){
+            $this->logger->info(explode('//',$this->site_url)[1]);
+            Db::update(['code_status'=>true],'sr_projects','project_name='."'".explode('//',$this->site_url)[1]."'");
+        }else{
+            //$this->logger->info(9999);
+        }
 
         $page = $page .'<link rel="stylesheet" href="/css/site.css">'
             .'<div class="preload"></div>'
@@ -73,7 +79,7 @@ class AddElements
     public function insertToDb(string $mode) {
         if ( $mode == 'add') {
             if ( $_SESSION['user'] ) {
-                $this->logger->addWarning('post222', $_POST);
+               // $this->logger->addWarning('post222', $_POST);
                 $this->email = $_SESSION['user']['email'];
                 $this->user_id = Db::select("SELECT id FROM sr_users WHERE email='$this->email'");
                 $this->project_name = $_POST['project_name'];
@@ -125,6 +131,8 @@ class AddElements
         } else {
 
             $elements = Db::select("SELECT * FROM sr_templates WHERE project_id =".$project_id);
+
+            $this->logger->addWarning('sendto', $elements);
 
             $this->fenom->assign('firstCheck', false);
             if ( $elements ) {
@@ -370,5 +378,14 @@ class AddElements
         $project_id = $_GET['project_id'];
        // $this->logger->addWarning('get',$_GET);
         Db::delete('sr_projects', 'project_id='.$project_id);
+    }
+    public function removeElement () {
+        //$this->logger->addWarning('gget', $_GET);
+        $project_id = $_GET['project_id'];
+        $template_id = $_GET['template_id'];
+
+        Db::delete('sr_templates', 'template_id='.$template_id);
+
+        $this->sendToClient($project_id);
     }
 }

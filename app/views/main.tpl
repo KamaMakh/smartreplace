@@ -45,9 +45,15 @@
                                 <i class="remove-project trash icon grey large"></i>
                             </div>
                             <div class="check-script">
-                                <a class="check-scrip-button" href="">
-                                    Код не установлен
-                                </a>
+                                {if $project['code_status'] == 1}
+                                    <div class="check-scrip-button blue">
+                                        Код установлен
+                                    </div>
+                                {else}
+                                    <div class="check-scrip-button red">
+                                        Код не установлен
+                                    </div>
+                                {/if}
                             </div>
                         </div>
                     </div>

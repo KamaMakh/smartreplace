@@ -17,7 +17,7 @@
                 <div class="column">
                     <div class="ui segment">Название</div>
                 </div>
-                <div class="column"><div class="ui segment">Содержимое</div></div>
+                <div class="column"><div class="ui segment">Настройки</div></div>
             </div>
             <div class="ui two column stackable grid list">
 
@@ -32,7 +32,6 @@
                 </form>
 
                 <div class="reset-wrap">
-                    <input type="hidden" value="{$.session['user']['project_name']}">
                     <i class="reset repeat icon large blue"></i>Сбросить
                 </div>
             </div>

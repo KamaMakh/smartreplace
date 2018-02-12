@@ -309,6 +309,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (let i = 0; i<selected_elements.length; i++) {
                     selected_elements[i].classList.remove('selected');
                 }
+            } else if ( data.selector ) {
+                let selected_element = document.querySelector(data.selector);
+                console.log(selected_element);
+                selected_element.classList.remove('selected');
             }
         } catch (e) {}
 

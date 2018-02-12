@@ -310,6 +310,12 @@ body {
     flex-flow:wrap column;
     margin-right: 30px;
     max-width:400px;
+    justify-content: center;
+}
+.project-item-mid{
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
 }
 
 .project-item-right{
@@ -356,7 +362,7 @@ body {
     color: #fff;
 }
 
-.remove-project{
+.remove-project,.remove-element,.show-element{
     cursor: pointer;
 }
 
@@ -406,4 +412,20 @@ body {
 .comlete-projects-list-head{
     text-transform: uppercase;
     font-weight: bold;
+}
+.check-scrip-button{
+    display: block;
+    margin-top: 15px;
+    padding: 5px;
+    color: #fff;
+}
+.check-scrip-button:hover{
+    color: #fff;
+}
+.check-scrip-button.red{
+    background: rgba(255,0,0, 0.5);
+}
+
+.check-scrip-button.blue{
+    background: rgba(4,255,0, 0.5);
 }

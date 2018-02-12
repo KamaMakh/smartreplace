@@ -24,7 +24,7 @@
             //$project_name = $project_name.split('%2F')[0] +'/'+ $project_name.split('%2F')[1];
         }
 
-        console.log($project_name);
+        //console.log($project_name);
 
 
         // $project_name = $project_name.replace(/%2F/g, '/');
@@ -61,7 +61,7 @@
                     iframe = document.getElementById('main_iframe');
 
                     if (iframe) {
-                        console.log(123);
+
                         iframe.addEventListener('load', function () {
                             this.contentWindow.postMessage(JSON.stringify({
                                 elements: JSON.stringify(dataFromDb)
@@ -79,10 +79,16 @@
                         var type = dataFromDb[i]['type'],
                             name = dataFromDb[i]['name'],
                             data = dataFromDb[i]['data'],
-                            param = dataFromDb[i]['param'];
+                            param = dataFromDb[i]['param'],
+                            template_id = dataFromDb[i]['template_id'],
+                            project_id = dataFromDb[i]['project_id'];
                         data = this.replaceForHtmlTags(data);
                         //console.log(data);
-                        $container.append('<div class="column">' + name + '</div><div class="column">' + data.substring(0,200) +'...</div>');
+                        $container.append('<div class="column">' + name + '</div>' +
+                            '<div class="column">' +
+                            '<i class="remove-element trash icon grey large" data-template-id="'+template_id+'" data-project-id="'+project_id+'" data-selector="'+param+'"></i>' +
+                            '<i class="show-element compass icon grey large" data-selector="'+param+'"></i>' +
+                            '</div>');
                     }
                 } else {
                     $container.html('');
@@ -91,7 +97,7 @@
             },
             confirmPassword() {
                 //    confirm password
-                console.log(5656565656);
+                //console.log(5656565656);
                 var $password = $("#password");
                 var $confirmPassword = $("#confir_password");
                 var $userName = $("#username");
@@ -158,7 +164,7 @@
                     project_id = $('.elements-table-wrap').attr('data-project-id'),
                     i = 0;
 
-                console.log($groups);
+               // console.log($groups);
                 if ( $groups ) {
                     $groups.each(function(e){
 
@@ -197,7 +203,7 @@
                     });
                     setGroups['project_id'] = project_id;
                 }
-                console.log(setGroups);
+              //  console.log(setGroups);
 
                 $.post({
                     url: '/addelements/insertGroup',
@@ -263,7 +269,7 @@
                     keyword = `${group['group_id']}s${group['project_id']}`,
                     textareas = last_group.find('.request-textarea'),
                     i=0;
-                console.log(last_group);
+              //  console.log(last_group);
 
                 table.append(last_group);
 
@@ -285,7 +291,7 @@
                 if ( new_group ) {
                     let $newGroup_target = $('.sr-cloned .edit-group');
 
-                    console.log(group['ids']);
+                  //  console.log(group['ids']);
                     utilities.editGroup($newGroup_target);
                 }
             },
@@ -294,7 +300,7 @@
                     group_id: remove_button.parents('.group-row').attr('data-group-id')
                 };
 
-                console.log(group_id);
+              //  console.log(group_id);
                 $.post({
                   url: '/addelements/removeGroup',
                     method: 'POST',
@@ -404,8 +410,32 @@
                             console.log(response);
                             project_item.remove();
                         });
-                    console.log(project_id);
+                    //console.log(project_id);
                 }
+            },
+            removeElement(target){
+                console.log(target);
+                let template_id = target.attr('data-template-id'),
+                    project_id = target.attr('data-project-id'),
+                    selector = target.attr('data-selector'),
+                    iframe = document.getElementById('main_iframe');
+
+                fetch(`/addelements/removeElement?template_id=${template_id}&project_id=${project_id}`)
+                    .then (function(response){
+                        return response.json();
+                    })
+                    .then(function(data){
+                        if (iframe) {
+                            //console.log(iframe);
+                            iframe.contentWindow.postMessage(JSON.stringify({
+                                selector: selector
+                            }), '*');
+                        }
+                        utilities.buildList(JSON.stringify(data));
+                        //data_list = data;
+                    });
+
+                //return data_list;
             }
         };
 
@@ -428,7 +458,7 @@
                         name: name,
                         project_name: $project_name
                     };
-                console.log(params);
+               // console.log(params);
                 $.post({
                     url: '/addelements/insertToDb',
                     method: 'POST',
@@ -546,7 +576,7 @@
                 utilities.buildList();
             }
             else if (target.hasClass('edit-group')) {
-                console.log($(target));
+                //console.log($(target));
                 utilities.editGroup(target);
 
             }
@@ -557,6 +587,11 @@
             }
             else if (target.hasClass('remove-project')){
                 utilities.removeProject(target);
+            }
+            else if (target.hasClass('remove-element')) {
+                let dataFromDb = utilities.removeElement(target);
+                //console.log(dataFromDb);
+                //utilities.buildList(dataFromDb);
             }
         });
 

@@ -88,4 +88,7 @@ class AddelementsController
     public function saveGroup () {
         $this->addElements->saveGroup();
     }
+    public function removeElement() {
+        $this->addElements->removeElement();
+    }
 }
