@@ -8,7 +8,7 @@ body {
     flex-grow: 1;
 }
 .site-container .page-content {
-    padding: 0 0 30px;
+    /*padding: 0 0 30px;*/
 }
 
 .mdl-layout__content {
@@ -172,64 +172,100 @@ body {
 }
 
 .added-elements-wrap{
-    width: 460px !important;
+    max-width:100%;
     box-sizing: border-box;
     display: flex;
     top: 20px;
     background: #fff !important;
     min-height: 300px;
-    padding: 10px;
     flex-flow: wrap column;
     font-weight: normal !important;
+    padding: 10px 20px !important;
+    flex-flow: wrap column;
+    height: 100%;
 }
 
-.burger {
-    width: 40px;
-    height: 40px;
-    position: fixed;
-    box-sizing: border-box;
-    top: 20px;
-    left: 20px;
-    /*background: lightblue;*/
-    cursor: pointer;
-    border-radius: 50%
-}
+/*.burger {*/
+    /*width: 40px;*/
+    /*height: 40px;*/
+    /*position: fixed;*/
+    /*box-sizing: border-box;*/
+    /*top: 20px;*/
+    /*left: 20px;*/
+    /*!*background: lightblue;*!*/
+    /*cursor: pointer;*/
+    /*border-radius: 50%*/
+/*}*/
 
-.close-button{
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 20px;
-    left: auto;
-    right:0px;
-    cursor: pointer;
-    border-radius: 50%;
-}
+/*.close-button{*/
+    /*width: 30px;*/
+    /*height: 30px;*/
+    /*position: absolute;*/
+    /*top: 20px;*/
+    /*left: auto;*/
+    /*right:0px;*/
+    /*cursor: pointer;*/
+    /*border-radius: 50%;*/
+/*}*/
 
 .add-elements-button{
-    width: 200px;
+    width: 100%;
     margin: 20px auto 0 !important;
+    padding: 8px !important;
 }
 
-.added-elements-wrap{
+.columns-wrap{
     display: flex;
-    flex-flow: wrap column;
+    flex-flow:wrap row;
 }
+
+.columns-wrap .left-column{
+    margin-right: 20px;
+}
+
+.columns-wrap .right-column{
+    flex:1 0 auto;
+}
+
+.added-elements-wrap form{
+    width: 100%;
+}
+
+.added-elements-wrap .template-name {
+    margin-right: 20px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.added-elements-wrap .list-column{
+    display: flex;
+    flex-flow:wrap row;
+    padding: 5px 0;
+    margin: 5px 0;
+    justify-content: space-between;
+}
+
 .added-elements-wrap .column {
     word-break: break-all !important;
 }
 
 .added-elements-wrap-scroll{
-    max-height: 600px;
-    position: fixed;
-    left: -100%;
-    top: 20px;
-    overflow: auto;
+    /*max-height: 600px;*/
+    /*position: fixed;*/
+    /*left: -100%;*/
+    /*top: 20px;*/
+    /*overflow: auto;*/
+    width: 250px;
+    height: 100%;
 }
 
 .reset{
     margin-left: 20px !important;
     margin-right: 20px;
+}
+
+.added-elements-wrap{
+    width: 100%;
 }
 
 .added-elements-wrap * {
@@ -238,6 +274,12 @@ body {
 
 .list{
     max-width:100%;
+    padding: 5px 10px;
+    margin-top: 20px;
+}
+.left-column .header-text{
+    max-width:100%;
+    padding: 0;
 }
 
 .reset-wrap,.remove-group, .edit-group{
@@ -259,7 +301,7 @@ body {
 }
 
 #content {
-    padding: 20px;
+    padding: 10px 5px 10px 0;
 }
 
 .request-textarea{
@@ -428,4 +470,76 @@ body {
 
 .check-scrip-button.blue{
     background: rgba(4,255,0, 0.5);
+}
+
+
+.elements-table-wrap{
+    background: #fff;
+    padding:20px;
+}
+
+.elements-table-wrap-bot{
+    display: flex;
+    flex-flow: wrap column;
+}
+.elements-table-wrap-bot .group-row{
+    display: flex;
+    flex-flow: wrap row;
+}
+
+.elements-table-wrap-mid{
+    margin-bottom: 50px;
+}
+
+.elements-table-wrap-bot .element-name>div {
+    
+}
+
+.cell-keywords textarea{
+    max-width: 250px;
+    height: 40px;
+}
+
+.l-cl{
+    max-width:300px;
+    margin-right: 20px;
+    /*border-right: 1px solid;*/
+}
+
+.project-name-head{
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.editor_columns{
+    margin: 0 5px;
+    border-right: 1px solid #999;
+}
+
+.editor_columns:first-child{
+    border-left: 1px solid #999;
+}
+.editor_columns:last-child{
+    border-right: none;
+}
+
+.add-group{
+    margin: 20px !important;
+}
+
+.element-name .element-column-value {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.edit-buttons-wrap{
+    display: flex;
+    flex-flow:wrap row;
+}
+
+.group-row-keyword{
+    margin: 10px 0;
 }

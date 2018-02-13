@@ -30,7 +30,7 @@ body:hover{
     width: 300px;
     min-height: 300px;
     z-index: 999999;
-    background: #48adf7;
+    background: grey;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -50,9 +50,9 @@ body:hover{
     display: block;
     margin: 15px auto 0;
     text-align: center;
-    background-color: #f8c842;
+    background-color: #1b659b;
     border: none;
-    color: #1b659b;
+    color: #fff;
     border-radius: 3px;
     text-transform: uppercase;
     font-weight: bold;
@@ -60,21 +60,28 @@ body:hover{
     padding: 8px 20px;
     z-index: 999999;
     cursor: pointer;
-    font-family: "PT Sans";
     width: 260px;
     box-sizing: border-box;
 }
 
 .sandbox-close{
-    position: absolute;
-    top: 10px;
-    left: auto;
-    right: 10px;
-    width: 20px;
-    height: 20px;
-    border: 1px solid white;
     border-radius: 50%;
     cursor: pointer;
+    display: block;
+    margin: 15px auto 0;
+    text-align: center;
+    background-color: #1b659b;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 20px;
+    z-index: 999999;
+    cursor: pointer;
+    width: 260px;
+    box-sizing: border-box;
 }
 
 .sandbox-info {
@@ -85,7 +92,7 @@ body:hover{
 }
 
 .info-title{
-    text-align: center;
+    /*text-align: center;*/
     color: #fff;
 }
 
@@ -100,7 +107,7 @@ body:hover{
     width: 100%;
     font-size: 13px;
     padding: 8px 10px;
-    text-align: center;
+    /*text-align: center;*/
     color: #fff;
     box-sizing: border-box;
 }

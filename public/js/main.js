@@ -29,6 +29,8 @@
 
         // $project_name = $project_name.replace(/%2F/g, '/');
         completeButton.attr('value', $project_name);
+
+
         var utilities = {
             replaceForHtmlTags(data) {
                 //console.log(1212+data);
@@ -61,10 +63,10 @@
                     iframe = document.getElementById('main_iframe');
 
                     if (iframe) {
-
                         iframe.addEventListener('load', function () {
                             this.contentWindow.postMessage(JSON.stringify({
-                                elements: JSON.stringify(dataFromDb)
+                                elements: JSON.stringify(dataFromDb),
+                                last_id: dataFromDb.length
                             }), '*');
                         });
                         // Отправка в iframe
@@ -84,11 +86,9 @@
                             project_id = dataFromDb[i]['project_id'];
                         data = this.replaceForHtmlTags(data);
                         //console.log(data);
-                        $container.append('<div class="column">' + name + '</div>' +
-                            '<div class="column">' +
-                            '<i class="remove-element trash icon grey large" data-template-id="'+template_id+'" data-project-id="'+project_id+'" data-selector="'+param+'"></i>' +
-                            '<i class="show-element compass icon grey large" data-selector="'+param+'"></i>' +
-                            '</div>');
+                        $container.append('<div class="list-column"><div class="template-name"><span>'+ `${i+1}` +'. </span>' + name +
+                            '</div><span><i class="remove-element trash icon grey large" data-template-id="'+template_id+'" data-project-id="'+project_id+'" data-selector="'+param+'"></i>' +
+                            '<i class="show-element compass icon grey large" data-selector="'+param+'"></i></span>' + '</div>');
                     }
                 } else {
                     $container.html('');
@@ -262,7 +262,7 @@
 
             buildNewGroup(group, new_group=null) {
                 //console.log(group);
-                let table = $('.elements-table-wrap .groups-container'),
+                let table = $('.elements-table-wrap'),
                     last_group = $('.group-row.to-clone').clone(),
                     elements = last_group.find('.cell-element'),
                     project_name = last_group.find('.group-row-keyword').attr('title'),
@@ -428,7 +428,8 @@
                         if (iframe) {
                             //console.log(iframe);
                             iframe.contentWindow.postMessage(JSON.stringify({
-                                selector: selector
+                                selector: selector,
+                                last_id: data.length
                             }), '*');
                         }
                         utilities.buildList(JSON.stringify(data));
@@ -436,6 +437,19 @@
                     });
 
                 //return data_list;
+            },
+            run() {
+                let editor_columns = $('.editor_columns'),
+                    reference_width = 0;
+
+                if( editor_columns ) {
+                    editor_columns.each(function(){
+                        reference_width = reference_width < $(this).width()? $(this).width() : reference_width;
+                    });
+                }
+
+                editor_columns.css('width', reference_width);
+                console.log(reference_width);
             }
         };
 
@@ -475,7 +489,7 @@
 
 
 
-
+        utilities.run();
 
 
 

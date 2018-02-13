@@ -4,6 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    let last_id = 1;
 
     var elementCatch = {
 
@@ -11,12 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         sandBox : '<div class="sandbox sandbox-inner">' +
         '<div class="sandbox sandbox-title"> Элемент: <span class="sandbox value"></span></div>' +
-        '<div class="sandbox sandbox-info"><div class="sandbox info-title">Содержимое элемента</div>' +
+        '<div class="sandbox sandbox-info"><div class="sandbox info-title">Текущее значение</div>' +
         '<div class="sandbox info-value"></div>' +
         '</div>'+
-        '<div class="sandbox sandbox-close"></div>' +
-        '<div class="sandbox sandbox-name"> Название подмены: <span style="color:red;">*</span> <input class="sandbox edit-name" value="" placeholder="Введите название" type="text" required name="element-name"></div>'+
-        '<div class="sandbox sandbox-button">Сделать заменяемым</div>' +
+        '<div class="sandbox sandbox-name"> Название элемента: <span style="color:red;">*</span> <input class="sandbox edit-name" value="" placeholder="Введите название" type="text" required name="element-name"></div>'+
+        '<div class="sandbox sandbox-button ui submit button blue small">Сохранить</div>' +
+        '<div class="sandbox sandbox-close">Отмена</div>' +
         '</div>',
 
         onMouseMove(e) {
@@ -136,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 sandBoxWrap.classList.add('sandbox');
                 sandBoxWrap.innerHTML = this.sandBox;
 
+
+
                 if ( docHeight -  (e.clientY + pageYOffset + sandBoxWrap.offsetHeight -20) < 0 ) {
                         currentHeight = e.clientY + pageYOffset -20,
                         excessHeight = currentHeight + sandBoxWrap.offsetHeight  - docHeight;
@@ -183,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     element_obj.data = target.innerHTML;
                 }
 
+                sandBoxWrap.querySelector('.edit-name').setAttribute('value', element_obj.title + (last_id+1));
                 element_name = sandBoxWrap.querySelector('.sandbox .sandbox-name input');
                 element_name = element_name.value;
                 element_obj.name = element_name;
@@ -281,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if ( !editName ) {
                 alert('Назовите подменяемый элемент');
             } else {
-
+                last_id++;
                 document.querySelector(elementCatch.cloud.wayToElement).classList.add('selected');
                 elementCatch.cloud.name = editName;
                 sendToParent.send(elementCatch.cloud);
@@ -295,6 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('message', function(event) {
         try {
             var data = JSON.parse(event.data);
+            console.log(data);
             if (data.elements) {
                 data.elements = JSON.parse(data.elements);
                 for ( let i=0; i<data.elements.length; i++ ) {
@@ -309,10 +314,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (let i = 0; i<selected_elements.length; i++) {
                     selected_elements[i].classList.remove('selected');
                 }
-            } else if ( data.selector ) {
+            }
+            if ( data.selector ) {
                 let selected_element = document.querySelector(data.selector);
-                console.log(selected_element);
+               // console.log(selected_element);
                 selected_element.classList.remove('selected');
+            }
+
+            if(data.last_id) {
+                last_id = data.last_id;
+               // console.log(data.last_id);
             }
         } catch (e) {}
 
