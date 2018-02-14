@@ -235,6 +235,8 @@ body {
     /*margin-right: 20px;*/
     font-size: 15px;
     font-weight: 600;
+    word-break: break-all;
+    max-width: 120px;
 }
 
 .added-elements-wrap .list-column{
@@ -243,6 +245,7 @@ body {
     padding: 5px 0;
     margin: 5px 0;
     justify-content: space-between;
+    align-items:center;
 }
 
 .added-elements-wrap .column {
@@ -551,4 +554,13 @@ body {
 
 .myModalButton{
     margin-top: 20px !important;
+}
+
+.back-to-main{
+    text-align: center;
+    margin-top: 60px;
+}
+
+.back-to-main a {
+    width: 100% !important;
 }

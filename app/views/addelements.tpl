@@ -31,6 +31,10 @@
 
                     </div>
 
+                    <div class="back-to-main">
+                        <a class="ui button grey small" href="/"> Вернуться</a>
+                    </div>
+
                 </div>
             </div>
         </div>
