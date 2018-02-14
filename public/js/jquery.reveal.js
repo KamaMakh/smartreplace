@@ -18,7 +18,7 @@
 ----------------------------*/
 
 	$('a[data-reveal-id]').on('click', function(e) {
-        console.log(444);
+
         e.preventDefault();
         var modalLocation = $(this).attr('data-reveal-id');
         $('#'+modalLocation).reveal($(this).data());
@@ -47,12 +47,12 @@
  Global Variables
 ----------------------------*/
         	var modal = $(this),
-        		topMeasure  = parseInt(modal.css('top'))/2,
+        		topMeasure  = parseInt(modal.css('top'))/10,
 				topOffset = modal.height() + topMeasure,
           		locked = false,
 				modalBG = $('.reveal-modal-bg');
 
-/*---------------------------
+			/*---------------------------
  Create Modal BG
 ----------------------------*/
 			if(modalBG.length == 0) {

@@ -28,4 +28,11 @@ class MainController
         $this->main->init();
     }
 
+    public function checkScript() {
+        $this->main->checkScript($_GET['site_url']);
+        //$this->main->init();
+        header('Location: /');
+        exit;
+    }
+
 }

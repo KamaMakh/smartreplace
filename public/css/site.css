@@ -28,7 +28,7 @@ body:hover{
 .sandbox-wrap{
     position: absolute;
     width: 300px;
-    min-height: 300px;
+    /*min-height: 300px;*/
     z-index: 999999;
     background: grey;
     padding: 20px;
@@ -60,13 +60,10 @@ body:hover{
     padding: 8px 20px;
     z-index: 999999;
     cursor: pointer;
-    width: 260px;
     box-sizing: border-box;
 }
 
-.sandbox-close{
-    border-radius: 50%;
-    cursor: pointer;
+.sandbox-remove-element{
     display: block;
     margin: 15px auto 0;
     text-align: center;
@@ -80,7 +77,23 @@ body:hover{
     padding: 8px 20px;
     z-index: 999999;
     cursor: pointer;
-    width: 260px;
+    box-sizing: border-box;
+}
+
+.sandbox-close{
+    cursor: pointer;
+    display: block;
+    margin: 15px auto 0;
+    text-align: center;
+    background-color: #1b659b;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 20px;
+    z-index: 999999;
     box-sizing: border-box;
 }
 
@@ -102,6 +115,8 @@ body:hover{
     background: #fff;
     color: rgba(0,0,0, .5);
     word-wrap: break-word;
+    max-height: 150px;
+    overflow-y: auto;
 }
 .sandbox .sandbox-name {
     width: 100%;
@@ -130,7 +145,13 @@ pointer-events: none;
 }
 
 .selected{
-    outline: darkolivegreen solid 2px !important;
+    /*outline: darkolivegreen solid 2px !important;*/
 }
 
+
+.sandbox-buttons-wrap{
+    display: flex;
+    flex-flow:wrap row;
+    justify-content:space-between;
+}
 

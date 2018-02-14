@@ -15,10 +15,10 @@
         <div class="add-new-project-wrap">
             <div class="top-line">
                 <div class="all-projects-head">
-                    ВСЕ ПРОЕКТЫ
+                    СПИСОК ПРОЕКТОВ
                 </div>
                 <div class="add-new-project-button ">
-                    <a class="myModalButton ui submit button blue"  data-reveal-id="myModal">Создать проект</a>
+                    <a class="myModalButton ui submit button grey small"  data-reveal-id="myModal">Создать новый проект</a>
                 </div>
             </div>
         </div>
@@ -32,27 +32,27 @@
                         </div>
                         <div class="project-item-mid">
                             <div class="add-new-element">
-                                <a href="/addelements/?site_url=http%3A%2F%2F{$project['project_name']}">
-                                    Разметить страницу
+
+                                <a class="ui button grey small" href="/addelements/?site_url=http%3A%2F%2F{$project['project_name']}">
+                                    Элементы ({$project['templates_count']})
                                 </a>
-                                <a href="/addelements/complete?project_name={$project['project_name']}">
-                                    Наполнить динамический контент
+                                <a class="ui button grey small" href="/addelements/complete?project_name={$project['project_name']}">
+                                    Замены ({$project['groups_count']})
                                 </a>
                             </div>
-                        </div>
-                        <div class="project-item-right">
                             <div class="remove-button">
-                                <i class="remove-project trash icon grey large"></i>
+                                <button class=" remove-project ui submit button grey small">Удалить</button>
+                                {*<i class="remove-project trash icon grey large"></i>*}
                             </div>
                             <div class="check-script">
                                 {if $project['code_status'] == 1}
-                                    <div class="check-scrip-button blue">
+                                    <a title="Нажмите для повторной проверки" href="/main/checkScript?site_url=http://{$project['project_name']}" class="check-scrip-button blue">
                                         Код установлен
-                                    </div>
+                                    </a>
                                 {else}
-                                    <div class="check-scrip-button red">
+                                    <a title="Нажмите для повторной проверки" href="/main/checkScript?site_url=http://{$project['project_name']}" class="check-scrip-button red">
                                         Код не установлен
-                                    </div>
+                                    </a>
                                 {/if}
                             </div>
                         </div>
@@ -79,6 +79,7 @@
         <script>
             $(function(){
                 $('.myModalButton').on('click', function(){
+                    console.log(666);
                     $('#myModal').reveal({
                         animation: 'fade',                   //fade, fadeAndPop, none
                         animationspeed: 300,                       //how fast animtions are
@@ -86,7 +87,7 @@
                         dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
                     });
                     $('.get_iframe').removeClass('hidden');
-                })
+                });
 
             })
         </script>

@@ -182,7 +182,7 @@
 
         {*</div>*}
     </div>
-    <button class="add-group ui blue basic button">Добавить</button>
+    <button class="add-group ui basic button grey">Добавить</button>
     {*<form action="/addelements/insertGroup">*}
     {*<button type="submit" class="sr-end ui green basic button">Сохранить</button>*}
     {*</form>*}

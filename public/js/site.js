@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    let last_id = 1;
+    let last_id = 0;
 
     var elementCatch = {
 
@@ -16,8 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
         '<div class="sandbox info-value"></div>' +
         '</div>'+
         '<div class="sandbox sandbox-name"> Название элемента: <span style="color:red;">*</span> <input class="sandbox edit-name" value="" placeholder="Введите название" type="text" required name="element-name"></div>'+
+        '<div class="sandbox sandbox-buttons-wrap">'+
         '<div class="sandbox sandbox-button ui submit button blue small">Сохранить</div>' +
         '<div class="sandbox sandbox-close">Отмена</div>' +
+        '<div class="sandbox sandbox-remove-element hidden">Удалить</div>' +
+        '</div>'+
         '</div>',
 
         onMouseMove(e) {
@@ -124,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 element_type,
                 element_data;
 
-            if ( !target.classList.contains('sandbox') && !target.classList.contains('selected') ) {
+            if ( !target.classList.contains('sandbox') ) {
 
                 this.removeSandbox();
 
@@ -175,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     element_obj.type = 'text';
                     element_obj.data = target.innerText;
                 }
-                else if ( !this.isEmpty(target.innerText)  && this.isEmpty(target.innerHTML) && target.style.background ) {
+                else if ( this.isEmpty(target.innerText)  && this.isEmpty(target.innerHTML) && target.style.background ) {
                     element_obj.title = 'Картинка';
                     element_obj.type = 'style_image';
                     element_obj.data = target.style.background;
@@ -186,21 +189,33 @@ document.addEventListener('DOMContentLoaded', function() {
                     element_obj.data = target.innerHTML;
                 }
 
-                sandBoxWrap.querySelector('.edit-name').setAttribute('value', element_obj.title + (last_id+1));
-                element_name = sandBoxWrap.querySelector('.sandbox .sandbox-name input');
-                element_name = element_name.value;
-                element_obj.name = element_name;
-
-                sandBoxWrap.querySelector('.sandbox-title .value').innerText = element_obj.title;
-                sandBoxWrap.querySelector('.sandbox .sandbox-info .info-value').innerText = element_obj.data.slice(0,200);
-
-                if ( target.getAttribute('id') ) {
-                    element_obj.wayToElement = '#' + target.getAttribute('id');
-                } else {
-                    element_obj.wayToElement = this.iter(target);
+                if ( target.classList.contains('selected') ){
+                    sandBoxWrap.querySelector('.sandbox-remove-element').classList.remove('hidden');
+                    sandBoxWrap.querySelector('.sandbox-button').classList.add('hidden');
+                    sandBoxWrap.querySelector('.sandbox-info').classList.add('hidden');
+                    sandBoxWrap.querySelector('.edit-name').setAttribute('value', target.getAttribute('data-template-name'));
+                    sandBoxWrap.querySelector('.edit-name').setAttribute('disabled', true);
+                    sandBoxWrap.querySelector('.sandbox-remove-element').setAttribute('data-template-id', target.getAttribute('data-template-id'));
+                    sandBoxWrap.querySelector('.sandbox-remove-element').setAttribute('data-selector', target.getAttribute('data-template-id'));
                 }
-                this.cloud = element_obj;
-                return element_obj;
+                else{
+                    sandBoxWrap.querySelector('.edit-name').setAttribute('value', element_obj.title + (last_id+1));
+                    element_name = sandBoxWrap.querySelector('.sandbox .sandbox-name input');
+                    element_name = element_name.value;
+                    element_obj.name = element_name;
+
+                    sandBoxWrap.querySelector('.sandbox-title .value').innerText = element_obj.title;
+                    sandBoxWrap.querySelector('.sandbox .sandbox-info .info-value').innerText = element_obj.data;
+
+                    if ( target.getAttribute('id') ) {
+                        element_obj.wayToElement = '#' + target.getAttribute('id');
+                    } else {
+                        element_obj.wayToElement = this.iter(target);
+                    }
+                    this.cloud = element_obj;
+                    return element_obj;
+                }
+
             }
         },
 
@@ -239,6 +254,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 let newer = elements[i]['href'].replace(document.location.origin, url);
                 elements[i]['href'] = newer;
             }
+        },
+        scrollBy (distance, duration) {
+
+            let initialY = window.pageYOffset,
+                y = distance,
+                baseY = (initialY + y) * 0.5,
+                difference = initialY - baseY,
+                startTime = performance.now();
+
+            function step() {
+                let normalizedTime = (performance.now() - startTime) / duration;
+                if (normalizedTime > 1) normalizedTime = 1;
+
+                if (initialY > distance){
+                    baseY = (initialY - distance)*(-1);
+                } else if(initialY > distance) {
+                    baseY = (initialY - distance);
+                } else {
+                    return;
+                }
+
+                window.scrollTo(0, baseY + difference * Math.cos(normalizedTime * Math.PI));
+                if (normalizedTime < 1) window.requestAnimationFrame(step);
+            }
+            window.requestAnimationFrame(step);
         }
     };
 
@@ -253,6 +293,12 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.postMessage(JSON.stringify({
                 mode: mode,
                 element: data
+            }), '*');
+        },
+        removeElement(template_id){
+            parent.postMessage(JSON.stringify({
+                mode: 'remove',
+                template_id: template_id
             }), '*');
         }
     };
@@ -279,18 +325,31 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation();
         e.stopImmediatePropagation();
         elementCatch.onClick(e);
-        if (e.target.classList.contains('sandbox-button') ) {
+        if ( e.target.classList.contains('sandbox-button') ) {
 
             var editName = document.querySelector('.sandbox.edit-name').value;
             if ( !editName ) {
                 alert('Назовите подменяемый элемент');
             } else {
+                let element = document.querySelector(elementCatch.cloud.wayToElement);
                 last_id++;
-                document.querySelector(elementCatch.cloud.wayToElement).classList.add('selected');
+               // console.log(element);
+                element.classList.add('selected');
                 elementCatch.cloud.name = editName;
                 sendToParent.send(elementCatch.cloud);
                 elementCatch.removeSandbox();
             }
+        }
+        else if ( e.target.classList.contains('sandbox-remove-element') ) {
+            let template_id = e.target.getAttribute('data-template-id'),
+                prevElements = document.querySelectorAll('.selected')
+            sendToParent.removeElement(template_id);
+            elementCatch.removeSandbox();
+
+            for (let i=0; i<prevElements.length; i++) {
+                prevElements[i]['style']['outline'] = '';
+            }
+
         }
     });
 
@@ -299,12 +358,15 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('message', function(event) {
         try {
             var data = JSON.parse(event.data);
-            console.log(data);
+            //console.log(data);
             if (data.elements) {
                 data.elements = JSON.parse(data.elements);
                 for ( let i=0; i<data.elements.length; i++ ) {
-
-                    document.querySelector(data.elements[i]['param']).classList.add("selected");
+               //     console.log(data.elements[i]);
+                    var eq_element = document.querySelector(data.elements[i]['param']);
+                    eq_element.classList.add("selected");
+                    eq_element.setAttribute('data-template-id', data.elements[i]['template_id']);
+                    eq_element.setAttribute('data-template-name', data.elements[i]['name']);
                 }
             }
             if ( data.clear ) {
@@ -317,13 +379,36 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if ( data.selector ) {
                 let selected_element = document.querySelector(data.selector);
-               // console.log(selected_element);
                 selected_element.classList.remove('selected');
+                selected_element.removeAttribute('data-template-id');
             }
 
             if(data.last_id) {
                 last_id = data.last_id;
-               // console.log(data.last_id);
+            }
+
+            if (data.showElement) {
+                let element = document.querySelector(data.showElement),
+                    parentElement = element.parentElement,
+                    prevElements = document.querySelectorAll('.selected'),
+                    distance = 0;
+
+                while (parentElement.tagName != 'BODY') {
+                    distance += parentElement.offsetTop;
+                    parentElement = parentElement.parentElement;
+                }
+
+
+
+                elementCatch.scrollBy(distance-100, 500);
+
+                for (let i=0; i<prevElements.length; i++) {
+                    prevElements[i]['style']['outline'] = '';
+                }
+
+                element.style.outline = '2px solid';
+
+
             }
         } catch (e) {}
 

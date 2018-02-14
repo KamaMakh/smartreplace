@@ -58,11 +58,12 @@
                 let $container = $('.added-elements-wrap .list');
                 if (dataFromDb && dataFromDb.trim() != 'null'){
                     dataFromDb = JSON.parse(dataFromDb);
-                    console.log(dataFromDb);
+                   // console.log(dataFromDb);
 
                     iframe = document.getElementById('main_iframe');
 
                     if (iframe) {
+                       // console.log(iframe);
                         iframe.addEventListener('load', function () {
                             this.contentWindow.postMessage(JSON.stringify({
                                 elements: JSON.stringify(dataFromDb),
@@ -438,6 +439,18 @@
 
                 //return data_list;
             },
+            showElement(target) {
+                let selector = target.attr('data-selector'),
+                    iframe = document.getElementById('main_iframe');
+
+                target.addClass('active');
+
+                if (iframe) {
+                    iframe.contentWindow.postMessage(JSON.stringify({
+                        showElement: selector
+                    }), '*');
+                }
+            },
             run() {
                 let editor_columns = $('.editor_columns'),
                     reference_width = 0;
@@ -449,7 +462,7 @@
                 }
 
                 editor_columns.css('width', reference_width);
-                console.log(reference_width);
+             //   console.log(reference_width);
             }
         };
 
@@ -471,15 +484,24 @@
                         wayToElement: wayToElement,
                         name: name,
                         project_name: $project_name
-                    };
-               // console.log(params);
+                    },
+                    iframe = document.getElementById('main_iframe');
                 $.post({
                     url: '/addelements/insertToDb',
                     method: 'POST',
                     data: params,
                     success: function(response) {
                         utilities.buildList(response);
-                        //console.log(response);
+                        if (iframe) {
+                            //console.log(iframe);
+                            iframe.contentWindow.postMessage(JSON.stringify({
+                                elements: response,
+                                last_id: data.length
+                            }), '*');
+                        }
+                    },
+                    error(e){
+                        console.log(e);
                     }
                 });
             }
@@ -492,22 +514,7 @@
         utilities.run();
 
 
-
-
-            //iframe = document.getElementById('main_iframe');
-
-            // if (iframe) {
-            //
-            //     // Отправка в iframe
-            //     iframe.addEventListener('load', function () {
-            //         this.contentWindow.postMessage(JSON.stringify({
-            //             test: true
-            //         }), '*');
-            //
-            //     }, false);
-            // }
-
-            var password = document.getElementById('password');
+        var password = document.getElementById('password');
 
             if ( password ) {
                 utilities.confirmPassword();
@@ -545,8 +552,20 @@
             try {
                 data = JSON.parse(event.data);
                 if (data.mode == 'add') {
-                    //console.log(data);
+                    console.log(data);
                     addToList.add(data);
+                }
+                else if (data.mode == 'remove' && data.template_id) {
+                    let remove_buttons = $('.left-column .remove-element'),
+                        remove_button;
+
+                    remove_buttons.each(function(){
+                       if ( $(this).attr('data-template-id') == data.template_id ) {
+                           remove_button = $(this);
+                       }
+                    });
+
+                    utilities.removeElement(remove_button);
                 }
             } catch (e) {
                 console.error(e);
@@ -606,6 +625,9 @@
                 let dataFromDb = utilities.removeElement(target);
                 //console.log(dataFromDb);
                 //utilities.buildList(dataFromDb);
+            }
+            else if ( target.hasClass('show-element') ) {
+                utilities.showElement(target);
             }
         });
 

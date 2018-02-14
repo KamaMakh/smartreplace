@@ -66,7 +66,7 @@ class AddElements
             $this->logger->info(explode('//',$this->site_url)[1]);
             Db::update(['code_status'=>true],'sr_projects','project_name='."'".explode('//',$this->site_url)[1]."'");
         }else{
-            //$this->logger->info(9999);
+            Db::update(['code_status'=>false],'sr_projects','project_name='."'".explode('//',$this->site_url)[1]."'");
         }
 
         $page = $page .'<link rel="stylesheet" href="/css/site.css">'
@@ -112,6 +112,8 @@ class AddElements
                 return $check_project[0]['project_id'];
                 //$this->sendToClient($check_project[0]['project_id']);
 
+            } else {
+                //header('location: /');
             }
 
         }
@@ -202,7 +204,7 @@ class AddElements
         $old_groups = Db::select("SELECT * FROM sr_replacements WHERE project_id=$project_id");
         $projects = Db::select("SELECT project_id,user_id,project_name FROM sr_projects JOIN sr_users WHERE email="."'".$_SESSION['user']['email']."'");
 
-        //$this->logger->addWarning('groups', $eq_goup);
+        $this->logger->addWarning('old_groups', $eq_goup);
         $this->fenom->assign('projects', $projects);
         $this->fenom->assign('groups', $groups);
         $this->fenom->assign('old_groups', $old_groups);
@@ -385,6 +387,7 @@ class AddElements
         $template_id = $_GET['template_id'];
 
         Db::delete('sr_templates', 'template_id='.$template_id);
+        Db::delete('sr_replacements', 'template_id='.$template_id);
 
         $this->sendToClient($project_id);
     }
