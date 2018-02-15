@@ -46,7 +46,7 @@
                                     Элементы ({$project['templates_count']})
                                 </a>
                                 <a class="ui button grey small" href="/addelements/complete?project_id={$project['project_id']}">
-                                    Замены ({$project['groups_count']})
+                                    Замены ({$project['templates_count'] != 0 ? $project['groups_count'] : 0})
                                 </a>
                             </div>
                             <div class="remove-button">
