@@ -22,10 +22,10 @@ class AddelementsController
     private $method;
     private $mode;
     private $addElements;
+    private $project_id;
 
     public function __construct()
     {
-        $this->site_url = $_GET['site_url'];
         $this->fenom = Application::getInstance()->getFenom();
         $this->logger = Application::getInstance()->getLogger();
         $this->method = $_SERVER['REQUEST_METHOD'];
@@ -34,7 +34,7 @@ class AddelementsController
     }
 
     public function init () {
-        $this->addElements->init($this->site_url);
+        $this->addElements->init($_GET['project_id']);
     }
 
     public function getcontent () {
@@ -42,8 +42,6 @@ class AddelementsController
     }
 
     public function insertToDb () {
-        //$this->logger->addWarning('post',$_POST);
-
         $result = $this->addElements->insertToDb( 'add' );
         if ($result) {
             $this->sendToClient($result);
@@ -55,21 +53,21 @@ class AddelementsController
     }
 
     public function complete () {
-        $this->addElements->complete($_GET['project_name']);
+        $this->addElements->complete($_GET['project_id']);
     }
 
-    public function reset () {
-        //$this->logger->addWarning('reset get',$_GET);
-        $result = $this->addElements->reset($_GET['project_name']);
-
-        if ( $result ) {
-            $this->sendToClient($result);
-        }
-    }
-    public function insertGroup() {
-        $groups = $_POST;
-        $this->addElements->insertGroup($groups);
-    }
+//    public function reset () {
+//        //$this->logger->addWarning('reset get',$_GET);
+//        $result = $this->addElements->reset($_GET['project_name']);
+//
+//        if ( $result ) {
+//            $this->sendToClient($result);
+//        }
+//    }
+//    public function insertGroup() {
+//        $groups = $_POST;
+//        $this->addElements->insertGroup($groups);
+//    }
     public function addNewGroup () {
         $new_group = $_POST;
         echo $this->addElements->addNewGroup($new_group);

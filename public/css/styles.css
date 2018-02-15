@@ -236,7 +236,7 @@ body {
     font-size: 15px;
     font-weight: 600;
     word-break: break-all;
-    max-width: 120px;
+    max-width: 130px;
 }
 
 .added-elements-wrap .list-column{
@@ -563,4 +563,28 @@ body {
 
 .back-to-main a {
     width: 100% !important;
+}
+
+.main-project-list .number form{
+    padding: 5px 0;
+}
+.main-project-list .number .edit-project-name:hover{
+    cursor: pointer;
+    outline: 1px dashed grey;
+}
+
+.main-project-list .number input {
+    background: none;
+    border:none !important;
+    color: #000 !important;
+    padding-left: 0 !important;
+}
+
+.edit-name{
+    outline: 1px dashed grey;
+}
+
+.edit-name-reject{
+    margin-right: 0 !important;
+    margin-left: auto !important;
 }

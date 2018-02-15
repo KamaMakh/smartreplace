@@ -29,10 +29,42 @@ class AddElements
     }
 
 
-    function init(string $site_url) {
-        $this->site_url = explode('//',$site_url)[1];
-        $this->sendToClient(null, $this->site_url);
-        $this->fenom->display('addelements.tpl');
+    function init(int $project_id=null) {
+        if ( $project_id ) {
+
+
+          //  $this->email = $_SESSION['user']['email'];
+            //$this->user_id = Db::select("SELECT id FROM sr_users WHERE email='$this->email'");
+
+           // $this->logger->addWarning('post', $_POST);
+
+//        if(!$project_id){
+//
+//            $check_name = $_POST['site_url'];
+//            $this->logger->info($check_name);
+//            $this->logger->info("SELECT project_id FROM sr_projects WHERE project_name="."'$check_name'");
+//            $check_project = Db::select("SELECT project_id FROM sr_projects WHERE project_name="."'$check_name'");
+//
+//            if ( !$check_project && strlen(strval($check_project))>0) {
+//                $data_fields = [
+//                    'user_id'=> [$this->user_id[0]['id'], 'i'],
+//                    'project_name'=> [$check_name, 's']
+//                ];
+//                $project_id = Db::insert($data_fields, 'sr_projects', null, true);
+//            } else {
+//                $project_id = $check_project[0]['project_id'];
+//                $this->logger->addWarning([0]['project_id']);
+//            }
+//        }
+
+            $site_url = Db::select('SELECT project_name FROM sr_projects WHERE project_id=' . $project_id)[0]['project_name'];
+
+            if ($site_url && strlen($site_url) > 0) {
+                $this->sendToClient(null, $site_url);
+                $this->fenom->assign('site_url', $site_url);
+                $this->fenom->display('addelements.tpl');
+            }
+        }
     }
 
     public function getcontent(string $site_url) {
@@ -63,7 +95,7 @@ class AddElements
 
         $check_script = strstr($page, 'sr.service.js');
         if($check_script){
-            $this->logger->info(explode('//',$this->site_url)[1]);
+            //$this->logger->info(explode('//',$this->site_url)[1]);
             Db::update(['code_status'=>true],'sr_projects','project_name='."'".explode('//',$this->site_url)[1]."'");
         }else{
             Db::update(['code_status'=>false],'sr_projects','project_name='."'".explode('//',$this->site_url)[1]."'");
@@ -79,28 +111,15 @@ class AddElements
     public function insertToDb(string $mode) {
         if ( $mode == 'add') {
             if ( $_SESSION['user'] ) {
-               // $this->logger->addWarning('post222', $_POST);
-                $this->email = $_SESSION['user']['email'];
-                $this->user_id = Db::select("SELECT id FROM sr_users WHERE email='$this->email'");
-                $this->project_name = $_POST['project_name'];
-                //$this->fenom->assign('project_name', $this->project_name);
-                $check_project = Db::select("SELECT * FROM sr_projects WHERE project_name='$this->project_name' ");
 
-                if ( !$check_project ) {
-                    $data_fields = [
-                        'user_id'=> [$this->user_id[0]['id'], 'i'],
-                        'project_name'=> [$this->project_name, 's']
-                    ];
+                $project_id = $_POST['project_id'];
+                $project_name = Db::select('SELECT project_name FROM sr_projects WHERE project_id='.$project_id)[0]['project_name'];
 
-                    Db::insert($data_fields, 'sr_projects');
-                    $check_project = Db::select("SELECT * FROM sr_projects WHERE project_name='$this->project_name' ");
-                }
-
-                $check_template = Db::select("SELECT * FROM sr_templates WHERE project_id=".$check_project[0]['project_id']." and param ="."'".$_POST['wayToElement']."'");
+                $check_template = Db::select("SELECT * FROM sr_templates WHERE project_id=".$project_id." and param ="."'".$_POST['wayToElement']."'");
 
                 if ( !$check_template ) {
                     $data_fields = [
-                        'project_id'=> [$check_project[0]['project_id'], 'i'],
+                        'project_id'=> [$project_id, 'i'],
                         'param'=> [$_POST['wayToElement'], 's'],
                         'type'=> [$_POST['type'], 's'],
                         'data'=> [$_POST['inner'], 's'],
@@ -109,7 +128,8 @@ class AddElements
                     //$this->logger->addWarning('data-fields', $data_fields);
                     Db::insert($data_fields, 'sr_templates');
                 }
-                return $check_project[0]['project_id'];
+               // $this->logger->info($project_id);
+                return $project_id;
                 //$this->sendToClient($check_project[0]['project_id']);
 
             } else {
@@ -123,7 +143,6 @@ class AddElements
 
             $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
             $project_id = $project_id[0]['project_id'];
-           // $this->logger->info("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
 
             $elements = Db::select("SELECT * FROM sr_templates WHERE project_id =".$project_id);
 
@@ -134,29 +153,30 @@ class AddElements
 
             $elements = Db::select("SELECT * FROM sr_templates WHERE project_id =".$project_id);
 
-            $this->logger->addWarning('sendto', $elements);
-
             $this->fenom->assign('firstCheck', false);
             if ( $elements ) {
+                //$this->logger->addWarning('rrr',$elements);
                 echo json_encode($elements);
+            } else {
+               // echo json_encode([]);
             }
         }
     }
 
-    public function complete(string $project_name) {
-        //$this->logger->info($project_name.'99999');
-        $project_id = Db::select("SELECT project_id FROM sr_projects WHERE project_name=". "'" .$project_name."'");
-        $project_id = $project_id[0]['project_id'];
-        $list = Db::select("SELECT name,template_id,project_id,type,param,new_text FROM sr_templates WHERE project_id = $project_id");
-        $eq_goup = Db::select("SELECT group_id FROM sr_groups WHERE project_id=$project_id");
+    public function complete(int $project_id) {
 
+        //$this->logger->info($project_id);
+
+        $list = Db::select("SELECT name,template_id,project_id,type,param FROM sr_templates WHERE project_id = $project_id");
+        $eq_group = Db::select("SELECT group_id FROM sr_groups WHERE project_id=$project_id");
+        $project_name = Db::select('SELECT project_name FROM sr_projects WHERE project_id='.$project_id)[0]['project_name'];
 
 
         //$this->fenom->assign('elements',$eq_goup[0]['elements']);
 
-        //$this->logger->addWarning('pre_groups', $list);
+       // $this->logger->info("SELECT name,template_id,project_id,type,param,new_text FROM sr_templates WHERE project_id = $project_id");
 
-        if ( !$eq_goup ) {
+        if ( !$eq_group ) {
             $insertId = Db::insert([
                 'project_id' => [$project_id, 'i'],
                 'elements' => [ json_encode($list), 's']
@@ -183,7 +203,7 @@ class AddElements
             foreach ( $list as $element ) {
                 $check_group = Db::select("SELECT group_id FROM sr_replacements WHERE template_id=".$element['template_id']);
                 if ( !$check_group ) {
-                    foreach ($eq_goup as $group_id) {
+                    foreach ($eq_group as $group_id) {
                         Db::insert([
                             'project_id'=> [$element['project_id'], 'i'],
                             'group_id'=>[$group_id["group_id"], 'i'],
@@ -192,7 +212,6 @@ class AddElements
                             'selector'=>[$element['param'], 's']
                         ], 'sr_replacements');
                     }
-
                 }
             }
         }
@@ -204,7 +223,7 @@ class AddElements
         $old_groups = Db::select("SELECT * FROM sr_replacements WHERE project_id=$project_id");
         $projects = Db::select("SELECT project_id,user_id,project_name FROM sr_projects JOIN sr_users WHERE email="."'".$_SESSION['user']['email']."'");
 
-        $this->logger->addWarning('old_groups', $eq_goup);
+       // $this->logger->addWarning('old_groups', $eq_goup);
         $this->fenom->assign('projects', $projects);
         $this->fenom->assign('groups', $groups);
         $this->fenom->assign('old_groups', $old_groups);
@@ -319,7 +338,7 @@ class AddElements
         $backToClient = Db::select('SELECT project_id,group_id FROM sr_groups WHERE group_id='.$last_group_id);
         //$backToClient2 = Db::select('SELECT project_id,group_id FROM sr_groups, sr_replacements WHERE group_id='.$last_group_id);
         $backToClient[0]['ids'] = $ids;
-        $this->logger->addWarning('join', $backToClient[0]);
+        //$this->logger->addWarning('join', $backToClient[0]);
 
         return json_encode($backToClient[0]);
     }
@@ -330,7 +349,7 @@ class AddElements
     }
 
     public function saveGroup () {
-        //$this->logger->addWarning('save', $_POST);
+       // $this->logger->addWarning('save', $_POST);
 
         $old_val_group = Db::select("SELECT elements, channel_name FROM sr_groups WHERE group_id=".$_POST['group_id']);
         $old_val_replacements = Db::select("SELECT replace_id,template_id,new_text FROM sr_replacements WHERE group_id =".$_POST['group_id']);
@@ -343,14 +362,11 @@ class AddElements
             foreach ($elements as $key=>$val) {
                 if ($val->new_text != $_POST['element-'.$i]) {
                     $val->new_text = $_POST['element-'.$i];
-                   // $this->logger->info('111');
                 }
                 else {
-                   // $this->logger->info('222');
+
                 }
-
                 $i++;
-
             }
             $old_val_group[0]['elements'] = json_encode($elements, JSON_UNESCAPED_UNICODE);
 
@@ -374,7 +390,7 @@ class AddElements
 
         //$old_val
 
-        $this->complete($_POST['project_name']);
+        $this->complete($_POST['project_id']);
     }
     public function removeProject(){
         $project_id = $_GET['project_id'];

@@ -116,6 +116,7 @@ class Db {
         $sql = "UPDATE $table_name SET $request";
         //self::$logger->info($sql);
 
+
         $stmt = self::$pdo->prepare($sql);
         return $stmt->execute();
     }

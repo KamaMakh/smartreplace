@@ -3,6 +3,7 @@
         var iframe, data,
             list = $('.result_list'),
             $project_name,
+            project_id = location.search.split('=')[1],
             completeButton= $('.added-elements-wrap form input.for-p-name'),
             $firstCheck = $('.firstCheck'),
             $dataFields = $('.dataFields').text(),
@@ -10,25 +11,7 @@
             $elementsWrap = $('.added-elements-wrap-scroll'),
             $closeButton = $('.close-button');
 
-        $project_name = document.location.search.split('%2F%2F')[1];
-
-        if ($project_name && $project_name.split('%2F').length>1) {
-
-            let url_arr = $project_name.split('%2F');
-            $project_name='';
-
-            url_arr.forEach(function(item, key){
-                $project_name = key>0 ? $project_name+'/'+item : $project_name+item;
-            });
-
-            //$project_name = $project_name.split('%2F')[0] +'/'+ $project_name.split('%2F')[1];
-        }
-
-        //console.log($project_name);
-
-
-        // $project_name = $project_name.replace(/%2F/g, '/');
-        completeButton.attr('value', $project_name);
+        completeButton.attr('value', project_id);
 
 
         var utilities = {
@@ -263,7 +246,7 @@
 
             buildNewGroup(group, new_group=null) {
                 //console.log(group);
-                let table = $('.elements-table-wrap'),
+                let table = $('.elements-table-wrap .elements-table-wrap-bot'),
                     last_group = $('.group-row.to-clone').clone(),
                     elements = last_group.find('.cell-element'),
                     project_name = last_group.find('.group-row-keyword').attr('title'),
@@ -348,7 +331,7 @@
                 });
 
                 textarea.on('keyup', function () {
-                    channel_name = equal_group.find('.cell-name textarea').val();
+                    channel_name = equal_group.find('.cell-keywords textarea').val();
                     form.find('#form-channel-name').attr('value', channel_name);
                     index = 1;
 
@@ -423,17 +406,33 @@
 
                 fetch(`/addelements/removeElement?template_id=${template_id}&project_id=${project_id}`)
                     .then (function(response){
-                        return response.json();
+                        console.log(response);
+                        let data_json = response.json();
+                        return data_json ? data_json : false;
                     })
                     .then(function(data){
-                        if (iframe) {
-                            //console.log(iframe);
-                            iframe.contentWindow.postMessage(JSON.stringify({
-                                selector: selector,
-                                last_id: data.length
-                            }), '*');
+                        if (data) {
+                            if (iframe) {
+                                //console.log(iframe);
+                                iframe.contentWindow.postMessage(JSON.stringify({
+                                    selector: selector,
+                                    last_id: data.length
+                                }), '*');
+                            }
+                            console.log(data);
+                            utilities.buildList(JSON.stringify(data));
                         }
-                        utilities.buildList(JSON.stringify(data));
+                        else {
+                            if (iframe) {
+                                //console.log(iframe);
+                                iframe.contentWindow.postMessage(JSON.stringify({
+                                    last_id: 0
+                                }), '*');
+                            }
+                            console.log(data);
+                            utilities.buildList('');
+                        }
+
                         //data_list = data;
                     });
 
@@ -451,6 +450,23 @@
                     }), '*');
                 }
             },
+
+            editProjectName(target){
+                let $formWrap = target.parents('.number'),
+                    $buttons = $formWrap.find('button');
+                target.find('input').removeAttr('disabled');
+                $buttons.removeClass('hidden');
+                $formWrap.find('.edit-project-name').addClass('edit-name');
+            },
+
+            rejectEditingName(target){
+                let $formWrap = target.parents('.number'),
+                    $buttons = $formWrap.find('button');
+                $formWrap.find('input').attr('disabled', true);
+                $buttons.addClass('hidden');
+                $formWrap.find('.edit-project-name').removeClass('edit-name');
+            },
+
             run() {
                 let editor_columns = $('.editor_columns'),
                     reference_width = 0;
@@ -477,13 +493,14 @@
                     inner = data.element.data,
                     wayToElement = data.element.wayToElement,
                     name = data.element.name,
+                    project_id = location.search.split('=')[1],
                     params = {
                         mode: mode,
                         type: type,
                         inner: inner,
                         wayToElement: wayToElement,
                         name: name,
-                        project_name: $project_name
+                        project_id: project_id
                     },
                     iframe = document.getElementById('main_iframe');
                 $.post({
@@ -605,7 +622,7 @@
 
             }
             else if ( target.hasClass('reset-wrap') ) {
-                utilities.clear($project_name);
+                utilities.clear();
                 utilities.buildList();
             }
             else if (target.hasClass('edit-group')) {
@@ -628,6 +645,12 @@
             }
             else if ( target.hasClass('show-element') ) {
                 utilities.showElement(target);
+            }
+            else if (target.hasClass('edit-project-name')) {
+                utilities.editProjectName(target);
+            }
+            else if (target.hasClass('edit-name-reject')) {
+                utilities.rejectEditingName(target)
             }
         });
 

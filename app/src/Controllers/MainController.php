@@ -34,5 +34,12 @@ class MainController
         header('Location: /');
         exit;
     }
+    public function addNewProject (){
+        $this->main->addNewProject($_GET['project_id']);
+    }
+
+    public function editProjectName(){
+        $this->main->editProjectName();
+    }
 
 }

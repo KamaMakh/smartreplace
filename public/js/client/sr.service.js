@@ -14,19 +14,26 @@ window.addEventListener('DOMContentLoaded', function() {
                         return item;
                     }
                 });
-                get_params = get_params[0].split('=')[1].split('s');
 
-                return {
-                    group_id: get_params[0],
-                    project_id: get_params[1],
-                    project_name: project_name
+                console.log(get_params);
+                if (get_params[0]) {
+                    get_params = get_params[0].split('=')[1].split('s');
+
+                    return {
+                        group_id: get_params[0],
+                        project_id: get_params[1],
+                        project_name: project_name
+                    }
                 }
+
+            } else {
+                return false;
             }
 
         },
 
         requestParam(data) {
-            fetch(`http://kamron.webx.brn.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
+            fetch(`http://kamron-pc.dyn.frg.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
                 {
                     mode: 'cors',
                     method: 'get',
@@ -64,15 +71,16 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         check_script(data){
-            fetch(`http://kamron.webx.brn.m/srapi/getGroup?check_script=${true}&project_id=${data['project_id']}`)
+            fetch(`http://kamron-pc.dyn.frg.m/srapi/getGroup?check_script=${true}&project_id=${data['project_id']}`)
                 .then(function(resolve){
                     //console.log(resolve);
                 })
         },
         run() {
             let get_params = this.getUrl();
-            this.check_script(get_params);
+
             if (get_params) {
+                this.check_script(get_params);
                 this.requestParam(get_params);
             }
 

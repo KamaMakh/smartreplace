@@ -23,7 +23,7 @@ class Main
     }
 
     public function init() {
-        $projects = Db::select("SELECT project_id,user_id,project_name,code_status FROM sr_projects JOIN sr_users WHERE email="."'".$_SESSION['user']['email']."'");
+        $projects = Db::select("SELECT project_id,user_id,project_name,code_status,project_alias FROM sr_projects JOIN sr_users WHERE email="."'".$_SESSION['user']['email']."'");
         //$this->logger->info("SELECT project_id,user_id,project_name FROM sr_projects JOIN sr_users WHERE email=".$_SESSION['user']['email']);
 
 
@@ -36,7 +36,7 @@ class Main
             //$this->logger->addWarning('$project', $project);
         }
 
-        $this->logger->addWarning('$projects', $projects);
+        //$this->logger->addWarning('$projects', $projects);
 
         $this->fenom->assign('projects', $projects);
         $this->fenom->display('main.tpl');
@@ -58,6 +58,43 @@ class Main
         }else{
             Db::update(['code_status'=>false],'sr_projects','project_name='."'".explode('//',$site_url)[1]."'");
         }
+    }
+
+    public function addNewProject (int $project_id=null) {
+        $email = $_SESSION['user']['email'];
+        $user_id = Db::select("SELECT id FROM sr_users WHERE email='$email'")[0]['id'];
+
+        //$this->logger->addWarning('post',$_POST);
+
+        if(!$project_id){
+
+            $check_name = $_POST['site_url'];
+            $check_project = Db::select("SELECT project_id FROM sr_projects WHERE project_name="."'$check_name'");
+
+            if ( !$check_project && strlen(strval($check_project))>0) {
+                $projects_count = count(Db::select("SELECT project_id FROM sr_projects WHERE user_id =".$user_id));
+
+                $data_fields = [
+                    'user_id'=> [$user_id, 'i'],
+                    'project_name'=> [$check_name, 's'],
+                    'project_alias'=> ['Проект №'.($projects_count+1), 's']
+                ];
+                $project_id = Db::insert($data_fields, 'sr_projects', null, true);
+            } else {
+                $project_id = $check_project[0]['project_id'];
+               // $this->logger->addWarning([0]['project_id']);
+            }
+        }
+
+        header ('location: /');
+        exit;
+    }
+
+    public function editProjectName(){
+        //$this->logger->addWarning('post',$_POST);
+        Db::update(['project_alias'=>$_POST['project_new_name']], 'sr_projects', 'project_id='.$_POST['project_id']);
+        header ('location: /');
+        exit;
     }
 
 }

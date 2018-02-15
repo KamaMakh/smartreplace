@@ -241,19 +241,19 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         replaceHref(){
-            let elements = document.head.querySelectorAll('link'),
-                url;
-
-            url = document.location.search.split('=')[1];
-            url = url.split('/');
-            url = url[0]+'//'+url[2];
-
-            console.log(url);
-
-            for (let i=0; i<elements.length; i++) {
-                let newer = elements[i]['href'].replace(document.location.origin, url);
-                elements[i]['href'] = newer;
-            }
+            // let elements = document.head.querySelectorAll('link'),
+            //     url;
+            //
+            // url = document.location.search.split('=')[1];
+            // url = url.split('/');
+            // url = url[0]+'//'+url[2];
+            //
+            // console.log(url);
+            //
+            // for (let i=0; i<elements.length; i++) {
+            //     let newer = elements[i]['href'].replace(document.location.origin, url);
+            //     elements[i]['href'] = newer;
+            // }
         },
         scrollBy (distance, duration) {
 
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    elementCatch.replaceHref();
+    //elementCatch.replaceHref();
 
 
 
