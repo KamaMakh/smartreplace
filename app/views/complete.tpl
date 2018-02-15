@@ -138,6 +138,8 @@
 
 
     </div>
-    <button class="add-group ui basic button grey">Добавить</button>
+    {if $old_groups}
+        <button class="add-group ui basic button grey">Добавить</button>
+    {/if}
 
 {/block}
