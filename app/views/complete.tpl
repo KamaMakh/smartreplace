@@ -30,6 +30,7 @@
 
 
             {foreach $groups as $key=>$value}
+                {if $old_groups}
                 <div class="elements-list row group-row" data-group-id="{$value['group_id']}">
                             <div class="cell-keywords column l-cl" data-type-column="keyword"  style=";vertical-align: top">
 
@@ -72,6 +73,9 @@
                             {/foreach}
                         </div>
                 </div>
+                {else}
+                    <h2>Отсуствуют элементы для замены</h2>
+                {/if}
             {/foreach}
 
             {*--------------------start clone----------------------*}
