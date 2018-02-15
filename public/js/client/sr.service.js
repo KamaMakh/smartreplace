@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            fetch(`http://http://kamron.webx.brn.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
+            fetch(`http://kamron.webx.brn.m/srapi/getGroup?group_id=${data['group_id']}&project_id=${data['project_id']}&project_name=${data['project_name']}`,
                 {
                     mode: 'cors',
                     method: 'get',
@@ -71,7 +71,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         check_script(data){
-            fetch(`http://http://kamron.webx.brn.m/srapi/getGroup?check_script=${true}&project_id=${data['project_id']}`)
+            fetch(`http://kamron.webx.brn.m/srapi/getGroup?check_script=${true}&project_id=${data['project_id']}`)
                 .then(function(resolve){
                     //console.log(resolve);
                 })
