@@ -406,12 +406,12 @@
 
                 fetch(`/addelements/removeElement?template_id=${template_id}&project_id=${project_id}`)
                     .then (function(response){
-                        console.log(response);
-                        let data_json = response.json();
-                        return data_json ? data_json : false;
+                        //console.log(response.json());
+                        return response.json();
                     })
                     .then(function(data){
                         if (data) {
+                            console.log(data);
                             if (iframe) {
                                 //console.log(iframe);
                                 iframe.contentWindow.postMessage(JSON.stringify({

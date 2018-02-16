@@ -158,7 +158,7 @@ class AddElements
                 //$this->logger->addWarning('rrr',$elements);
                 echo json_encode($elements);
             } else {
-               // echo json_encode([]);
+                echo json_encode(['clear'=>true]);
             }
         }
     }
