@@ -1,0 +1,157 @@
+.smarthover{
+    outline: #5ab1ef solid 2px !important;
+    cursor: pointer;
+}
+
+.preload{
+    background-image: url(../images/loader.gif);
+    background-color: rgba(0, 0, 0, 0.95);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+html{
+    overflow: hidden;
+}
+
+body:hover{
+    cursor: pointer;
+}
+
+.sandbox-wrap{
+    position: absolute;
+    width: 300px;
+    /*min-height: 300px;*/
+    z-index: 999999;
+    background: grey;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sandbox-wrap:hover{
+    cursor: default ;
+}
+
+.sandbox-title{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+}
+
+.sandbox-button{
+    display: block;
+    margin: 15px auto 0;
+    text-align: center;
+    background-color: #1b659b;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 20px;
+    z-index: 999999;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.sandbox-remove-element{
+    display: block;
+    margin: 15px auto 0;
+    text-align: center;
+    background-color: #1b659b;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 20px;
+    z-index: 999999;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.sandbox-close{
+    cursor: pointer;
+    display: block;
+    margin: 15px auto 0;
+    text-align: center;
+    background-color: #1b659b;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 20px;
+    z-index: 999999;
+    box-sizing: border-box;
+}
+
+.sandbox-info {
+    margin: 15px 0;
+    font-size: 13px;
+    padding: 8px 10px;
+    display: block;
+}
+
+.info-title{
+    /*text-align: center;*/
+    color: #fff;
+}
+
+.info-value{
+    margin-top: 10px;
+    padding: 10px;
+    color: #fff;
+    word-wrap: break-word;
+    max-height: 150px;
+    border: 1px solid #fff;
+    overflow-y: auto;
+}
+.sandbox .sandbox-name {
+    width: 100%;
+    font-size: 13px;
+    padding: 8px 10px;
+    /*text-align: center;*/
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.sandbox .sandbox-name input{
+    width: 100%;
+    color: rgba(0,0,0, .5);
+    padding: 10px;
+    margin-top: 10px;
+    border:none;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+div {
+    pointer-events: all;
+}
+svg path, p *{
+pointer-events: none;
+}
+
+.selected{
+    /*outline: darkolivegreen solid 2px !important;*/
+}
+
+
+.sandbox-buttons-wrap{
+    display: flex;
+    flex-flow:wrap row;
+    justify-content:space-between;
+}
+

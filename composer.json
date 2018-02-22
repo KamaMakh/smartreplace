@@ -1,18 +1,56 @@
 {
   "name": "megagroup/smart_replace",
-  "description": "Dynamic_content is the dynamic content substitution",
-  "license" : "proprietary",
+  "description": "Сервис смены контента сайта",
   "authors": [
     {
-      "name": "Kamron Makhmudov",
-      "email": "meganyuton1@gmail.com",
-      "role": "Developer"
+      "name": "Kamron Mahmudov",
+      "email": "test@test.ru"
     }
   ],
+
+  "autoload": {
+    "psr-4": {
+      "SmartReplace\\": "SmartReplace"
+    }
+  },
+
+  "config": {
+    "vendor-dir": "lib/vendor",
+    "process-timeout": 5000
+  },
+
+  "repositories": [
+    {
+      "type": "git",
+      "url" : "git@gitlab.oml.ru:megagroup/framework.git"
+    },
+    {
+      "type": "git",
+      "url" : "git@gitlab.oml.ru:megagroup/oauth.git"
+    },
+    {
+      "name": "megagroup/viron-app",
+      "type": "git",
+      "url":  "git@gitlab.oml.ru:viron/app.git"
+    },
+    {
+      "name": "megagroup/viron",
+      "type": "git",
+      "url": "git@gitlab.oml.ru:deploy/viron.git"
+    }
+  ],
+  "minimum-stability": "dev",
+
   "require": {
-    "php": ">=7.0",
-    "fenom/fenom": "2.*",
-    "fenom/storage": "1.*",
+    "php"         : ">= 5.4",
+    "ext-json"    : "*",
+    "ext-mbstring": "*",
+    "ext-mysqli"  : "*",
+
+    "megagroup/framework": "dev-master",
+    "megagroup/oauth": "dev-master",
+    "megagroup/viron-app":  "dev-master",
+    "fenom/fenom": "dev-master",
     "guzzlehttp/psr7": "^1.4",
     "guzzlehttp/guzzle": "6.*",
     "sebastian/object-enumerator": "^3.0.3",
@@ -24,13 +62,5 @@
     "phpunit/phpunit": "^4.0 || ^5.0",
     "psr/log": "^1.0",
     "satooshi/php-coveralls": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Megagroup\\SmartReplace\\" : "app/src"
-    }
-  },
-  "autoload-dev": {
-    "classmap": ["tests/"]
   }
 }
