@@ -48,7 +48,7 @@
                         </div>
                         <div class="check-script">
                             {if $project['code_status'] == 1}
-                                <div title="Нажмите для повторной проверки" class="check-scrip-button blue">
+                                <div class="check-scrip-button blue">
                                     Код установлен
                                 </div>
                             {else}

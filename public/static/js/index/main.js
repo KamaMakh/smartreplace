@@ -393,7 +393,7 @@
                 else {
                     let project_item = target.parents('.project-item'),
                         project_id = project_item.attr('data-project-id');
-                    fetch('?mode=removeproject&project_id='+project_id)
+                    fetch('?mode=removeProject&project_id='+project_id)
                         .then(function(response){
                             console.log(response);
                             project_item.remove();
@@ -480,18 +480,15 @@
                 let project_id   = target.attr('data-project-id'),
                     project_name = target.attr('data-project-name');
 
-
-
                 $.post({
                     url: '/code?mode=checkScript&project_id='+project_id+'&site_url='+project_name,
                     method: 'GET',
                     success: function(response) {
-                        console.log(response);
-                        if (response) {
+                      //  console.log(response.trim());
+                        if (response.trim() == '1') {
                             alert('Код установлен');
                             document.location.href = '/';
-                        }
-                        else {
+                        } else {
                             alert('Ая-яй, не можем найти этот код на странице');
                         }
                     }

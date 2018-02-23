@@ -25,7 +25,6 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                console.log(get_params);
                 if (get_params[0]) {
                     get_params = get_params[0].split('=')[1].split('s');
 
@@ -45,7 +44,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
         requestParam(data) {
-            const url = `http://kamron-pc.dyn.frg.m/srapi?mode=getGroup&group_id=${data['group_id']}&project_id=${data['project_id']}`;
+            const url = `http://kamron.webx.brn.m/srapi?mode=getGroup&group_id=${data['group_id']}&project_id=${data['project_id']}`;
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 
@@ -55,7 +54,7 @@ window.addEventListener('DOMContentLoaded', function() {
             xhr.open('GET', url, true);
 
             xhr.onload = function() {
-                console.log( this.responseText );
+               // console.log( this.responseText );
                 let text = utilities.htmlspecialchars_decode(this.responseText);
 
                 let elements = JSON.parse(text);

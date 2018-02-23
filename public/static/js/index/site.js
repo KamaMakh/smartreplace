@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 parentSelector = parentName.toLowerCase();
             }
 
-
             for (var val in children) {
                 if ( children.hasOwnProperty(val) && children[val]['tagName'] &&  children[val]['tagName'] == targetName && children[val]['className'] == target.className ) {
                     acc++;
@@ -109,35 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         },
 
-
-        getDomPath(el) {
-        var stack = [];
-        while ( el.parentNode != null ) {
-            console.log(el.nodeName);
-            var sibCount = 0;
-            var sibIndex = 0;
-            for ( var i = 0; i < el.parentNode.childNodes.length; i++ ) {
-                var sib = el.parentNode.childNodes[i];
-                if ( sib.nodeName == el.nodeName ) {
-                    if ( sib === el ) {
-                        sibIndex = sibCount;
-                    }
-                    sibCount++;
-                }
-            }
-            if ( el.hasAttribute('id') && el.id != '' ) {
-                stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
-            } else if ( sibCount > 1 ) {
-                stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
-            } else {
-                stack.unshift(el.nodeName.toLowerCase());
-            }
-            el = el.parentNode;
-        }
-
-        return stack.slice(1); // removes the html element
-    },
-
         onClick(e) {
 
             var target = e.target;
@@ -150,11 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentWidth,
                 excessWidth,
                 closeButton,
-                classes,
-                uniqueness,
-                element_name,
-                element_type,
-                element_data;
+                element_name;
 
             if ( !target.classList.contains('sandbox') ) {
 
@@ -162,14 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 sandBoxWrap = document.createElement('div');
 
-
                 this.body.appendChild(sandBoxWrap);
 
                 sandBoxWrap.classList.add('sandbox-wrap');
                 sandBoxWrap.classList.add('sandbox');
                 sandBoxWrap.innerHTML = this.sandBox;
-
-
 
                 if ( docHeight -  (e.clientY + pageYOffset + sandBoxWrap.offsetHeight -20) < 0 ) {
                         currentHeight = e.clientY + pageYOffset -20,
@@ -273,21 +236,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         },
 
-        replaceHref(){
-            // let elements = document.head.querySelectorAll('link'),
-            //     url;
-            //
-            // url = document.location.search.split('=')[1];
-            // url = url.split('/');
-            // url = url[0]+'//'+url[2];
-            //
-            // console.log(url);
-            //
-            // for (let i=0; i<elements.length; i++) {
-            //     let newer = elements[i]['href'].replace(document.location.origin, url);
-            //     elements[i]['href'] = newer;
-            // }
-        },
         scrollBy (distance, duration) {
 
             let initialY = window.pageYOffset,
@@ -315,10 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    //elementCatch.replaceHref();
-
-
-
 
     var sendToParent = {
         send(data, mode = 'add') {
@@ -335,12 +279,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }), '*');
         }
     };
-
-
-
-
-
-
 
     window.onload = function () {
 
@@ -443,17 +381,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     prevElements[i]['style']['outline'] = '';
                 }
                 element.style.outline = '2px solid';
-
-
             }
-
         }
         catch (e) {
-
+            //console.log(e);
         }
     });
-
-
-
-
 }, false);
