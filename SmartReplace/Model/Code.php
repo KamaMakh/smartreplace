@@ -24,7 +24,8 @@ class Code
         $page = $res->getBody();
 
         $check_script = strstr($page, 'sr.service.js');
-        if($check_script){
+        $check_link   = strstr($page, 'site.css');
+        if($check_script && $check_link){
             Db::update('sr_projects', ['code_status'=>true],'project_id='.$get['project_id']);
             $result = true;
         }else{

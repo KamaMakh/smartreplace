@@ -9,7 +9,7 @@
             <div>
                 Установите данный код в шапку вашего сайта перед закрытием тега {'</head>'} <br/><br/>
                 <b>   {'<script src="http://kamron.webx.brn.m/static/js/client/sr.service.js"></script>'} </b> <br/>
-                <b> {'<link rel="stylesheet" href="http://kamron.webx.brn.m//static/css/site.css"></link> '}</b><br/><br/> </br>
+                <b>    &#123; if $smarty.get.yagla &#125;  {'<link rel="stylesheet" href="http://kamron.webx.brn.m//static/css/site.css"></link>'} &#123; i/f &#125;</b><br/><br/> </br>
                 Если Вы установили код, то нажмите Обновить
             </div>
             <br/>
