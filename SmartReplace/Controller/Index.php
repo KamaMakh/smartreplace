@@ -36,8 +36,6 @@ class Index Extends ActionBase
             'mode'     => 'main'
         ];
 
-
-
         if ( $mode == '' ) {
             $projects = $projects->init($this->user_id);
             $page['projects'] = $projects;

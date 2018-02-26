@@ -28,8 +28,7 @@ class Main
         $this->logger = $logger;
     }
 
-    public static function init($user_id) {
-
+    public function init($user_id) {
 
         $projects = Db::fetchAll("SELECT project_id,user_id,project_name,code_status,project_alias FROM sr_projects WHERE user_id=".$user_id);
 
@@ -38,6 +37,25 @@ class Main
             $templates_count = count(Db::fetchAll("SELECT template_id FROM sr_templates WHERE project_id=".$project['project_id']));
             $projects[$key]['groups_count'] = $groups_count;
             $projects[$key]['templates_count'] = $templates_count;
+
+            if ( strstr($project['project_name'], '--') ) {
+                $url_arr = explode('//', $project['project_name']);
+                $url_arr[1] = explode('/',$url_arr[1]);
+
+                if ( count($url_arr[1]) > 1 && strlen($url_arr[1]) ) {
+                    foreach ( $url_arr[1] as $key2=>$item ) {
+                        if ( strstr($item, '--') ) {
+                            $url_arr[1][$key2] = idn_to_utf8($item);
+                        }
+                    }
+                    $url_arr[1] = implode('/', $url_arr[1]);
+                }
+                else {
+                    $url_arr[1] = idn_to_utf8($url_arr[1][0]);
+                }
+
+                $projects[$key]['real_project_name'] = $url_arr[0] . '//' . idn_to_utf8($url_arr[1]);
+            }
         }
 
         return $projects;
@@ -69,6 +87,33 @@ class Main
 
 
         $check_name = $post['site_url'];
+        if ( !strstr($check_name, '--') ) {
+            $arr = explode('//', $check_name);
+
+            $arr[1] = explode('/',$arr[1]);
+            $this->logger->addWarning('2', $arr[1]);
+
+            if ( count($arr[1]) > 1 && strlen($arr[1][1]) ) {
+                foreach ( $arr[1] as $key2=>$item ) {
+                    if ( strstr($item, '--') ) {
+                        $arr[1][$key2] = idn_to_utf8($item);
+                    }
+                }
+                $arr[1] = array_filter($arr[1], function($item){
+                    if ( strlen($item) ) {
+                        return $item;
+                    }
+                });
+                $arr[1] = implode('/', $arr[1]);
+            }
+            else {
+                $arr[1] = idn_to_utf8($arr[1][0]);
+            }
+
+            $check_name = $arr[0] . '//' . idn_to_ascii($arr[1]);
+
+        }
+
         $check_project = Db::fetchAll("SELECT project_id FROM sr_projects WHERE project_name="."'$check_name'");
 
         if ( !$check_project && strlen(strval($check_project))>0) {
