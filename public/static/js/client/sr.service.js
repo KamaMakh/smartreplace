@@ -164,6 +164,8 @@ window.addEventListener('DOMContentLoaded', function() {
                     parentClassNames,
                     check;
 
+              //  console.log(targetName, parent);
+
                 if (target.classList.length && target.className != 'smarthover' && targetName != 'svg') {
                     classNames = this.joinClasses(target.className.split(' '));
                     selector = targetName.toLowerCase() + classNames + (selector ? '>' + selector : '');
@@ -179,6 +181,10 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
 
                 for (var val in children) {
+                    if ( target.classList.contains('smarthover') ) {
+                        target.classList.remove('smarthover');
+                    }
+                    //console.log(target.className);
                     if (children.hasOwnProperty(val) && children[val]['tagName'] && children[val]['tagName'] == targetName && children[val]['className'] == target.className) {
                         acc++;
                         if (children[val] == target) {
@@ -197,6 +203,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 check = document.querySelectorAll(parentSelector + '>' + selector);
+               // console.log(parentSelector + '>' + selector);
                 if (check.length == 1) {
                     console.log(parentSelector + '>' + selector);
                     return parentSelector + '>' + selector;
