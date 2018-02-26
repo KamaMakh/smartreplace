@@ -63,9 +63,9 @@ class SmartReplace Extends App {
         $uri_source = MF\Request::getSource();
 
         if (isset($uri_source['url']) && $uri_source['url'] == '/srapi') {
+            parent::__construct($this->_config['smart_replace']);
             header('Access-Control-Allow-Origin: *');
             header('Content-Type: application/json, charset=UTF-8');
-            parent::__construct($this->_config['smart_replace']);
         } else {
             if ($this->_config['develop']['debug']) {
 
