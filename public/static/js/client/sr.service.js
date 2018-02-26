@@ -1,10 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
 
 
-    let preloader = document.createElement('div');
-    preloader.setAttribute("class","preload");
-    document.body.appendChild(preloader);
-
     const utilities = {
         htmlspecialchars_decode(data) {
             data = data.replace(/&quot;/g, '"');
@@ -105,6 +101,17 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
     if ( location.search.indexOf('yagla=true') > 0 ) {
+
+
+
+        let preloader = document.createElement('div'),
+            styles = document.createElement('link');
+        styles.setAttribute('href','http://kamron.webx.brn.m/static/css/site.css');
+        styles.setAttribute('rel','stylesheet');
+        preloader.setAttribute("class","preload");
+
+        document.body.appendChild(preloader);
+        document.head.appendChild(styles);
 
         let last_id = 0;
 
