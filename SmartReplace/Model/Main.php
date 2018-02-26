@@ -109,9 +109,11 @@ class Main
             else {
                 $arr[1] = idn_to_utf8($arr[1][0]);
             }
-
             $check_name = $arr[0] . '//' . idn_to_ascii($arr[1]);
+        }
 
+        if (substr($check_name, -1) == '/') {
+            $check_name = substr($check_name, 0, -1);
         }
 
         $check_project = Db::fetchAll("SELECT project_id FROM sr_projects WHERE project_name="."'$check_name'");
