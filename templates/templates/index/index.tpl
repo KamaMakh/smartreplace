@@ -60,7 +60,7 @@
                                 <button class=" remove-project ui submit button grey small">Удалить</button>
                             </div>
                             <div class="check-script">
-                                <a title="Нажмите для повторной проверки" href="/code?site_url={$project['project_name']}&project_id={$project['project_id']}" class="check-scrip-button red">
+                                <a title="Нажмите для повторной проверки" href="/code?site_url={$project['project_name']}&project_id={$project['project_id']}&real_project_name={$project['real_project_name']}" class="check-scrip-button red">
                                     Установите код
                                 </a>
                             </div>

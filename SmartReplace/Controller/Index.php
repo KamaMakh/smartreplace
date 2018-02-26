@@ -200,10 +200,11 @@ class Index Extends ActionBase
         $get  = Request::getGet();
 
         $page = [
-            '_title'       => 'Мегагрупп smartreplace - Проверка кода',
-            'mode'         => 'Code',
-            'project_id'   => $get['project_id'],
-            'project_name' => $get['site_url']
+            '_title'            => 'Мегагрупп smartreplace - Проверка кода',
+            'mode'              => 'Code',
+            'project_id'        => $get['project_id'],
+            'project_name'      => $get['site_url'],
+            'real_project_name' => $get['real_project_name']
         ];
 
         //$result = $code->init($get);
