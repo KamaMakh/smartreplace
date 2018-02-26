@@ -14,6 +14,9 @@ use MF\DB\MySQL;
 use Oauth;
 use \MF\DB\MySQL as DB;
 use Viron\App;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 
 class SmartReplace Extends App {
 
@@ -34,8 +37,15 @@ class SmartReplace Extends App {
     public $user = null;
 
     public $render = '\SmartReplace\SmartReplace\Render';
+    public $logger;
 
     public function __construct ($config) {
+
+        $logger = new Logger('my_logger');
+        $logger->pushHandler(new StreamHandler(__DIR__.'/../logs/my_app.log', $logger::DEBUG));
+        $logger->pushHandler(new FirePHPHandler());
+        $this->logger = $logger;
+
         $_GET['mcs'] = 1;
         define('DEBUG',$config['develop']['debug']);
         MF\Log::addStorage(MF\Log::L_ERROR,$config['smart_replace']['app']['log']);
@@ -61,8 +71,12 @@ class SmartReplace Extends App {
         }
 
         $uri_source = MF\Request::getSource();
+        $uri_source2 = MF\Request::getFirstURIParam();
 
-        if (isset($uri_source['url']) && $uri_source['url'] == '/srapi') {
+        //$this->logger->addWarning('uri', $uri_source);
+        //$this->logger->addWarning('uri2'.$uri_source2);
+
+        if (isset($uri_source2) && $uri_source2 == 'srapi') {
             parent::__construct($this->_config['smart_replace']);
             header('Access-Control-Allow-Origin: *');
             header('Content-Type: application/json, charset=UTF-8');

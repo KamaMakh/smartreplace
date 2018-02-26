@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded', function() {
             };
 
             xhr.onerror = function() {
-                alert( 'Ошибка ' + this.status );
+                console.log( 'Ошибка ' + this.status );
             };
 
             xhr.send();
