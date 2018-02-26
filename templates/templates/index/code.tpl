@@ -3,7 +3,7 @@
     {if $content.mode != 'checkScript'}
         <div class="code-wrap">
             <h2>
-                Установка кода на проект {$content.real_project_name}
+                Установка кода на проект {$content.real_project_name ? $content.real_project_name : $content.project_name}
             </h2>
 
             <div>
