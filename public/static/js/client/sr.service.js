@@ -197,7 +197,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         target.classList.remove('smarthover');
                     }
                    // console.log(target.className);
-                    if (children.hasOwnProperty(val) && children[val]['tagName'] && children[val]['tagName'] == targetName && children[val]['className'] == target.className) {
+                    if (children.hasOwnProperty(val) && children[val]['tagName'] && children[val]['tagName'] == targetName ) {
                         acc++;
                         if (children[val] == target) {
                             nth = acc;
@@ -208,14 +208,14 @@ window.addEventListener('DOMContentLoaded', function() {
                 if (nth && acc > 1) {
                     if (i > 0) {
                         selector = selector.split('>');
-                        selector[selector.length - 1 - i] = selector[selector.length - 1 - i] + ':nth-child(' + nth + ')';
+                        selector[selector.length - 1 - i] = selector[selector.length - 1 - i] + ':nth-of-type(' + nth + ')';
                         selector = selector.join('>');
                     } else {
                         selector = selector + ':nth-of-type(' + nth + ')';
                     }
                 }
                 check = document.querySelectorAll(parentSelector + '>' + selector);
-               // console.log(parentSelector + '>' + selector);
+                //console.log(parentSelector + '>' + selector);
                 if (check.length == 1) {
                     console.log(parentSelector + '>' + selector);
                     return parentSelector + '>' + selector;
