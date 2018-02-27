@@ -47,7 +47,7 @@
  Global Variables
 ----------------------------*/
         	var modal = $(this),
-        		topMeasure  = parseInt(modal.css('top'))/10,
+        		topMeasure  = parseInt(modal.css('top')),
 				topOffset = modal.height() + topMeasure,
           		locked = false,
 				modalBG = $('.reveal-modal-bg');
