@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            const url = `http://kamron.webx.brn.m/srapi?mode=getGroup&group_id=${data['group_id']}&project_id=${data['project_id']}`;
+            const url = `http://kamron.webx.brn.m/srapi?mode=getGroup&group_id=${data['group_id']}}`;
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 
@@ -356,33 +356,6 @@ window.addEventListener('DOMContentLoaded', function() {
                     return false;
                 }
             },
-
-            scrollBy (distance, duration) {
-
-                let initialY = window.pageYOffset,
-                    y = distance,
-                    baseY = (initialY + y) * 0.5,
-                    difference = initialY - baseY,
-                    startTime = performance.now();
-
-                function step() {
-                    let normalizedTime = (performance.now() - startTime) / duration;
-                    if (normalizedTime > 1) normalizedTime = 1;
-
-                    if (initialY > distance) {
-                        baseY = (initialY - distance) * (-1);
-                    } else if (initialY > distance) {
-                        baseY = (initialY - distance);
-                    } else {
-                        return;
-                    }
-
-                    window.scrollTo(0, baseY + difference * Math.cos(normalizedTime * Math.PI));
-                    if (normalizedTime < 1) window.requestAnimationFrame(step);
-                }
-
-                window.requestAnimationFrame(step);
-            }
         };
 
 
@@ -487,6 +460,38 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
 
                 if (data.showElement) {
+
+                    window.smoothScrollTo = (function () {
+                        let timer, start, factor;
+
+                        return function (target, duration) {
+                            let offset = window.pageYOffset,
+                                delta  = target - window.pageYOffset; // Y-offset difference
+                            duration = duration || 1000;              // default 1 sec animation
+                            start = Date.now();                       // get start time
+                            factor = 0;
+
+                            if( timer ) {
+                                clearInterval(timer); // stop any running animations
+                            }
+
+                            function step() {
+                                let y;
+                                factor = (Date.now() - start) / duration; // get interpolation factor
+                                if( factor >= 1 ) {
+                                    clearInterval(timer); // stop animation
+                                    factor = 1;           // clip to max 1.0
+                                }
+                                y = factor * delta + offset;
+                                window.scrollBy(0, y - window.pageYOffset);
+                            }
+
+                            timer = setInterval(step, 10);
+                            return timer;
+                        };
+                    }());
+
+
                     let element = document.querySelector(data.showElement),
                         parentElement = element.parentElement,
                         prevElements = document.querySelectorAll('.selected'),
@@ -497,7 +502,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         parentElement = parentElement.parentElement;
                     }
 
-                    elementCatch.scrollBy(distance - 100, 500);
+                    smoothScrollTo(distance-200, 200);
 
                     for (let i = 0; i < prevElements.length; i++) {
                         prevElements[i]['style']['outline'] = '';
