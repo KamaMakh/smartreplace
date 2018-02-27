@@ -404,7 +404,7 @@ window.addEventListener('DOMContentLoaded', function() {
                             factor = 1;           // clip to max 1.0
                         }
                         y = factor * delta + offset;
-                        console.log(y - window.pageYOffset);
+                       // console.log(y - window.pageYOffset);
                         window.scrollBy(0, y - window.pageYOffset);
                     }
 
