@@ -355,7 +355,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 } else {
                     return false;
                 }
-            },
+            }
         };
 
 
@@ -380,6 +380,38 @@ window.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.preload').classList.remove('preload');
             var html = document.getElementsByTagName('html');
             html[0].style.overflow = 'auto';
+
+            window.smoothScrollTo = (function () {
+                let timer, start, factor;
+
+                return function (element, duration) {
+                    let offset = window.pageYOffset,
+                        delta  = element - window.pageYOffset; // Y-offset difference
+                    duration = duration || 1000;              // default 1 sec animation
+                    start = Date.now();                       // get start time
+                    factor = 0;
+                    console.log(element);
+
+                    if( timer ) {
+                        clearInterval(timer); // stop any running animations
+                    }
+
+                    function step() {
+                        let y;
+                        factor = (Date.now() - start) / duration; // get interpolation factor
+                        if( factor >= 1 ) {
+                            clearInterval(timer); // stop animation
+                            factor = 1;           // clip to max 1.0
+                        }
+                        y = factor * delta + offset;
+                        console.log(y - window.pageYOffset);
+                        window.scrollBy(0, y - window.pageYOffset);
+                    }
+
+                    timer = setInterval(step, 10);
+                    return timer;
+                };
+            }());
         };
 
         document.body.addEventListener('mouseover', function (e) {
@@ -461,48 +493,19 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 if (data.showElement) {
 
-                    window.smoothScrollTo = (function () {
-                        let timer, start, factor;
-
-                        return function (target, duration) {
-                            let offset = window.pageYOffset,
-                                delta  = target - window.pageYOffset; // Y-offset difference
-                            duration = duration || 1000;              // default 1 sec animation
-                            start = Date.now();                       // get start time
-                            factor = 0;
-
-                            if( timer ) {
-                                clearInterval(timer); // stop any running animations
-                            }
-
-                            function step() {
-                                let y;
-                                factor = (Date.now() - start) / duration; // get interpolation factor
-                                if( factor >= 1 ) {
-                                    clearInterval(timer); // stop animation
-                                    factor = 1;           // clip to max 1.0
-                                }
-                                y = factor * delta + offset;
-                                window.scrollBy(0, y - window.pageYOffset);
-                            }
-
-                            timer = setInterval(step, 10);
-                            return timer;
-                        };
-                    }());
-
-
                     let element = document.querySelector(data.showElement),
                         parentElement = element.parentElement,
                         prevElements = document.querySelectorAll('.selected'),
                         distance = 0;
 
-                    while (parentElement.tagName != 'HTML') {
+                    while (parentElement.tagName != 'BODY') {
                         distance += parentElement.offsetTop;
                         parentElement = parentElement.parentElement;
                     }
-                    console.log(distance,element.offsetTop);
-                    smoothScrollTo(element.offsetTop-50);
+                    //console.log(distance,element.offsetTop);
+
+
+                    smoothScrollTo(distance-100, 200);
 
                     for (let i = 0; i < prevElements.length; i++) {
                         prevElements[i]['style']['outline'] = '';
