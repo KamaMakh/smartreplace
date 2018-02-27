@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         let preloader = document.createElement('div'),
             styles = document.createElement('link');
-        styles.setAttribute('href','http://kamron.webx.brn.m/static/css/site.css');
+        styles.setAttribute('href','http://kamron-pc.dyn.frg.m/static/css/site.css');
         styles.setAttribute('rel','stylesheet');
         preloader.setAttribute("class","preload");
 
@@ -160,6 +160,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
             iter(target, selector = null, i = null) {
 
+
+               // console.log(target);
                 var targetName = target.tagName,
                     parent = target.parentElement,
                     parentName = parent.tagName,
@@ -171,7 +173,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     parentClassNames,
                     check;
 
-              //  console.log(targetName, parent);
+                //console.log(targetName, parent);
 
                 if (target.classList.length && target.className != 'smarthover' && targetName != 'svg') {
                     classNames = this.joinClasses(target.className.split(' '));
@@ -180,10 +182,14 @@ window.addEventListener('DOMContentLoaded', function() {
                     selector = targetName.toLowerCase() + (selector ? '>' + selector : '');
                 }
 
-                if (parent.classList.length) {
+                if ( parent.getAttribute('id') ) {
+                    parentSelector = '#' + parent.getAttribute('id');
+                }
+                else if (parent.classList.length) {
                     parentClassNames = this.joinClasses(parent.className.split(' '));
                     parentSelector = parentName.toLowerCase() + parentClassNames;
-                } else {
+                }
+                else {
                     parentSelector = parentName.toLowerCase();
                 }
 
@@ -191,7 +197,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     if ( target.classList.contains('smarthover') ) {
                         target.classList.remove('smarthover');
                     }
-                    //console.log(target.className);
+                   // console.log(target.className);
                     if (children.hasOwnProperty(val) && children[val]['tagName'] && children[val]['tagName'] == targetName && children[val]['className'] == target.className) {
                         acc++;
                         if (children[val] == target) {
@@ -210,7 +216,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 check = document.querySelectorAll(parentSelector + '>' + selector);
-               // console.log(parentSelector + '>' + selector);
+                console.log(parentSelector + '>' + selector);
                 if (check.length == 1) {
                     console.log(parentSelector + '>' + selector);
                     return parentSelector + '>' + selector;
