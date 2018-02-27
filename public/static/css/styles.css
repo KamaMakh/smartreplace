@@ -153,6 +153,9 @@ body {
     z-index: 9999;
     position: absolute !important;
 }
+.get_iframe input[type=text] {
+    font-size: 15px !important;
+}
 
 .registr,.auth{
     width: 500px;
@@ -256,6 +259,10 @@ body {
     margin: 5px 0;
     justify-content: space-between;
     align-items:center;
+}
+
+.added-elements-wrap .list-column span {
+    font-size: 14px;
 }
 
 .added-elements-wrap .column {
