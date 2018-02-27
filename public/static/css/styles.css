@@ -1,5 +1,6 @@
 body {
     background: #eee !important;
+    height: 100%;
 }
 
 .site-container {
@@ -86,9 +87,9 @@ body {
 }
 
 .main_iframe {
-    margin-top: 20px;
+    margin: 0;
     overflow: auto;
-    min-height:800px;
+    height: 100%;
 }
 
 .mdl-layout__content {
@@ -216,7 +217,11 @@ body {
 
 .columns-wrap{
     display: flex;
+    height: 100%;
+    max-width: 100%;
+    font-size: 0;
     flex-flow:wrap row;
+    box-sizing: border-box;
 }
 
 .columns-wrap .left-column{
@@ -225,6 +230,10 @@ body {
 
 .columns-wrap .right-column{
     flex:1 0 auto;
+    background-color: #dfdfdf;
+    width: calc(100% - 300px);
+    max-width: calc(100% - 250px);
+    height: 100%;
 }
 
 .added-elements-wrap form{
@@ -305,6 +314,10 @@ body {
 
 #content {
     padding: 10px 5px 10px 0;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .request-textarea{
@@ -593,4 +606,9 @@ body {
 
 .code-wrap{
     padding: 10px;
+}
+
+.editor_columns span{
+    text-align: center;
+    display: block;
 }

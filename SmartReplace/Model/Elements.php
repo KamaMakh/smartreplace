@@ -35,8 +35,6 @@ class Elements
 
             $site_url = Db::fetchAll('SELECT project_name FROM sr_projects WHERE project_id=' . $project_id)[0]['project_name'];
 
-         //   $this->logger->info($site_url);
-
             if ($site_url && strlen($site_url) > 0) {
                 $result = $this->sendToClient(null, $site_url);
                 $result['site_url'] = $site_url;
@@ -47,7 +45,6 @@ class Elements
 
     public function insertToDb($post) {
 
-        //$this->logger->addWarning('post', $post);
         $project_id = $post['project_id'];
         $check_template = Db::fetchAll("SELECT name FROM sr_templates WHERE project_id=".$project_id." and param ="."'".$post['wayToElement']."'");
 

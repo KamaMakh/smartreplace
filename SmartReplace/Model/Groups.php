@@ -28,7 +28,7 @@ class Groups
 
     public function complete(int $project_id, int $user_id) {
 
-        $list = Db::fetchAll("SELECT name,template_id,project_id,type,param FROM sr_templates WHERE project_id = $project_id");
+        $list = Db::fetchAll("SELECT * FROM sr_templates WHERE project_id = $project_id");
         $eq_group = Db::fetchAll("SELECT group_id FROM sr_groups WHERE project_id=$project_id");
         $project_name = Db::fetchAll('SELECT project_name FROM sr_projects WHERE project_id='.$project_id)[0]['project_name'];
 
@@ -44,11 +44,12 @@ class Groups
                 if ( !$check_group ) {
 
                     Db::insert('sr_replacements',[
-                        'project_id'=> $element['project_id'],
-                        'group_id'=>$insertId,
+                        'project_id' => $element['project_id'],
+                        'group_id'   =>$insertId,
                         'template_id'=>$element['template_id'],
-                        'type'=>$element['type'],
-                        'selector'=>$element['param']
+                        'type'       =>$element['type'],
+                        'selector'   =>$element['param'],
+                        'old_text'   =>$element['data']
                     ]);
 
                 }
@@ -61,11 +62,12 @@ class Groups
                 if ( !$check_group ) {
                     foreach ($eq_group as $group_id) {
                         Db::insert('sr_replacements' ,[
-                            'project_id'=> $element['project_id'],
-                            'group_id'=>$group_id["group_id"],
+                            'project_id' => $element['project_id'],
+                            'group_id'   =>$group_id["group_id"],
                             'template_id'=>$element['template_id'],
-                            'type'=>$element['type'],
-                            'selector'=>$element['param']
+                            'type'       =>$element['type'],
+                            'selector'   =>$element['param'],
+                            'old_text'   =>$element['data']
                         ]);
                     }
                 }
@@ -77,12 +79,12 @@ class Groups
         $project = Db::fetchAll("SELECT project_id,user_id,project_name,code_status FROM sr_projects WHERE project_id=".$project_id);
 
         return [
-            'project'=>$project,
-            'groups'=>$groups,
-            'elements'=>$elements,
+            'project'     =>$project,
+            'groups'      =>$groups,
+            'elements'    =>$elements,
             'project_name'=>$project_name,
-            'list'=>$list,
-            'project_id'=>$project_id
+            'list'        =>$list,
+            'project_id'  =>$project_id
         ];
     }
 
@@ -129,7 +131,7 @@ class Groups
 
         $new_group_params = [
             'project_id'=>$new_group['project_id'],
-            'elements'=>json_encode($new_group['elements'])
+            'elements'  =>json_encode($new_group['elements'])
         ];
 
         $last_group_id = Db::insert('sr_groups', $new_group_params);
@@ -137,11 +139,12 @@ class Groups
 
         foreach ( $new_group['elements'] as $key=>$elements ) {
             $new_replacement_params = [
-                'project_id'=>$new_group['project_id'],
-                'group_id'=>$last_group_id,
+                'project_id' =>$new_group['project_id'],
+                'group_id'   =>$last_group_id,
                 'template_id'=>$elements['template_id'],
-                'type'=>$elements['type'],
-                'selector'=>$elements['param']
+                'type'       =>$elements['type'],
+                'selector'   =>$elements['param'],
+                'old_text'   =>$elements['old_text']
             ];
             $ids[$key] = Db::insert('sr_replacements', $new_replacement_params);
         }

@@ -63,8 +63,6 @@ class Main
 
     public function checkScript ($site_url, $project_id) {
 
-        $this->logger->info($site_url);
-
         $client  =  new GuzzleHttp\Client();
         $res = $client->request('GET', $site_url);
 
@@ -77,21 +75,20 @@ class Main
             Db::update('sr_projects', ['code_status'=>false],'project_id='.$project_id);
         }
 
-        header ('location: /');
-        exit;
     }
 
     public function addNewProject ($post, $user_id) {
 
-        //$user_id = Db::fetchAll("SELECT id FROM sr_users WHERE email='test@gmail.com'")[0]['id'];
-
-
         $check_name = $post['site_url'];
+
+        if ( count(explode('//', $check_name)) < 2 ) {
+            $check_name = 'http://'.$check_name;
+        }
+
         if ( !strstr($check_name, '--') ) {
             $arr = explode('//', $check_name);
 
             $arr[1] = explode('/',$arr[1]);
-            $this->logger->addWarning('2', $arr[1]);
 
             if ( count($arr[1]) > 1 && strlen($arr[1][1]) ) {
                 foreach ( $arr[1] as $key2=>$item ) {
@@ -126,7 +123,8 @@ class Main
                 'project_name'=> $check_name,
                 'project_alias'=> 'Проект №'.($projects_count+1)
             ];
-            Db::insert('sr_projects', $data_fields);
+            $project_id = Db::insert('sr_projects', $data_fields);
+            $this->checkScript($check_name, $project_id);
         }
 
 

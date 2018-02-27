@@ -20,11 +20,9 @@ class Code
     public function checkScript ($get) {
         $client  =  new GuzzleHttp\Client();
         $res = $client->request('GET', $get['site_url']);
-
         $page = $res->getBody();
-
         $check_script = strstr($page, 'sr.service.js');
-        $check_link   = strstr($page, 'site.css');
+
         if($check_script){
             Db::update('sr_projects', ['code_status'=>true],'project_id='.$get['project_id']);
             $result = true;
@@ -32,8 +30,6 @@ class Code
             Db::update('sr_projects', ['code_status'=>false],'project_id='.$get['project_id']);
             $result = false;
         }
-
         return $result;
-
     }
 }

@@ -204,7 +204,6 @@
             },
             addNewGroup () {
                 let $first_group = $('.group-row').first(),
-                    group_id = $first_group.attr('data-group-id'),
                     cell_elements = $first_group.find('.cell-element'),
                     cell_elements_obj={},
                     $project_id = $('.elements-table-wrap').attr('data-project-id'),
@@ -216,21 +215,23 @@
                 //console.log(cell_elements);
 
                 cell_elements.each(function(){
-                    let eq_param = $(this).find('textarea').attr('data-param'),
+                    let c = 0,
+                        eq_param = $(this).find('textarea').attr('data-param'),
                         eq_template_id = $(this).find('.textarea').attr('data-template-id'),
-                        eq_type = $(this).find('.textarea').attr('data-template-type');
+                        eq_type = $(this).find('.textarea').attr('data-template-type'),
+                        old_text = $('.element-name .old-text-'+c).val();
 
                     cell_elements_obj[i] = {
                         template_id: eq_template_id,
                         project_id: $project_id,
                         type:eq_type,
-                        param:eq_param
+                        param:eq_param,
+                        old_text: old_text
                     };
                     i++;
                 });
 
                 newGroup = {
-                    group_id: group_id,
                     project_id: $project_id,
                     elements: cell_elements_obj
                 };

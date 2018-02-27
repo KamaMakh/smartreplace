@@ -26,11 +26,10 @@ window.addEventListener('DOMContentLoaded', function() {
                 });
 
                 if (get_params[0]) {
-                    get_params = get_params[0].split('=')[1].split('s');
+                    get_params = get_params[0].split('=')[1];
 
                     return {
-                        group_id: get_params[0],
-                        project_id: get_params[1],
+                        group_id: get_params,
                         project_name: project_name
                     }
                 }
@@ -106,7 +105,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         let preloader = document.createElement('div'),
             styles = document.createElement('link');
-        styles.setAttribute('href','http://kamron-pc.dyn.frg.m/static/css/site.css');
+        styles.setAttribute('href','http://kamron.webx.brn.m/static/css/site.css');
         styles.setAttribute('rel','stylesheet');
         preloader.setAttribute("class","preload");
 
@@ -216,7 +215,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 check = document.querySelectorAll(parentSelector + '>' + selector);
-                console.log(parentSelector + '>' + selector);
+               // console.log(parentSelector + '>' + selector);
                 if (check.length == 1) {
                     console.log(parentSelector + '>' + selector);
                     return parentSelector + '>' + selector;
