@@ -497,12 +497,12 @@ window.addEventListener('DOMContentLoaded', function() {
                         prevElements = document.querySelectorAll('.selected'),
                         distance = 0;
 
-                    while (parentElement.tagName != 'BODY') {
+                    while (parentElement.tagName != 'HTML') {
                         distance += parentElement.offsetTop;
                         parentElement = parentElement.parentElement;
                     }
-
-                    smoothScrollTo(distance-200, 200);
+                    console.log(distance,element.offsetTop);
+                    smoothScrollTo(element.offsetTop-50);
 
                     for (let i = 0; i < prevElements.length; i++) {
                         prevElements[i]['style']['outline'] = '';
