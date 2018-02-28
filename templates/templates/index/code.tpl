@@ -8,7 +8,7 @@
 
             <div>
                 Установите данный код в шапку вашего сайта перед закрытием тега {'</head>'} <br/><br/>
-                <b>   {'<script src="http://kamron.webx.brn.m/static/js/client/sr.service.js"></script>'} </b> <br/>
+                <b>   {'<script src="http://kamron.webx.brn.m/assets/js/client/sr.service.js"></script>'} </b> <br/>
                 Если Вы установили код, то нажмите Обновить
             </div>
             <br/>
