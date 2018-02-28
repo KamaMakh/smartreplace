@@ -259,7 +259,7 @@
                     last_group = $('.group-row.to-clone').clone(),
                     elements = last_group.find('.cell-element'),
                     project_name = last_group.find('.group-row-keyword').attr('title'),
-                    keyword = `${group['group_id']}s${group['project_id']}`,
+                    keyword = `${group['group_id']}`,
                     textareas = last_group.find('.request-textarea'),
                     i=0;
               //  console.log(last_group);

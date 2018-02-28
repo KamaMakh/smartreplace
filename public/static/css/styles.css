@@ -620,3 +620,9 @@ body {
     text-align: center;
     display: block;
 }
+
+.cell-element{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

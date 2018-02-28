@@ -43,10 +43,10 @@
                     {if $content.elements}
                     <div class="elements-list row group-row" data-group-id="{$value['group_id']}">
                                 <div class="cell-keywords column l-cl" data-type-column="keyword"  style=";vertical-align: top">
-                                    <textarea disabled rows="4" data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}"> {if $value['channel_name']} {$value['channel_name']} {else} Канал №{$key+1} {/if}</textarea>
                                     <div class="advert-request group-row-keyword" title="{$content.project_name}" data-keyword="{$value['group_id']}" id="">
-                                        {$content.project_name}?sr={$value['group_id']}
+                                        <a target="_blank" href="{$content.project_name}?sr={$value['group_id']}">{$content.project_name}?sr={$value['group_id']}</a>
                                     </div>
+                                    <textarea disabled rows="4" data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}"> {if $value['channel_name']} {$value['channel_name']} {else} Канал №{$key+1} {/if}</textarea>
                                     <i class="edit-group write icon grey large"></i>
                                     <i class="remove-group trash icon grey large"></i>
                                     <div class="edit-buttons-wrap">
@@ -87,11 +87,11 @@
                         <div class="elements-list row group-row to-clone hidden" data-group-id="{$value['group_id']}">
                             <div class="cell-keywords column l-cl" data-type-column="keyword"  style=";vertical-align: top">
 
+                                <div class="advert-request group-row-keyword" title="{$content.project_name}" data-keyword="{$value['group_id']}" id="">
+                                    <a target="_blank" href="{$content.project_name}?sr={$value['group_id']}">{$content.project_name}?sr={$value['group_id']}</a>
+                                </div>
                                 <textarea disabled rows="4" data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}">Канал №{count($content.groups)+1} </textarea>
 
-                                <div class="advert-request group-row-keyword" title="{$content.project_name}" data-keyword="{$value['group_id']}" id="">
-                                    {$content.project_name}?sr={$value['group_id']}
-                                </div>
                                 <i class="edit-group write icon grey large"></i>
                                 <i class="remove-group trash icon grey large"></i>
                                 <div class="edit-buttons-wrap">
