@@ -36,7 +36,7 @@
                             </form>
                             <button style="display:block;" class="edit-name-reject ui submit button grey small hidden">Отменить</button>
                         </div>
-                        <div data-real="{$project['project_name']}" class="project-name">{$project['real_project_name'] ? $project['real_project_name']:$project['project_name']}</div>
+                        <div data-real="{$project['project_name']}" class="project-name">{$project['real_project_name'] ? $project['real_project_name']:$project['project_name']}  <br/>id проетка: {$project['project_id']}</div>
                     </div>
                     {if $project['code_status'] == 1}
                         <div class="project-item-mid">
