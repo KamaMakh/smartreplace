@@ -626,3 +626,13 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.element-name .l-cl{
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.element-name.row {
+    align-items: flex-end !important;
+}

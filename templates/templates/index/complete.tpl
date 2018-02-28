@@ -24,7 +24,7 @@
             </div>
             <div class="elements-table-wrap-bot ui two column grid">
                 <div class="element-name row">
-                    <div class="column l-cl"></div>
+                    <div class="column l-cl">Название канала</div>
                     <div class="ui equal width grid">
                         {foreach $content.list as $key=> $value}
                         <div data-type="{$value['type']}" data-template-element-id="{$value['template_id']}" class="editor_columns active" >
