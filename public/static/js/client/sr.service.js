@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            const url = `http://kamron.webx.brn.m/srapi?mode=getGroup&group_id=${data['group_id']}}`;
+            const url = `http://kamron.webx.brn.m/srapi?mode=getGroup&group_id=${data['group_id']}`;
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 
