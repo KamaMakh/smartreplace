@@ -4,4 +4,4 @@ CREATE TABLE `sr_groups` (
   `elements` text,
   `channel_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`group_id`)
-);
+) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4;

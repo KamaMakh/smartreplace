@@ -10,4 +10,4 @@ CREATE TABLE `oauth_session` (
   `real_uid` int(10) unsigned NOT NULL DEFAULT '0',
   `expire` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY `session_name` (`session_name`,`user_id`,`server_id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

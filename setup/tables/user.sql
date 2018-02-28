@@ -12,4 +12,4 @@ CREATE TABLE `user` (
   `email` varchar(45) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `outer_id_type_id_UQI` (`user_type_id`,`outer_user_id`)
-);
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

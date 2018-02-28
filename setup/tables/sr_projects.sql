@@ -5,4 +5,4 @@ CREATE TABLE `sr_projects` (
   `code_status` tinyint(1) DEFAULT '0',
   `project_alias` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
-);
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4;

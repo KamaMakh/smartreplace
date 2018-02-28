@@ -6,4 +6,4 @@ CREATE TABLE `sr_templates` (
   `data` text,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`template_id`)
-);
+) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8mb4;
