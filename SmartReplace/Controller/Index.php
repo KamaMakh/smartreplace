@@ -14,6 +14,9 @@ class Index Extends ActionBase
 {
     public $logger;
     protected $user_id;
+    protected $staff_id;
+    protected $first_name;
+    protected $last_name;
 
     public function __construct(\Viron\Request $request, ActionBase $parent = null)
     {
@@ -24,6 +27,9 @@ class Index Extends ActionBase
 
         $this->logger = $logger;
         $this->user_id = $this->app->user->id;
+        $this->staff_id = $this->app->user->outer_user_id;
+        $this->first_name = $this->app->user->first_name;
+        $this->last_name = $this->app->user->last_name;
     }
 
     public function index()
@@ -33,7 +39,11 @@ class Index Extends ActionBase
 
         $page = [
             '_title'   => 'Мегагрупп smartreplace - Список проектов',
-            'mode'     => 'main'
+            'mode'     => 'main',
+            'user_id'  => $this->user_id,
+            'staff_id' => $this->staff_id,
+            'first_name' => $this->first_name,
+            'last_name'  => $this->last_name
         ];
 
         if ( $mode == '' ) {

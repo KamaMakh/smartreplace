@@ -11,6 +11,11 @@
             <div class="all-projects-head">
                 СПИСОК ПРОЕКТОВ
             </div>
+            <div class="user">
+                {*<div class="id">{$content.user_id}</div>*}
+                <div class="staff-id">{$content.staff_id}</div>
+                <div class="user-name">{$content.first_name} {$content.last_name}</div>
+            </div>
             <div class="add-new-project-button ">
                 <a class="myModalButton ui submit button grey small"  data-reveal-id="myModal">Создать новый проект</a>
             </div>
