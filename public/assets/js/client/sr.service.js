@@ -105,7 +105,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         let preloader = document.createElement('div'),
             styles = document.createElement('link');
-        styles.setAttribute('href','http://smartreplace.svc.m/static/css/site.css');
+        styles.setAttribute('href','http://smartreplace.svc.m/assets/css/site.css');
         styles.setAttribute('rel','stylesheet');
         preloader.setAttribute("class","preload");
 
