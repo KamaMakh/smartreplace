@@ -28,7 +28,7 @@
                     <div class="project-item-left">
                         <div class="number">
                             <form action="?mode=editProjectName" method="post">
-                                <div class="ui input edit-project-name">
+                                <div class="ui input edit-project-name" title="Изменить название проекта">
                                     <input type="text" name="project_new_name" disabled value="{$project['project_alias']}">
                                 </div>
                                 <input type="hidden" value="{$project['project_id']}" name="project_id">

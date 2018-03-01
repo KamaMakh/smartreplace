@@ -81,9 +81,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
         run() {
             let get_params = this.getUrl();
-
-            if (get_params) {
-                // this.check_script(get_params);
+          //  console.log(get_params);
+         //   console.log(Math.floor(get_params['group_id']) == Math.floor('001'));
+            if ( get_params && Math.floor(get_params['group_id']) != Math.floor('001') ) {
                 this.requestParam(get_params);
             }
 
@@ -99,7 +99,7 @@ window.addEventListener('DOMContentLoaded', function() {
     //----------------------------------------------------------------------
 
 
-    if ( location.search.indexOf('yagla=true') > 0 ) {
+    if ( location.search.indexOf('sr=001') > 0 ) {
 
 
 

@@ -64,7 +64,7 @@ class Main
     public function checkScript ($site_url, $project_id) {
 
         $client  =  new GuzzleHttp\Client();
-        $res = $client->request('GET', $site_url);
+        $res = $client->request('GET', $site_url.'?sr=001');
 
         $page = $res->getBody();
 

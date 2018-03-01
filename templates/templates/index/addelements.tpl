@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="right-column">
-                <iframe name="main_iframe" class="main_iframe" id="main_iframe" src="{$content.site_url}?yagla=true" frameborder="0" width="100%" height="600px" ></iframe>
+                <iframe name="main_iframe" class="main_iframe" id="main_iframe" src="{$content.site_url}?sr=001" frameborder="0" width="100%" height="600px" ></iframe>
             </div>
         </div>
         <span class="hidden dataFields">
