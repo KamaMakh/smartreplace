@@ -89,9 +89,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
         }
     };
-    setTimeout(function(){
+  //  setTimeout(function(){
         module.run();
-    },100);
+   // },100);
 
 
 

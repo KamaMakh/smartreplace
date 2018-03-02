@@ -93,13 +93,19 @@ class Elements
         }
     }
 
-    public function removeElement ($get) {
+    public function removeElement ($get, $user_id) {
         $project_id = $get['project_id'];
         $template_id = $get['template_id'];
+        $equal_user_id = Db::fetchAll("SELECT user_id FROM sr_projects WHERE project_id=".$project_id)[0]['user_id'];
 
-        Db::delete('sr_templates', 'template_id='.$template_id);
-        Db::delete('sr_replacements', 'template_id='.$template_id);
+        if ( $user_id == $equal_user_id ) {
+            Db::delete('sr_templates', 'template_id='.$template_id);
+            Db::delete('sr_replacements', 'template_id='.$template_id);
 
-        $this->sendToClient($project_id);
+            $this->sendToClient($project_id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

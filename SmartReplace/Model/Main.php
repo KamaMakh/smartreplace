@@ -138,7 +138,7 @@ class Main
         exit;
     }
 
-    public function removeProject($project_id) {
-        Db::delete('sr_projects', 'project_id='.$project_id);
+    public function removeProject($project_id, $user_id) {
+        Db::delete('sr_projects', 'project_id='.$project_id. ' AND user_id='.$user_id);
     }
 }

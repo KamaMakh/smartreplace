@@ -60,7 +60,7 @@ class Index Extends ActionBase
         }
         else if ( $mode == 'removeProject' ) {
             $project_id = Request::getStrFromPost('project_id', '');
-            $projects->removeProject($project_id);
+            $projects->removeProject($project_id, $this->user_id);
         }
         else if ( $mode == 'checkScript' ) {
             $site_url = Request::getStrFromGet('site_url', '');
@@ -109,19 +109,17 @@ class Index Extends ActionBase
 
         }
         else if ($mode == 'removeElement') {
-            $elements->removeElement(Request::getGet());
+            $check_user = $elements->removeElement(Request::getGet(), $this->user_id);
 
-            if ( $project_id ) {
-                $result = $elements->sendToClient($project_id);
-
-                $page['dataFields'] = $result['elements'];
-                $page['firstCheck'] = $result['firstCheck'];
-                $page['mode'] = 'removeElement';
-
+            if ( $check_user ) {
+                if ( $project_id ) {
+                    $result = $elements->sendToClient($project_id);
+                    $page['dataFields'] = $result['elements'];
+                    $page['firstCheck'] = $result['firstCheck'];
+                    $page['mode'] = 'removeElement';
+                }
             }
         }
-
-       // $this->logger->info('mode:'.$mode);
 
         return $page;
 
@@ -153,7 +151,7 @@ class Index Extends ActionBase
         }
         else if ( $mode == 'removeGroup' ) {
             $group_id = Request::getStrFromPost('group_id', '');
-            $groups->removeGroup($group_id);
+            $groups->removeGroup($group_id, $project_id ,$this->user_id );
         }
         else if ( $mode == 'saveGroup' ) {
             $post = Request::getPost();

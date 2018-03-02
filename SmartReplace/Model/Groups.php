@@ -88,9 +88,14 @@ class Groups
         ];
     }
 
-    public function removeGroup ($group_id) {
-        Db::delete('sr_replacements', 'group_id='.$group_id);
-        Db::delete('sr_groups', 'group_id='.$group_id);
+    public function removeGroup ($group_id, $project_id, $user_id) {
+        $equal_user_id = Db::fetchAll("SELECT user_id FROM sr_projects WHERE project_id=".$project_id)[0]['user_id'];
+
+        if ( $equal_user_id == $user_id ) {
+            Db::delete('sr_replacements', 'group_id='.$group_id);
+            Db::delete('sr_groups', 'group_id='.$group_id);
+        }
+
     }
 
     public function saveGroup ($post) {
