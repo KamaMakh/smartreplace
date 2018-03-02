@@ -11,7 +11,7 @@
                 <a href="/addelements?project_id={$content.project_id}" type="submit" class="back-to-add ui submit button grey small" >Выбрать элементы для разметки</a>
                 <a href="/" type="submit" class="back-to-add ui submit button grey small" >Вернуться к списку проектов</a>
 
-                {if $content.project['code_status'] == 1}
+                {*if $content.project['code_status'] == 1}
                     <div  href="" class="check-scrip-button check-scrip-button blue">
                         Код установлен
                     </div>
@@ -19,7 +19,7 @@
                     <a title="Нажмите для повторной проверки" href="/code?site_url={$content.project['project_name']}&project_id={$content.project['project_id']}" class="check-scrip-button red">
                         Код не установлен
                     </a>
-                {/if}
+                {/if*}
 
             </div>
             <div class="elements-table-wrap-bot ui two column grid">

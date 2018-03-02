@@ -19,7 +19,7 @@ class Code
 
     public function checkScript ($get) {
         $client  =  new GuzzleHttp\Client();
-        $res = $client->request('GET', $get['site_url']);
+        $res = $client->request('GET', $get['site_url'].'sr=001');
         $page = $res->getBody();
         $check_script = strstr($page, 'sr.service.js');
 

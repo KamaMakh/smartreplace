@@ -122,7 +122,9 @@ class Groups
             }
         }
 
-        $this->checkScript($post['project_name'], $post['project_id']);
+        //$this->checkScript($post['project_name'], $post['project_id']);
+        header ('location: /complete?project_id='.$post['project_id']);
+        exit;
     }
 
     public function addNewGroup ($new_group) {
