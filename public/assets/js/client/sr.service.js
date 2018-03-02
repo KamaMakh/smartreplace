@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            const url = `http://smartreplace.svc.m/srapi?mode=getGroup&group_id=${data['group_id']}`;
+            const url = `http://smartreplace.ru/srapi?mode=getGroup&group_id=${data['group_id']}`;
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 
@@ -105,7 +105,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         let preloader = document.createElement('div'),
             styles = document.createElement('link');
-        styles.setAttribute('href','http://smartreplace.svc.m/assets/css/site.css');
+        styles.setAttribute('href','http://smartreplace.ru/assets/css/site.css');
         styles.setAttribute('rel','stylesheet');
         preloader.setAttribute("class","preload");
 
