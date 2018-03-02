@@ -105,7 +105,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         let preloader = document.createElement('div'),
             styles = document.createElement('link');
-        styles.setAttribute('href','http://smartreplace.ru/assets/css/site.css');
+        styles.setAttribute('href','//smartreplace.ru/assets/css/site.css');
         styles.setAttribute('rel','stylesheet');
         preloader.setAttribute("class","preload");
 
@@ -390,7 +390,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     duration = duration || 1000;              // default 1 sec animation
                     start = Date.now();                       // get start time
                     factor = 0;
-                    console.log(element);
+                    //console.log(element);
 
                     if( timer ) {
                         clearInterval(timer); // stop any running animations
