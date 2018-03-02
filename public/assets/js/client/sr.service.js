@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function() {
         },
 
         requestParam(data) {
-            const url = `http://smartreplace.ru/srapi?mode=getGroup&group_id=${data['group_id']}`;
+            const url = `//smartreplace.ru/srapi?mode=getGroup&group_id=${data['group_id']}`;
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 
