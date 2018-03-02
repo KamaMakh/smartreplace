@@ -59,7 +59,7 @@ class Index Extends ActionBase
             $projects->editProjectName($post);
         }
         else if ( $mode == 'removeProject' ) {
-            $project_id = Request::getStrFromGet('project_id', '');
+            $project_id = Request::getStrFromPost('project_id', '');
             $projects->removeProject($project_id);
         }
         else if ( $mode == 'checkScript' ) {

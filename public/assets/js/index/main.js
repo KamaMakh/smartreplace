@@ -394,11 +394,24 @@
                 else {
                     let project_item = target.parents('.project-item'),
                         project_id = project_item.attr('data-project-id');
-                    fetch('?mode=removeProject&project_id='+project_id)
+                    /*
+                    fetch('?mode=removeProject&project_id='+project_id,{
+
+                    })
                         .then(function(response){
                             console.log(response);
                             project_item.remove();
                         });
+*/
+                    $.ajax({
+                        type: "POST",
+                        url: '?mode=removeProject',
+                        data: {"project_id":project_id},
+                        success: function () {
+                            //console.log("test");
+                            project_item.remove();
+                        }
+                    });
                     //console.log(project_id);
                 }
             },
