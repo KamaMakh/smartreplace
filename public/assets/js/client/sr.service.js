@@ -1,5 +1,5 @@
 (function(window){
-    'use strict';
+   // 'use strict';
     const utilities = {
         htmlspecialchars_decode(data) {
             data = data.replace(/&quot;/g, '"');
