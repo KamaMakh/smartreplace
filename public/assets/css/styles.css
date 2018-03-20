@@ -636,3 +636,10 @@ body {
 .element-name.row {
     align-items: flex-end !important;
 }
+.context-body > div {
+    width: 100%;
+}
+.context-body > div textarea {
+    max-width: 100%;
+    min-height: 30px;
+}

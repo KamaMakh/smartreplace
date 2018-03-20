@@ -245,6 +245,7 @@
                         response = utilities.htmlspecialchars_decode(response);
                      //   console.log(response);
                         utilities.buildNewGroup(JSON.parse(response), true);
+                        utilities.run();
                     },
                     error(e){
                         console.log(e);
@@ -510,17 +511,28 @@
             },
 
             run() {
-                let editor_columns = $('.editor_columns'),
-                    reference_width = 0;
+                let $row = $('.rows_wrapper');
+                let width = 0;
 
-                if( editor_columns ) {
-                    editor_columns.each(function(){
-                        reference_width = reference_width < $(this).width()? $(this).width() : reference_width;
+                if ($row.length) {
+                    $row.each(function (i, e) {
+                        let $col = $(e).find('.context-body');
+                        let cols_count = $(e).find('.context-body').length;
+                        width = $(e).width()/cols_count - 10;
+                        $col.css('width', width);
                     });
                 }
-
-                editor_columns.css('width', reference_width);
-             //   console.log(reference_width);
+             //    let editor_columns = $('.editor_columns'),
+             //        reference_width = 0;
+             //
+             //    if( editor_columns ) {
+             //        editor_columns.each(function(){
+             //            reference_width = reference_width < $(this).width()? $(this).width() : reference_width;
+             //        });
+             //    }
+             //
+             //    editor_columns.css('width', reference_width);
+             // //   console.log(reference_width);
             }
         };
 

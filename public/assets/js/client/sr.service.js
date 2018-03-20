@@ -16,18 +16,22 @@
 
             get_params = get_params.split('?')[1];
             if (get_params) {
+                let other_params;
                 get_params = get_params.split('&');
-                get_params = get_params.map(function(item){
-                    if (item.split('=')[0] == 'sr') {
-                        return item;
-                    }
+                other_params = get_params.filter(function(item){
+                    return item.split('=')[0] != 'sr';
                 });
+                get_params = get_params.filter(function(item){
+                    return item.split('=')[0] == 'sr';
+                });
+                console.log(get_params);
                 if (get_params[0]) {
                     get_params = get_params[0].split('=')[1];
 
                     return {
                         group_id: get_params,
-                        project_name: project_name
+                        project_name: project_name,
+                        other_params: other_params
                     }
                 }
             } else {
@@ -36,7 +40,8 @@
         },
 
         requestParam(data) {
-            const url = `//smartreplace.ru/srapi?mode=getGroup&group_id=${data['group_id']}`;
+            const url = `http://smart_replace.local/srapi?mode=getGroup&group_id=${data['group_id']}`;
+            let replacement_text = '';
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 
@@ -49,12 +54,30 @@
 
                 for (let key in elements) {
                     if (elements[key]['new_text'].length) {
-                        if ( elements[key]['type'] == 'image' ) {
-                            document.querySelector(elements[key]['selector']).setAttribute('src', elements[key]['new_text']);
-                        } else if ( elements[key]['type'] == 'text' ) {
-                            document.querySelector(elements[key]['selector']).innerText = elements[key]['new_text'];
-                        } else if ( elements[key]['type'] == 'code' ) {
-                            document.querySelector(elements[key]['selector']).innerHTML = elements[key]['new_text'];
+
+                        if (elements[key]['new_text'].indexOf('get_') == 0 && data['other_params']) {
+                            let other_params = data['other_params'];
+                            for (let i = 0; i < other_params.length; i++) {
+                                let param = other_params[i].split('=');
+                                if (param[0] && param[1] && param[0] == elements[key]['new_text'].replace('get_', '')) {
+                                    replacement_text = decodeURIComponent(param[1]);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (replacement_text) {
+                            elements[key]['new_text'] = replacement_text;
+                        }
+
+                        if (replacement_text || (!replacement_text && elements[key]['new_text'].indexOf('get_') != 0)) {
+                            if ( elements[key]['type'] == 'image' ) {
+                                document.querySelector(elements[key]['selector']).setAttribute('src', elements[key]['new_text']);
+                            } else if ( elements[key]['type'] == 'text' ) {
+                                document.querySelector(elements[key]['selector']).innerText = elements[key]['new_text'];
+                            } else if ( elements[key]['type'] == 'code' ) {
+                                document.querySelector(elements[key]['selector']).innerHTML = elements[key]['new_text'];
+                            }
                         }
                     }
                 }
@@ -84,7 +107,7 @@
         if ( location.search.indexOf('sr=001') > 0 ) {
             let preloader = document.createElement('div'),
                 styles = document.createElement('link');
-            styles.setAttribute('href','//smartreplace.ru/assets/css/site.css');
+            styles.setAttribute('href','http://smart_replace.local/assets/css/site.css');
             styles.setAttribute('rel','stylesheet');
             preloader.setAttribute("class","preload");
 
