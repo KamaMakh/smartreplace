@@ -541,7 +541,7 @@ body {
 }
 .context-body.l-cl.cell-keywords textarea{
     max-width: none;
-    min-height: 4пше0px;
+    min-height: 40px;
     height: auto;
     margin-top: 3px;
     line-height: 1.2;
@@ -651,6 +651,6 @@ body {
 }
 .context-body > div textarea {
     max-width: 100%;
-    min-height: 4пше0px;
+    min-height: 40px;
     line-height: 1.2;
 }
