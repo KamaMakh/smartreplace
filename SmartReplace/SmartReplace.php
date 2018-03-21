@@ -83,7 +83,7 @@ class SmartReplace Extends App {
         } else {
             if ($this->_config['develop']['debug']) {
 
-                $outer_id = 1142;
+                $outer_id = 989;
                 $user_type_id = 2;
 
             } else {

@@ -290,13 +290,15 @@
                 }
             },
             removeGroup (remove_button) {
+                console.log(remove_button.parents('.group-row'));
                 let group_id = {
                     group_id: remove_button.parents('.group-row').attr('data-group-id')
                 };
+                let project_id = $('.elements-table-wrap').attr('data-project-id');
 
               //  console.log(group_id);
                 $.post({
-                  url: '/complete?mode=removeGroup',
+                  url: `/complete?mode=removeGroup&project_id=${project_id}`,
                     method: 'POST',
                     data: group_id,
                     success: function(response){

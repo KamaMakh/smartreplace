@@ -24,7 +24,7 @@
             </div>
             <div class="elements-table-wrap-bot ui two column grid">
                 <div class="element-name row rows_wrapper">
-                    <div class="column l-cl context-body">Название канала</div>
+                    <div class="column l-cl context-body">Название подмены</div>
                     <div class="ui equal width grid">
                         {foreach $content.list as $key=> $value}
                         <div data-type="{$value['type']}" data-template-element-id="{$value['template_id']}" class="editor_columns active context-body" >
@@ -46,7 +46,7 @@
                                     <div class="advert-request group-row-keyword" title="{$content.project_name}" data-keyword="{$value['group_id']}" id="">
                                         <a target="_blank" href="{$content.project_name}?sr={$value['group_id']}">{$content.project_name}?sr={$value['group_id']}</a>
                                     </div>
-                                    <textarea disabled data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}"> {if $value['channel_name']} {$value['channel_name']} {else} Канал №{$key+1} {/if}</textarea>
+                                    <textarea disabled data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}"> {if $value['channel_name']} {$value['channel_name']} {else} Подмена №{$key+1} {/if}</textarea>
                                     <i class="edit-group write icon grey large"></i>
                                     <i class="remove-group trash icon grey large"></i>
                                     <div class="edit-buttons-wrap">
@@ -90,7 +90,7 @@
                                 <div class="advert-request group-row-keyword" title="{$content.project_name}" data-keyword="{$value['group_id']}" id="">
                                     <a target="_blank" href="{$content.project_name}?sr={$value['group_id']}">{$content.project_name}?sr={$value['group_id']}</a>
                                 </div>
-                                <textarea disabled data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}">Канал №{count($content.groups)+1} </textarea>
+                                <textarea disabled data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}">Подмена №{count($content.groups)+1} </textarea>
 
                                 <i class="edit-group write icon grey large"></i>
                                 <i class="remove-group trash icon grey large"></i>
