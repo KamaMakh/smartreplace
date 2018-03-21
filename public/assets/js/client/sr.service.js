@@ -40,7 +40,7 @@
         },
 
         requestParam(data) {
-            const url = `http://smart_replace.local/srapi?mode=getGroup&group_id=${data['group_id']}`;
+            const url = `//smartreplace.ru/srapi?mode=getGroup&group_id=${data['group_id']}`;
             let replacement_text = '';
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
@@ -107,7 +107,7 @@
         if ( location.search.indexOf('sr=001') > 0 ) {
             let preloader = document.createElement('div'),
                 styles = document.createElement('link');
-            styles.setAttribute('href','http://smart_replace.local/assets/css/site.css');
+            styles.setAttribute('href','//smartreplace.ru/assets/css/site.css');
             styles.setAttribute('rel','stylesheet');
             preloader.setAttribute("class","preload");
 
