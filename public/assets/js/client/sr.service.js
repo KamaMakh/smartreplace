@@ -51,15 +51,16 @@
             xhr.onload = function() {
                 let text = utilities.htmlspecialchars_decode(this.responseText);
                 let elements = JSON.parse(text);
+                let reg = /^get\:/;
 
                 for (let key in elements) {
-                    if (elements[key]['new_text'].length) {
+                    if (elements[key]['new_text'] && elements[key]['new_text'].length) {
 
-                        if (elements[key]['new_text'].indexOf('get_') == 0 && data['other_params']) {
+                        if (elements[key]['new_text'].indexOf('get:') == 0 && data['other_params']) {
                             let other_params = data['other_params'];
                             for (let i = 0; i < other_params.length; i++) {
                                 let param = other_params[i].split('=');
-                                if (param[0] && param[1] && param[0] == elements[key]['new_text'].replace('get_', '')) {
+                                if (param[0] && param[1] && param[0] == elements[key]['new_text'].replace('get:', '')) {
                                     replacement_text = decodeURIComponent(param[1]);
                                     break;
                                 }
@@ -70,7 +71,7 @@
                             elements[key]['new_text'] = replacement_text;
                         }
 
-                        if (replacement_text || (!replacement_text && elements[key]['new_text'].indexOf('get_') != 0)) {
+                        if (replacement_text || (!replacement_text && elements[key]['new_text'].indexOf('get:') != 0)) {
                             if ( elements[key]['type'] == 'image' ) {
                                 document.querySelector(elements[key]['selector']).setAttribute('src', elements[key]['new_text']);
                             } else if ( elements[key]['type'] == 'text' ) {
