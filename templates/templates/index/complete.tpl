@@ -46,7 +46,7 @@
                                     <div class="advert-request group-row-keyword" title="{$content.project_name}" data-keyword="{$value['group_id']}" id="">
                                         <a target="_blank" href="{$content.project_name}?sr={$value['group_id']}">{$content.project_name}?sr={$value['group_id']}</a>
                                     </div>
-                                    <textarea disabled rows="4" data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}"> {if $value['channel_name']} {$value['channel_name']} {else} Канал №{$key+1} {/if}</textarea>
+                                    <textarea disabled data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}"> {if $value['channel_name']} {$value['channel_name']} {else} Канал №{$key+1} {/if}</textarea>
                                     <i class="edit-group write icon grey large"></i>
                                     <i class="remove-group trash icon grey large"></i>
                                     <div class="edit-buttons-wrap">
@@ -90,7 +90,7 @@
                                 <div class="advert-request group-row-keyword" title="{$content.project_name}" data-keyword="{$value['group_id']}" id="">
                                     <a target="_blank" href="{$content.project_name}?sr={$value['group_id']}">{$content.project_name}?sr={$value['group_id']}</a>
                                 </div>
-                                <textarea disabled rows="4" data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}">Канал №{count($content.groups)+1} </textarea>
+                                <textarea disabled data-id="" data-type="" class="request-textarea" name="request-title" old-val="{$value['channel_name']}">Канал №{count($content.groups)+1} </textarea>
 
                                 <i class="edit-group write icon grey large"></i>
                                 <i class="remove-group trash icon grey large"></i>

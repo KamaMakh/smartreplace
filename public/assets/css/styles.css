@@ -536,6 +536,16 @@ body {
     margin-right: 20px;
     /*border-right: 1px solid;*/
 }
+.context-body.l-cl{
+    max-width: none;
+}
+.context-body.l-cl.cell-keywords textarea{
+    max-width: none;
+    min-height: 4пше0px;
+    height: auto;
+    margin-top: 3px;
+    line-height: 1.2;
+}
 
 .project-name-head{
     font-size: 18px;
@@ -641,5 +651,6 @@ body {
 }
 .context-body > div textarea {
     max-width: 100%;
-    min-height: 30px;
+    min-height: 4пше0px;
+    line-height: 1.2;
 }

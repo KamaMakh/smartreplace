@@ -24,7 +24,7 @@
                 get_params = get_params.filter(function(item){
                     return item.split('=')[0] == 'sr';
                 });
-                console.log(get_params);
+
                 if (get_params[0]) {
                     get_params = get_params[0].split('=')[1];
 
