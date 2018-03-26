@@ -41,8 +41,9 @@ foreach ($projects as $project_key => $project) {
     DB::query("UPDATE sr_replacements SET project_id=$page_id WHERE project_id=$project_id");
     DB::query("UPDATE sr_templates SET project_id=$page_id WHERE project_id=$project_id");
 
-    DB::query("ALTER TABLE sr_groups CHANGE COLUMN project_id page_id INT(11) NOT NULL DEFAULT 0");
-    DB::query("ALTER TABLE sr_replacements CHANGE COLUMN project_id page_id INT(11) NOT NULL DEFAULT 0");
-    DB::query("ALTER TABLE sr_templates CHANGE COLUMN project_id page_id INT(11) NOT NULL DEFAULT 0");
-
 }
+
+DB::query("ALTER TABLE sr_groups CHANGE COLUMN project_id page_id INT(11) NOT NULL DEFAULT 0");
+DB::query("ALTER TABLE sr_replacements CHANGE COLUMN project_id page_id INT(11) NOT NULL DEFAULT 0");
+DB::query("ALTER TABLE sr_templates CHANGE COLUMN project_id page_id INT(11) NOT NULL DEFAULT 0");
+DB::query("ALTER TABLE sr_projects DROP COLUMN code_status");
