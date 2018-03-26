@@ -34,7 +34,6 @@ foreach ($projects as $project_key => $project) {
         Db::query("UPDATE sr_projects SET project_name=$url_without_path WHERE project_id=$project_id");
     }
     DB::query("INSERT INTO sr_pages (page_id, project_id, page_name, code_status) VALUES (null,$project_id,'$page_url',$code_status)");
-    DB::query("ALTER TABLE sr_projects DROP COLUMN code_status");
 
     $page_id = Db::fetchAll("SELECT page_id FROM sr_pages WHERE project_id = $project_id")[0]['page_id'];
 
