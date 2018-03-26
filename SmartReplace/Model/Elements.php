@@ -30,14 +30,16 @@ class Elements
     }
 
 
-    function init(int $project_id=null) {
-        if ( $project_id ) {
+    function init(int $project_id=null, int $page_id=null) {
+        if ( $project_id && $page_id) {
 
             $site_url = Db::fetchAll('SELECT project_name FROM sr_projects WHERE project_id=' . $project_id)[0]['project_name'];
+            $page_url = Db::fetchAll("SELECT page_name FROM sr_pages WHERE page_id=$page_id")[0]['page_name'];
 
             if ($site_url && strlen($site_url) > 0) {
-                $result = $this->sendToClient(null, $site_url);
+                $result = $this->sendToClient($page_id, $site_url, true);
                 $result['site_url'] = $site_url;
+                $result['page_url'] = $page_url;
                 return $result;
             }
         }
@@ -46,11 +48,12 @@ class Elements
     public function insertToDb($post) {
 
         $project_id = $post['project_id'];
-        $check_template = Db::fetchAll("SELECT name FROM sr_templates WHERE project_id=".$project_id." and param ="."'".$post['wayToElement']."'");
+        $page_id = $post['page_id'];
+        $check_template = Db::fetchAll("SELECT name FROM sr_templates WHERE page_id=".$page_id." and param ="."'".$post['wayToElement']."'");
 
         if ( !$check_template ) {
             $data_fields = [
-                'project_id'=> $project_id,
+                'page_id'=> $page_id,
                 'param'=> $post['wayToElement'],
                 'type'=> $post['type'],
                 'data'=> $post['inner'],
@@ -64,23 +67,33 @@ class Elements
 
     }
 
-    public function sendToClient ($project_id, $project_name = null) {
-        if ( !$project_id ) {
+    public function sendToClient ($page_id, $project_name = null, $first_check = null) {
+//        if ( !$page_id ) {
+//
+//            $query = "SELECT * FROM sr_pages p
+//                        JOIN sr_projects pr
+//                        ON p.project_id = pr.project_id
+//                        WHERE project_name='$project_name'";
+//
+//            $page_id = Db::fetchAll($query)[0]['page_id'];
+//
+//            $query2 = "SELECT t.template_id, t.page_id, t.param, t.type, t.data, t.name, p.project_id
+//                        FROM sr_templates t
+//                        JOIN sr_pages p
+//                        ON t.page_id=p.page_id
+//                        WHERE t.page_id =".$page_id;
+//
+//            $elements = Db::fetchAll($query2);
+//
+//            return [
+//                'elements'=>json_encode($elements),
+//                'firstCheck'=>1
+//            ];
+//
+//        } else {
+        if ($page_id) {
 
-            $project_id = Db::fetchAll("SELECT project_id FROM sr_projects WHERE project_name ="."'".$project_name."'");
-
-            $project_id = $project_id[0]['project_id'];
-
-            $elements = Db::fetchAll("SELECT * FROM sr_templates WHERE project_id =".$project_id);
-
-            return [
-                'elements'=>json_encode($elements),
-                'firstCheck'=>1
-            ];
-
-        } else {
-
-            $elements = Db::fetchAll("SELECT * FROM sr_templates WHERE project_id =".$project_id);
+            $elements = Db::fetchAll("SELECT * FROM sr_templates WHERE page_id =".$page_id);
 
             if ( !$elements ) {
                 $elements = null; //json_encode(['clear'=>true]);
@@ -88,13 +101,14 @@ class Elements
 
             return [
                 'elements'=>json_encode($elements),
-                'firstCheck'=>false
+                'firstCheck'=> $first_check ? true : false
             ];
         }
     }
 
     public function removeElement ($get, $user_id) {
         $project_id = $get['project_id'];
+        $page_id = $get['page_id'];
         $template_id = $get['template_id'];
         $equal_user_id = Db::fetchAll("SELECT user_id FROM sr_projects WHERE project_id=".$project_id)[0]['user_id'];
 
@@ -102,7 +116,7 @@ class Elements
             Db::delete('sr_templates', 'template_id='.$template_id);
             Db::delete('sr_replacements', 'template_id='.$template_id);
 
-            $this->sendToClient($project_id);
+            $this->sendToClient($page_id);
             return true;
         } else {
             return false;

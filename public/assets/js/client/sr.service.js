@@ -40,8 +40,7 @@
         },
 
         requestParam(data) {
-            const url = `//smartreplace.ru/srapi?mode=getGroup&group_id=${data['group_id']}`;
-            let replacement_text = '';
+            const url = `http://smart_replace.local/srapi?mode=getGroup&group_id=${data['group_id']}`;
 
             let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 
@@ -50,34 +49,43 @@
             xhr.open('GET', url, true);
             xhr.onload = function() {
                 let text = utilities.htmlspecialchars_decode(this.responseText);
-                let elements = JSON.parse(text);
-                let reg = /^get\:/;
+                let data_obj = JSON.parse(text);
 
-                for (let key in elements) {
-                    if (elements[key]['new_text'] && elements[key]['new_text'].length) {
+                if (data_obj && data_obj['elements'] && data_obj['page_url']) {
+                    let elements = data_obj['elements'];
 
-                        if (elements[key]['new_text'].indexOf('get:') == 0 && data['other_params']) {
-                            let other_params = data['other_params'];
-                            for (let i = 0; i < other_params.length; i++) {
-                                let param = other_params[i].split('=');
-                                if (param[0] && param[1] && param[0] == elements[key]['new_text'].replace('get:', '')) {
-                                    replacement_text = decodeURIComponent(param[1]);
-                                    break;
+                    if (data_obj['page_url'] != location.pathname) {
+                        return;
+                    }
+
+                    for (let key in elements) {
+                        let replacement_text = '';
+
+                        if (elements[key]['new_text'] && elements[key]['new_text'].length) {
+                            if (elements[key]['new_text'].indexOf('get:') == 0 && data['other_params']) {
+                                let other_params = data['other_params'];
+                                for (let i = 0; i < other_params.length; i++) {
+                                    let param = other_params[i].split('=');
+
+                                    if (param[0] && param[1] && param[0] == elements[key]['new_text'].replace('get:', '')) {
+                                        replacement_text = decodeURIComponent(param[1]);
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
-                        if (replacement_text) {
-                            elements[key]['new_text'] = replacement_text;
-                        }
+                            if (replacement_text) {
+                                elements[key]['new_text'] = replacement_text;
+                            }
 
-                        if (replacement_text || (!replacement_text && elements[key]['new_text'].indexOf('get:') != 0)) {
-                            if ( elements[key]['type'] == 'image' ) {
-                                document.querySelector(elements[key]['selector']).setAttribute('src', elements[key]['new_text']);
-                            } else if ( elements[key]['type'] == 'text' ) {
-                                document.querySelector(elements[key]['selector']).innerText = elements[key]['new_text'];
-                            } else if ( elements[key]['type'] == 'code' ) {
-                                document.querySelector(elements[key]['selector']).innerHTML = elements[key]['new_text'];
+                            if (replacement_text || (!replacement_text && elements[key]['new_text'].indexOf('get:') != 0)) {
+                                if ( elements[key]['type'] == 'image' ) {
+                                    document.querySelector(elements[key]['selector']).setAttribute('src', elements[key]['new_text']);
+                                } else if ( elements[key]['type'] == 'text' ) {
+                                    document.querySelector(elements[key]['selector']).innerText = elements[key]['new_text'];
+                                } else if ( elements[key]['type'] == 'code' ) {
+                                    document.querySelector(elements[key]['selector']).innerHTML = elements[key]['new_text'];
+                                }
                             }
                         }
                     }
@@ -108,7 +116,7 @@
         if ( location.search.indexOf('sr=001') > 0 ) {
             let preloader = document.createElement('div'),
                 styles = document.createElement('link');
-            styles.setAttribute('href','//smartreplace.ru/assets/css/site.css');
+            styles.setAttribute('href','http://smart_replace.local/assets/css/site.css');
             styles.setAttribute('rel','stylesheet');
             preloader.setAttribute("class","preload");
 

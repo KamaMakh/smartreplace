@@ -10,21 +10,22 @@
                             <div class="ui segment">Выберите элементы для замены, после этого нажмите кнопку Настроить замены.</div>
                         </div>
                         <div class="buttons-wrap">
-                            <form action="/complete?project_id={$content.project_id}" method="get">
+                            <form action="/complete?project_id={$content.project_id}&page_id={$content.page_id}" method="get">
                                 <input type="hidden" name="project_id" class="for-p-name" value="">
+                                <input type="hidden" name="page_id" class="for-page-name" value="">
                                 <button type="submit" class="add-elements-button ui submit button grey small" >Настроить замену</button>
                             </form>
                         </div>
                         <div class="list">
                         </div>
                         <div class="back-to-main">
-                            <a class="ui button grey small" href="/"> Вернуться</a>
+                            <a class="ui button grey small" href="/pages?project_id={$content.project_id}&site_url={$content.site_url}"> Вернуться</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="right-column">
-                <iframe name="main_iframe" class="main_iframe" id="main_iframe" src="{$content.site_url}?sr=001" frameborder="0" width="100%" height="600px" ></iframe>
+                <iframe name="main_iframe" class="main_iframe" id="main_iframe" src="{$content.site_url}{$content.page_url}?sr=001" frameborder="0" width="100%" height="600px" ></iframe>
             </div>
         </div>
         <span class="hidden dataFields">

@@ -14,7 +14,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 
-class Main
+class Pages
 {
     public $fenom;
     public $logger;
@@ -28,20 +28,20 @@ class Main
         $this->logger = $logger;
     }
 
-    public function init($user_id) {
+    public function init($project_id) {
 
-        $projects = Db::fetchAll("SELECT project_id,user_id,project_name,project_alias FROM sr_projects WHERE user_id=".$user_id);
+        $pages = Db::fetchAll("SELECT page_id,project_id,page_name, code_status FROM sr_pages WHERE project_id=".$project_id);
 
-        foreach($projects as $key=>$project){
-              $pages_count =  count(Db::fetchAll("SELECT page_id FROM sr_pages WHERE project_id=".$project['project_id']));
-//            $groups_count =  count(Db::fetchAll("SELECT group_id FROM sr_groups WHERE project_id=".$project['project_id']));
-//            $templates_count = count(Db::fetchAll("SELECT template_id FROM sr_templates WHERE project_id=".$project['project_id']));
-//            $projects[$key]['groups_count'] = $groups_count;
-//            $projects[$key]['templates_count'] = $templates_count;
-              $projects[$key]['pages_count'] = $pages_count;
+        foreach($pages as $key=>$page){
+            $groups_count =  count(Db::fetchAll("SELECT group_id FROM sr_groups WHERE page_id=".$page['page_id']));
+            $templates_count = count(Db::fetchAll("SELECT template_id FROM sr_templates WHERE page_id=".$page['page_id']));
+            $pages_count = count(Db::fetchAll("SELECT page_id FROM sr_pages WHERE page_id=".$page['page_id']));
+            $pages[$key]['groups_count'] = $groups_count;
+            $pages[$key]['templates_count'] = $templates_count;
+            $pages[$key]['pages_count'] = $pages_count;
 
-            if ( strstr($project['project_name'], '--') ) {
-                $url_arr = explode('//', $project['project_name']);
+            if ( strstr($page['page_name'], '--') ) {
+                $url_arr = explode('//', $page['page_name']);
                 $url_arr[1] = explode('/',$url_arr[1]);
 
                 if ( count($url_arr[1]) > 1 && strlen($url_arr[1]) ) {
@@ -56,32 +56,32 @@ class Main
                     $url_arr[1] = idn_to_utf8($url_arr[1][0]);
                 }
 
-                $projects[$key]['real_project_name'] = $url_arr[0] . '//' . idn_to_utf8($url_arr[1]);
+                $pages[$key]['real_page_name'] = $url_arr[0] . '//' . idn_to_utf8($url_arr[1]);
             }
         }
 
-        return $projects;
+        return $pages;
     }
 
-    public function checkScript ($site_url, $project_id) {
-
+    public function checkScript ($page_url, $site_url, $page_id) {
         $client  =  new GuzzleHttp\Client();
-        $res = $client->request('GET', $site_url.'?sr=001');
-
+        error_log(var_export($site_url.$page_url, 1));
+        $res = $client->request('GET', $site_url.$page_url.'?sr=001');
         $page = $res->getBody();
 
         $check_script = strstr($page, 'sr.service.js');
         if($check_script){
-            Db::update('sr_projects', ['code_status'=>true],'project_id='.$project_id);
+            Db::update('sr_pages', ['code_status'=>true],'page_id='.$page_id);
         }else{
-            Db::update('sr_projects', ['code_status'=>false],'project_id='.$project_id);
+            Db::update('sr_pages', ['code_status'=>false],'page_id='.$page_id);
         }
 
     }
 
-    public function addNewProject ($post, $user_id) {
+    public function addNewPage ($post, $project_id) {
 
         $check_name = $post['site_url'];
+        $check_page_name = $post['page_url'];
 
         if ( count(explode('//', $check_name)) < 2 ) {
             $check_name = 'http://'.$check_name;
@@ -115,32 +115,35 @@ class Main
             $check_name = substr($check_name, 0, -1);
         }
 
-        $check_project = Db::fetchAll("SELECT project_id FROM sr_projects WHERE project_name="."'$check_name'");
+        if (strrpos($check_page_name, '/') !== 0) {
+            $check_page_name = '/'.$check_page_name;
+        }
 
-        if ( !$check_project && strlen(strval($check_project))>0) {
-            $projects_count = count(Db::fetchAll("SELECT project_id FROM sr_projects WHERE user_id =".$user_id));
+        $check_project = Db::fetchAll("SELECT page_id FROM sr_pages WHERE page_name="."'$check_page_name'");
+
+        if ( !$check_project && strlen(strval($check_project))>0 && $check_page_name) {
+            $pages_count = count(Db::fetchAll("SELECT page_id FROM sr_pages WHERE project_id =".$project_id));
 
             $data_fields = [
-                'user_id'=> $user_id,
-                'project_name'=> $check_name,
-                'project_alias'=> 'Проект №'.($projects_count+1)
+                'project_id'=> $project_id,
+                'page_name'=> $check_page_name,
             ];
-            $project_id = Db::insert('sr_projects', $data_fields);
-//            $this->checkScript($check_name, $project_id);
+            $page_id = Db::insert('sr_pages', $data_fields);
+            $this->checkScript($check_page_name, $check_name, $page_id);
         }
 
 
+        header ("location: /pages?project_id=".$project_id."&site_url=$check_name");
+        exit;
+    }
+
+    public function editPageName($post){
+        Db::update('sr_pages', ['project_alias'=>$post['project_new_name']], 'page_id='.$post['page_id']);
         header ('location: /');
         exit;
     }
 
-    public function editProjectName($post){
-        Db::update('sr_projects', ['project_alias'=>$post['project_new_name']], 'project_id='.$post['project_id']);
-        header ('location: /');
-        exit;
-    }
-
-    public function removeProject($project_id, $user_id) {
-        Db::delete('sr_projects', 'project_id='.$project_id. ' AND user_id='.$user_id);
+    public function removePage($page_id, $project_id) {
+        Db::delete('sr_pages', 'page_id='.$page_id. ' AND project_id='.$project_id);
     }
 }

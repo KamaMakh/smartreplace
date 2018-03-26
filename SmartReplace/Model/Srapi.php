@@ -23,9 +23,21 @@ class Srapi
         $logger->pushHandler(new FirePHPHandler());
         $this->logger = $logger;
 
-        $project_id = Db::fetchAll("SELECT project_id FROM sr_groups WHERE group_id =".$get_param['group_id'])[0]['project_id'];
-        $elements = Db::fetchAll("SELECT selector,type,new_text FROM sr_replacements WHERE group_id=".$get_param['group_id']. " AND project_id=".$project_id);
-        return $elements;
+        $data = [];
+        $page_data = Db::fetchAll("SELECT page_id FROM sr_groups WHERE group_id =".$get_param['group_id']);
+
+        if ($page_data) {
+            $page_id = $page_data[0]['page_id'];
+            $elements = Db::fetchAll("SELECT selector,type,new_text FROM sr_replacements WHERE group_id=".$get_param['group_id']. " AND page_id=".$page_id);
+            $page_data = Db::fetchAll("SELECT * FROM sr_pages WHERE page_id=".$page_id);
+
+            $data = [
+                'elements' => $elements,
+                'page_url' => $page_data[0]['page_name']
+            ];
+        }
+
+        return $data;
 
     }
 }

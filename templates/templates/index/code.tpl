@@ -12,7 +12,7 @@
                 Если Вы установили код, то нажмите Обновить
             </div>
             <br/>
-            <div  title="Нажмите для повторной проверки" href="" class="ui button grey small check-code" data-project-id="{$content.project_id}" data-project-name="{$content.project_name}">
+            <div  title="Нажмите для повторной проверки" href="" class="ui button grey small check-code" data-project-id="{$content.project_id}" data-page-id="{$content.page_id}" data-project-name="{$content.project_name}">
                 Обновить
             </div>
             <a href="/" type="submit" class="back-to-add ui submit button grey small" >Вернуться к списку проектов</a>

@@ -62,10 +62,53 @@ class Index Extends ActionBase
             $project_id = Request::getStrFromPost('project_id', '');
             $projects->removeProject($project_id, $this->user_id);
         }
+//        else if ( $mode == 'checkScript' ) {
+//            $site_url = Request::getStrFromGet('site_url', '');
+//            $project_id = Request::getStrFromGet('project_id', '');
+//            $projects->checkScript($site_url,$project_id);
+//        }
+
+
+
+        return $page;
+
+    }
+
+    public function Pages()
+    {
+        $pages = new Model\Pages();
+        $mode     = Request::getStrFromGet('mode', '');
+        $project_id = Request::getStrFromGet('project_id', '');
+        $site_url = Request::getStrFromGet('site_url', '') ?? Request::getStrFromPost('site_url', '');
+
+        $page = [
+            '_title'   => 'Мегагрупп smartreplace - Список Страниц',
+            'mode'     => 'main',
+            'project_id' => $project_id,
+            'site_url' => urldecode($site_url)
+        ];
+
+        if ( $mode == '' ) {
+            $pages = $pages->init($project_id);
+            $page['pages'] = $pages;
+        }
+        else if ( $mode == 'addNewPage' ) {
+            $post = Request::getPost();
+            $pages->addNewPage($post, $project_id);
+        }
+        else if ( $mode == 'editPageName' ) {
+            $post = Request::getPost();
+            $pages->editPageName($post);
+        }
+        else if ( $mode == 'removePage' ) {
+            $project_id = Request::getStrFromPost('project_id', '');
+            $page_id = Request::getStrFromPost('page_id', '');
+            $pages->removePage($page_id, $project_id);
+        }
         else if ( $mode == 'checkScript' ) {
-            $site_url = Request::getStrFromGet('site_url', '');
+            $page_url = Request::getStrFromGet('page_url', '');
             $project_id = Request::getStrFromGet('project_id', '');
-            $projects->checkScript($site_url,$project_id);
+            $pages->checkScript($page_url, $site_url, $project_id);
         }
 
 
@@ -74,26 +117,28 @@ class Index Extends ActionBase
 
     }
 
-
     public function Addelements()
     {
 
         $elements   = new Model\Elements();
         $mode       = Request::getStrFromGet('mode', '');
+        $page_id = Request::getStrFromGet('page_id', '');
         $project_id = Request::getStrFromGet('project_id', '');
 
 
         $page = [
             '_title'     => 'Мегагрупп smartreplace - Добавление элементов',
             'mode'       => 'addelements',
-            'project_id' => $project_id
+            'project_id' => $project_id,
+            'page_id'    => $page_id,
         ];
 
 
 
         if ($mode == '') {
-            $result = $elements->init($project_id);
+            $result = $elements->init($project_id, $page_id);
             $page['site_url'] = $result['site_url'];
+            $page['page_url'] = $result['page_url'];
             $page['dataFields'] = $result['elements'];
             $page['firstCheck'] = $result['firstCheck'];
         }
@@ -101,7 +146,7 @@ class Index Extends ActionBase
 
             $elements->insertToDb(Request::getPost());
 
-            $result = $elements->sendToClient($project_id);
+            $result = $elements->sendToClient($page_id);
 
             $page['dataFields'] = $result['elements'];
             $page['firstCheck'] = $result['firstCheck'];
@@ -112,8 +157,8 @@ class Index Extends ActionBase
             $check_user = $elements->removeElement(Request::getGet(), $this->user_id);
 
             if ( $check_user ) {
-                if ( $project_id ) {
-                    $result = $elements->sendToClient($project_id);
+                if ( $page_id ) {
+                    $result = $elements->sendToClient($page_id);
                     $page['dataFields'] = $result['elements'];
                     $page['firstCheck'] = $result['firstCheck'];
                     $page['mode'] = 'removeElement';
@@ -131,6 +176,7 @@ class Index Extends ActionBase
         $groups     = new Model\Groups();
         $mode       = Request::getStrFromGet('mode', '');
         $project_id = Request::getStrFromGet('project_id', '');
+        $page_id    = Request::getStrFromGet('page_id', '');
 
 
 
@@ -140,14 +186,17 @@ class Index Extends ActionBase
         ];
 
         if ( $mode == '' ) {
-            $result = $groups->complete($project_id, $this->user_id);
+            $result = $groups->complete($project_id, $this->user_id, $page_id);
 
             $page['project'] = $result['project'][0];
+            $page['page'] = $result['page'][0];
             $page['groups'] = $result['groups'];
             $page['elements'] = $result['elements'];
             $page['project_name'] = $result['project_name'];
+            $page['page_name'] = $result['page_name'];
             $page['list'] = $result['list'];
             $page['project_id'] = $result['project_id'];
+            $page['page_id'] = $result['page_id'];
         }
         else if ( $mode == 'removeGroup' ) {
             $group_id = Request::getStrFromPost('group_id', '');
@@ -156,6 +205,7 @@ class Index Extends ActionBase
         else if ( $mode == 'saveGroup' ) {
             $post = Request::getPost();
             $page['project_id'] = $project_id;
+            $page['page_id'] = $page_id;
             $groups->saveGroup($post);
         }
         else if ( $mode == 'addNewGroup' ) {
@@ -171,7 +221,8 @@ class Index Extends ActionBase
         else if ( $mode == 'checkScript' ) {
             $site_url = Request::getStrFromGet('site_url', '');
             $project_id = Request::getStrFromGet('project_id', '');
-            $groups->checkScript($site_url,$project_id);
+            $page_id = Request::getStrFromGet('page_id', '');
+            $groups->checkScript($site_url, $project_id, $page_id);
         }
 
         return $page;
@@ -211,7 +262,9 @@ class Index Extends ActionBase
             '_title'            => 'Мегагрупп smartreplace - Проверка кода',
             'mode'              => 'Code',
             'project_id'        => $get['project_id'],
+            'page_id'           => $get['page_id'],
             'project_name'      => $get['site_url'],
+            'page_name'         => $get['page_url'],
             'real_project_name' => $get['real_project_name']
         ];
 

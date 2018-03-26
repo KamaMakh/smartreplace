@@ -3,15 +3,26 @@
         var iframe, data,
             list = $('.result_list'),
             $project_name,
-            project_id = location.search.split('=')[1],
+            strGet = location.search.replace( '?', ''),
             completeButton= $('.added-elements-wrap form input.for-p-name'),
+            completePageButton= $('.added-elements-wrap form input.for-page-name'),
             $firstCheck = $('.firstCheck'),
             $dataFields = $('.dataFields').text(),
             $button = $('.burger'),
             $elementsWrap = $('.added-elements-wrap-scroll'),
-            $closeButton = $('.close-button');
+            $closeButton = $('.close-button'),
+            project_id = 0, page_id = 0;
+
+        strGet.split('&').forEach(function (get) {
+            if (get.indexOf('project_id') == 0) {
+                project_id = get.split('=')[1];
+            } else if (get.indexOf('page_id') == 0) {
+                page_id = get.split('=')[1];
+            }
+        });
 
         completeButton.attr('value', project_id);
+        completePageButton.attr('value', page_id);
 
 
         var utilities = {
@@ -73,10 +84,11 @@
                             param = dataFromDb[i]['param'],
                             template_id = dataFromDb[i]['template_id'],
                             project_id = dataFromDb[i]['project_id'];
+                            page_id = dataFromDb[i]['page_id'];
                         data = this.replaceForHtmlTags(data);
                         //console.log(data);
                         $container.append('<div class="list-column"><div class="template-name"><span>'+ `${i+1}` +'. </span>' + name +
-                            '</div><span><i class="remove-element trash icon grey large" data-template-id="'+template_id+'" data-project-id="'+project_id+'" data-selector="'+param+'"></i>' +
+                            '</div><span><i class="remove-element trash icon grey large" data-template-id="'+template_id+'" data-page-id="'+page_id+'" data-project-id="'+project_id+'" data-selector="'+param+'"></i>' +
                             '<i class="show-element compass icon grey large" data-selector="'+param+'"></i></span>' + '</div>');
                     }
                 } else {
@@ -151,6 +163,7 @@
                 let $groups = $('.group-row'),
                     setGroups = {},
                     project_id = $('.elements-table-wrap').attr('data-project-id'),
+                    page_id = $('.elements-table-wrap').attr('data-page-id'),
                     i = 0;
 
                // console.log($groups);
@@ -175,6 +188,7 @@
                                 name: name,
                                 template_id: template_id,
                                 project_id:project_id,
+                                page_id:page_id,
                                 type:$type,
                                 param:eq_param,
                                 new_text:eq_new_text,
@@ -191,6 +205,7 @@
                         i++;
                     });
                     setGroups['project_id'] = project_id;
+                    setGroups['page_id'] = page_id;
                 }
               //  console.log(setGroups);
 
@@ -207,6 +222,7 @@
                     cell_elements = $first_group.find('.cell-element'),
                     cell_elements_obj={},
                     $project_id = $('.elements-table-wrap').attr('data-project-id'),
+                    $page_id = $('.elements-table-wrap').attr('data-page-id'),
                     i = 0,
                     newGroup;
 
@@ -224,6 +240,7 @@
                     cell_elements_obj[i] = {
                         template_id: eq_template_id,
                         project_id: $project_id,
+                        page_id: $page_id,
                         type:eq_type,
                         param:eq_param,
                         old_text: old_text
@@ -233,6 +250,7 @@
 
                 newGroup = {
                     project_id: $project_id,
+                    page_id: $page_id,
                     elements: cell_elements_obj
                 };
 
@@ -270,7 +288,7 @@
 
                 last_group.attr('data-group-id', group['group_id'])
                     .find('.group-row-keyword').attr('data-keyword', keyword)
-                    .text(`${project_name}=${keyword}`);
+                    .text(`${project_name}?sr=${keyword}`);
 
                 elements.each(function () {
                    $(this).find('.textarea').attr('data-replace-id', group['ids'][i]);
@@ -295,10 +313,11 @@
                     group_id: remove_button.parents('.group-row').attr('data-group-id')
                 };
                 let project_id = $('.elements-table-wrap').attr('data-project-id');
+                let page_id = $('.elements-table-wrap').attr('data-page-id');
 
               //  console.log(group_id);
                 $.post({
-                  url: `/complete?mode=removeGroup&project_id=${project_id}`,
+                  url: `/complete?mode=removeGroup&project_id=${project_id}&page_id=${page_id}`,
                     method: 'POST',
                     data: group_id,
                     success: function(response){
@@ -314,6 +333,7 @@
                     remove_icon = equal_group.find('.remove-group'),
                     group_id = equal_group.attr('data-group-id'),
                     project_id = $('.elements-table-wrap').attr('data-project-id'),
+                    page_id = $('.elements-table-wrap').attr('data-page-id'),
                     channel_name = equal_group.find('.cell-name textarea').val(),
                     textarea = equal_group.find('textarea.request-textarea'),
                     elements = equal_group.find('.cell-element'),
@@ -330,6 +350,7 @@
                 form.prepend(`<input type="hidden" name="elements_count" value="${elements.length}">`);
                 form.find('#form-group-id').attr('value', group_id);
                 form.find('#form-project-id').attr('value', project_id);
+                form.find('#form-page-id').attr('value', page_id);
 
 
 
@@ -396,7 +417,8 @@
                 }
                 else {
                     let project_item = target.parents('.project-item'),
-                        project_id = project_item.attr('data-project-id');
+                        project_id = project_item.attr('data-project-id'),
+                        page_id = project_item.attr('data-page-id');
                     /*
                     fetch('?mode=removeProject&project_id='+project_id,{
 
@@ -409,7 +431,37 @@
                     $.ajax({
                         type: "POST",
                         url: '?mode=removeProject',
-                        data: {"project_id":project_id},
+                        data: {"project_id":project_id, "page_id" : page_id},
+                        success: function () {
+                            //console.log("test");
+                            project_item.remove();
+                        }
+                    });
+                    //console.log(project_id);
+                }
+            },
+            removePage(target){
+                let question = confirm('Страница будет удалена');
+                if (!question) {
+                    return false;
+                }
+                else {
+                    let project_item = target.parents('.project-item'),
+                        project_id = project_item.attr('data-project-id'),
+                        page_id = project_item.attr('data-page-id');
+                    /*
+                    fetch('?mode=removeProject&project_id='+project_id,{
+
+                    })
+                        .then(function(response){
+                            console.log(response);
+                            project_item.remove();
+                        });
+*/
+                    $.ajax({
+                        type: "POST",
+                        url: '?mode=removePage',
+                        data: {"project_id":project_id, "page_id" : page_id},
                         success: function () {
                             //console.log("test");
                             project_item.remove();
@@ -422,12 +474,13 @@
 //                console.log(target);
                 let template_id = target.attr('data-template-id'),
                     project_id = target.attr('data-project-id'),
+                    page_id = target.attr('data-page-id'),
                     selector = target.attr('data-selector'),
                     iframe = document.getElementById('main_iframe');
 
 
                 $.post({
-                    url: `/addelements?mode=removeElement&template_id=${template_id}&project_id=${project_id}`,
+                    url: `/addelements?mode=removeElement&template_id=${template_id}&project_id=${project_id}&page_id=${page_id}`,
                     success: function(data) {
                         if (data) {
                             data = utilities.htmlspecialchars_decode(data);
@@ -495,10 +548,11 @@
 
             checkCode(target) {
                 let project_id   = target.attr('data-project-id'),
+                    page_id   = target.attr('data-page-id'),
                     project_name = target.attr('data-project-name');
 
                 $.post({
-                    url: '/code?mode=checkScript&project_id='+project_id+'&site_url='+project_name,
+                    url: `/code?mode=checkScript&project_id=${project_id}&page_id=${page_id}&site_url=${project_name}`,
                     method: 'GET',
                     success: function(response) {
                       //  console.log(response.trim());
@@ -549,18 +603,29 @@
                     inner = data.element.data,
                     wayToElement = data.element.wayToElement,
                     name = data.element.name,
-                    project_id = location.search.split('=')[1],
-                    params = {
+                    strGet = location.search.replace( '?', ''),
+                    project_id, page_id;
+
+                strGet.split('&').forEach(function (get) {
+                    if (get.indexOf('project_id') == 0) {
+                        project_id = get.split('=')[1];
+                    } else if (get.indexOf('page_id') == 0) {
+                        page_id = get.split('=')[1];
+                    }
+                });
+
+                var  params = {
                         mode: mode,
                         type: type,
                         inner: inner,
                         wayToElement: wayToElement,
                         name: name,
-                        project_id: project_id
+                        project_id: project_id,
+                        page_id: page_id
                     },
                     iframe = document.getElementById('main_iframe');
                 $.post({
-                    url: '/addelements?mode=insertToDb&project_id='+project_id,
+                    url: `/addelements?mode=insertToDb&project_id=${project_id}&page_id=${page_id}`,
                     method: 'POST',
                     data: params,
                     success: function(response) {
@@ -694,6 +759,9 @@
             }
             else if (target.hasClass('remove-project')){
                 utilities.removeProject(target);
+            }
+            else if (target.hasClass('remove-page')){
+                utilities.removePage(target);
             }
             else if (target.hasClass('remove-element')) {
                 let dataFromDb = utilities.removeElement(target);

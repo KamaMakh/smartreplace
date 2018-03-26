@@ -38,39 +38,46 @@
                         </div>
                         <div data-real="{$project['project_name']}" class="project-name">{$project['real_project_name'] ? $project['real_project_name']:$project['project_name']}  <br/>id проетка: {$project['project_id']}</div>
                     </div>
-                    {if $project['code_status'] == 1}
-                        <div class="project-item-mid">
-                            <div class="add-new-element">
-
-                                <a class="ui button grey small" href="/addelements?project_id={$project['project_id']}">
-                                    Элементы ({$project['templates_count']})
-                                </a>
-                                <a class="ui button grey small" href="/complete?project_id={$project['project_id']}">
-                                    Замены ({$project['templates_count'] != 0 ? $project['groups_count'] : 0})
-                                </a>
-                            </div>
-                            <div class="remove-button">
-                                <button class=" remove-project ui submit button grey small">Удалить</button>
-                            </div>
-                            <div class="check-script">
-                                <div class="check-scrip-button blue">
-                                    Код установлен
-                                </div>
-                            </div>
+                    <div class="project-item-mid">
+                        <div class="add-new-element">
+                            <a class="ui button grey small" href="/pages?project_id={$project['project_id']}&site_url={$project['project_name']}">
+                                Страницы ({$project['pages_count']})
+                            </a>
                         </div>
-                    {else}
-                        <div class="project-item-mid">
+                    </div>
+                    {*{if $project['code_status'] == 1}*}
+                        {*<div class="project-item-mid">*}
+                            {*<div class="add-new-element">*}
 
-                            <div class="remove-button">
-                                <button class=" remove-project ui submit button grey small">Удалить</button>
-                            </div>
-                            <div class="check-script">
-                                <a title="Нажмите для повторной проверки" href="/code?site_url={$project['project_name']}&project_id={$project['project_id']}&real_project_name={$project['real_project_name']}" class="check-scrip-button red">
-                                    Установите код
-                                </a>
-                            </div>
-                        </div>
-                    {/if}
+                                {*<a class="ui button grey small" href="/addelements?project_id={$project['project_id']}">*}
+                                    {*Элементы ({$project['templates_count']})*}
+                                {*</a>*}
+                                {*<a class="ui button grey small" href="/complete?project_id={$project['project_id']}">*}
+                                    {*Замены ({$project['templates_count'] != 0 ? $project['groups_count'] : 0})*}
+                                {*</a>*}
+                            {*</div>*}
+                            {*<div class="remove-button">*}
+                                {*<button class=" remove-project ui submit button grey small">Удалить</button>*}
+                            {*</div>*}
+                            {*<div class="check-script">*}
+                                {*<div class="check-scrip-button blue">*}
+                                    {*Код установлен*}
+                                {*</div>*}
+                            {*</div>*}
+                        {*</div>*}
+                    {*{else}*}
+                        {*<div class="project-item-mid">*}
+
+                            {*<div class="remove-button">*}
+                                {*<button class=" remove-project ui submit button grey small">Удалить</button>*}
+                            {*</div>*}
+                            {*<div class="check-script">*}
+                                {*<a title="Нажмите для повторной проверки" href="/code?site_url={$project['project_name']}&project_id={$project['project_id']}&real_project_name={$project['real_project_name']}" class="check-scrip-button red">*}
+                                    {*Установите код*}
+                                {*</a>*}
+                            {*</div>*}
+                        {*</div>*}
+                    {*{/if}*}
                 </div>
             {/foreach}
         {else}

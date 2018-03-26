@@ -26,15 +26,16 @@ class Groups
         $this->logger = $logger;
     }
 
-    public function complete(int $project_id, int $user_id) {
+    public function complete(int $project_id, int $user_id, int $page_id) {
 
-        $list = Db::fetchAll("SELECT * FROM sr_templates WHERE project_id = $project_id");
-        $eq_group = Db::fetchAll("SELECT group_id FROM sr_groups WHERE project_id=$project_id");
+        $list = Db::fetchAll("SELECT * FROM sr_templates WHERE page_id = $page_id");
+        $eq_group = Db::fetchAll("SELECT group_id FROM sr_groups WHERE page_id=$page_id");
         $project_name = Db::fetchAll('SELECT project_name FROM sr_projects WHERE project_id='.$project_id)[0]['project_name'];
+        $page_name = Db::fetchAll('SELECT page_name FROM sr_pages WHERE page_id='.$page_id)[0]['page_name'];
 
         if ( !$eq_group ) {
             $insertId = Db::insert('sr_groups',[
-                'project_id' => $project_id,
+                'page_id' => $page_id,
                 'elements' => json_encode($list)
             ]);
 
@@ -44,7 +45,7 @@ class Groups
                 if ( !$check_group ) {
 
                     Db::insert('sr_replacements',[
-                        'project_id' => $element['project_id'],
+                        'page_id' => $element['page_id'],
                         'group_id'   =>$insertId,
                         'template_id'=>$element['template_id'],
                         'type'       =>$element['type'],
@@ -62,7 +63,7 @@ class Groups
                 if ( !$check_group ) {
                     foreach ($eq_group as $group_id) {
                         Db::insert('sr_replacements' ,[
-                            'project_id' => $element['project_id'],
+                            'page_id' => $element['page_id'],
                             'group_id'   =>$group_id["group_id"],
                             'template_id'=>$element['template_id'],
                             'type'       =>$element['type'],
@@ -74,17 +75,21 @@ class Groups
             }
         }
 
-        $groups = Db::fetchAll("SELECT * FROM sr_groups WHERE project_id=$project_id");
-        $elements = Db::fetchAll("SELECT * FROM sr_replacements WHERE project_id=$project_id");
-        $project = Db::fetchAll("SELECT project_id,user_id,project_name,code_status FROM sr_projects WHERE project_id=".$project_id);
+        $groups = Db::fetchAll("SELECT * FROM sr_groups WHERE page_id=$page_id");
+        $elements = Db::fetchAll("SELECT * FROM sr_replacements WHERE page_id=$page_id");
+        $project = Db::fetchAll("SELECT project_id,user_id,project_name FROM sr_projects WHERE project_id=".$project_id);
+        $page = Db::fetchAll("SELECT page_id,page_name, code_status FROM sr_pages WHERE page_id=".$page_id);
 
         return [
             'project'     =>$project,
+            'page'        =>$page,
             'groups'      =>$groups,
             'elements'    =>$elements,
             'project_name'=>$project_name,
+            'page_name'   =>$page_name,
             'list'        =>$list,
-            'project_id'  =>$project_id
+            'project_id'  =>$project_id,
+            'page_id'     =>$page_id
         ];
     }
 
@@ -128,7 +133,7 @@ class Groups
         }
 
         //$this->checkScript($post['project_name'], $post['project_id']);
-        header ('location: /complete?project_id='.$post['project_id']);
+        header ('location: /complete?project_id='.$post['project_id'].'&page_id='.$post['page_id']);
         exit;
     }
 
@@ -137,7 +142,7 @@ class Groups
         $this->logger->info('got it');
 
         $new_group_params = [
-            'project_id'=>$new_group['project_id'],
+            'page_id'=>$new_group['page_id'],
             'elements'  =>json_encode($new_group['elements'])
         ];
 
@@ -146,7 +151,7 @@ class Groups
 
         foreach ( $new_group['elements'] as $key=>$elements ) {
             $new_replacement_params = [
-                'project_id' =>$new_group['project_id'],
+                'page_id'    =>$new_group['page_id'],
                 'group_id'   =>$last_group_id,
                 'template_id'=>$elements['template_id'],
                 'type'       =>$elements['type'],
@@ -156,26 +161,26 @@ class Groups
             $ids[$key] = Db::insert('sr_replacements', $new_replacement_params);
         }
 
-        $backToClient = Db::fetchAll('SELECT project_id,group_id FROM sr_groups WHERE group_id='.$last_group_id);
+        $backToClient = Db::fetchAll('SELECT page_id,group_id FROM sr_groups WHERE group_id='.$last_group_id);
 
         $backToClient[0]['ids'] = $ids;
         return json_encode($backToClient[0]);
     }
-    public function checkScript ($site_url, $project_id) {
+    public function checkScript ($site_url, $project_id, $page_id, $page_url) {
 
         $client  =  new GuzzleHttp\Client();
-        $res = $client->request('GET', $site_url.'sr=001');
+        $res = $client->request('GET', $site_url.$page_url.'sr=001');
 
         $page = $res->getBody();
 
         $check_script = strstr($page, 'sr.service.js');
         if($check_script){
-            Db::update('sr_projects', ['code_status'=>true],'project_id='.$project_id);
+            Db::update('sr_pages', ['code_status'=>true],'page_id='.$page_id);
         }else{
-            Db::update('sr_projects', ['code_status'=>false],'project_id='.$project_id);
+            Db::update('sr_pages', ['code_status'=>false],'page_id='.$page_id);
         }
 
-        header ('location: /complete?project_id='.$project_id);
+        header ('location: /complete?project_id='.$project_id.'&page_id='.$page_id);
         exit;
     }
 

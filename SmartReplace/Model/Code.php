@@ -24,10 +24,10 @@ class Code
         $check_script = strstr($page, 'sr.service.js');
 
         if($check_script){
-            Db::update('sr_projects', ['code_status'=>true],'project_id='.$get['project_id']);
+            Db::update('sr_pages', ['code_status'=>true],'page_id='.$get['page_id']);
             $result = true;
         }else{
-            Db::update('sr_projects', ['code_status'=>false],'project_id='.$get['project_id']);
+            Db::update('sr_pages', ['code_status'=>false],'page_id='.$get['page_id']);
             $result = false;
         }
         return $result;
