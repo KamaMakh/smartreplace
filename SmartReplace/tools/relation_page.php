@@ -31,7 +31,7 @@ foreach ($projects as $project_key => $project) {
     if (isset($parse_url['path'])) {
         $url_without_path = str_replace($parse_url['path'], '', $site_url);
         $page_url = $parse_url['path'];
-        Db::query("UPDATE sr_projects SET project_name=$url_without_path WHERE project_id=$project_id");
+        Db::query("UPDATE sr_projects SET project_name='$url_without_path' WHERE project_id=$project_id");
     }
     DB::query("INSERT INTO sr_pages (page_id, project_id, page_name, code_status) VALUES (null,$project_id,'$page_url',$code_status)");
 
