@@ -30,9 +30,6 @@
                     <div class="project-item-left" >
                         <div class="number">
                             <form action="?mode=editProjectName" method="post">
-                                <div class="ui input edit-project-name" title="Изменить название страницы">
-                                    <input type="text" name="project_new_name" disabled value="{$page['page_alias']}">
-                                </div>
                                 <input type="hidden" value="{$page['page_id']}" name="page_id">
                                 <input type="hidden" value="{$content.project_id}" name="project_id">
                                 <button class="ui submit button grey small hidden">Сохранить</button>
@@ -68,9 +65,9 @@
                                 <button class=" remove-page ui submit button grey small">Удалить</button>
                             </div>
                             <div class="check-script">
-                                <a title="Нажмите для повторной проверки" href="/code?site_url={$page['page_name']}&page_id={$page['page_id']}&project_id={$content.project_id}&real_project_name={$page['real_project_name']}" class="check-scrip-button red">
-                                    Установите код
-                                </a>
+                                <div class="check-scrip-button red">
+                                    Страница не существует
+                                </div>
                             </div>
                         </div>
                     {/if}

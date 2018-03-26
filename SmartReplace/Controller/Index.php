@@ -89,7 +89,7 @@ class Index Extends ActionBase
         ];
 
         if ( $mode == '' ) {
-            $pages = $pages->init($project_id);
+            $pages = $pages->init($project_id, urldecode($site_url));
             $page['pages'] = $pages;
         }
         else if ( $mode == 'addNewPage' ) {

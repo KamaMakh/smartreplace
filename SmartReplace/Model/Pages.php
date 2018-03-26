@@ -28,7 +28,7 @@ class Pages
         $this->logger = $logger;
     }
 
-    public function init($project_id) {
+    public function init($project_id, $site_url) {
 
         $pages = Db::fetchAll("SELECT page_id,project_id,page_name, code_status FROM sr_pages WHERE project_id=".$project_id);
 
@@ -40,8 +40,8 @@ class Pages
             $pages[$key]['templates_count'] = $templates_count;
             $pages[$key]['pages_count'] = $pages_count;
 
-            if ( strstr($page['page_name'], '--') ) {
-                $url_arr = explode('//', $page['page_name']);
+            if ( strstr($site_url, '--') ) {
+                $url_arr = explode('//', $site_url);
                 $url_arr[1] = explode('/',$url_arr[1]);
 
                 if ( count($url_arr[1]) > 1 && strlen($url_arr[1]) ) {
@@ -56,7 +56,7 @@ class Pages
                     $url_arr[1] = idn_to_utf8($url_arr[1][0]);
                 }
 
-                $pages[$key]['real_page_name'] = $url_arr[0] . '//' . idn_to_utf8($url_arr[1]);
+                $pages[$key]['real_project_name'] = $url_arr[0] . '//' . idn_to_utf8($url_arr[1]);
             }
         }
 
@@ -65,7 +65,6 @@ class Pages
 
     public function checkScript ($page_url, $site_url, $page_id) {
         $client  =  new GuzzleHttp\Client();
-        error_log(var_export($site_url.$page_url, 1));
         $res = $client->request('GET', $site_url.$page_url.'?sr=001');
         $page = $res->getBody();
 
