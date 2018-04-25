@@ -113,15 +113,14 @@ class Pages
         if (substr($check_name, -1) == '/') {
             $check_name = substr($check_name, 0, -1);
         }
-
-        if (strrpos($check_page_name, '/') !== 0) {
+        if (strrpos($check_page_name, '/') !== 0 && $check_page_name !='/') {
             $check_page_name = '/'.$check_page_name;
         }
 
-        $check_project = Db::fetchAll("SELECT page_id FROM sr_pages WHERE page_name="."'$check_page_name'");
+        $check_project = Db::fetchAll("SELECT page_id FROM sr_pages WHERE project_id=$project_id AND page_name=?", [$check_page_name]);
 
         if ( !$check_project && strlen(strval($check_project))>0 && $check_page_name) {
-            $pages_count = count(Db::fetchAll("SELECT page_id FROM sr_pages WHERE project_id =".$project_id));
+//            $pages_count = count(Db::fetchAll("SELECT page_id FROM sr_pages WHERE project_id =".$project_id));
 
             $data_fields = [
                 'project_id'=> $project_id,
