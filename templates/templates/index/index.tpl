@@ -44,6 +44,9 @@
                                 Страницы ({$project['pages_count']})
                             </a>
                         </div>
+                        <div class="remove-button">
+                        <button class=" remove-project ui submit button grey small">Удалить</button>
+                        </div>
                     </div>
                     {*{if $project['code_status'] == 1}*}
                         {*<div class="project-item-mid">*}
